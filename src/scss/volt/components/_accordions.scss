@@ -1,0 +1,38 @@
+/**
+ * = s
+ */
+
+ .-button {
+    text-align: left;
+
+    .btn-check:focus + .btn, .btn:focus {
+        outline: 0;
+        box-shadow: none;
+    }
+    
+    &:hover{
+        background-color: $dark;
+    }
+}
+
+// Flush  items
+//
+// Remove borders and border-radius to keep  items edge-to-edge.
+
+.-flush {
+    .-button {
+        background-color: $dark;
+        &:not(.collapsed) {
+            color: $secondary;
+        }
+        &:focus {
+            border-color: $dark;
+            box-shadow: none;
+        }
+    }
+    .-collapse {
+        border: 0;
+    }
+}
+
+

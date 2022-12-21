@@ -10,12 +10,14 @@ import { Routes } from "../../routes";
 import axios from "../examples/api/axios";
 const ATHLETE_URL='athletelist_info/';
 const Athletes = () =>{
+  localStorage.removeItem('iden');
+  localStorage.removeItem('pr');
+  localStorage.removeItem('im');
+  localStorage.removeItem('mid');
 const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
 const [showDefaults, setShowDefaults] = useState();
-  const[id,setId]=useState([])
- 
 
 const [state,setState]=useState([])
 const token = localStorage.getItem("token");
@@ -25,7 +27,6 @@ useEffect(() => {
   .then(res => {
     const persons = res.data;
     setState(persons);
-    console.log(state)
 
 })},[])
 const [file, setFile] = useState();
@@ -73,6 +74,7 @@ function handleChange(e) {
         <Table responsive className="table-centered table-nowrap rounded mb-0">
           <thead className="thead-light">
             <tr>
+            <th className="border-0">ID</th>
               <th className="border-0">CIN</th>
               <th className="border-0">Nom</th>
               <th className="border-0">Prenom</th>
@@ -83,6 +85,8 @@ function handleChange(e) {
               <th className="border-0">Degré</th>
               <th className="border-0">Role</th>
               <th className="border-0">Photo</th>
+              <th className="border-0">Identité</th>
+              <th className="border-0">fiche médicale</th>
               <th className="border-0">Actions</th>
               {/* <th className="border-0">sexe</th>
               <th className="border-0">Club</th>
@@ -94,6 +98,8 @@ function handleChange(e) {
           <tbody>
           {state.map(person => (
         <><tr>
+                        <td className="border-0 ">{person.athlete.id}</td>
+
               <td className="border-0 ">{person.profile.cin}</td>
               <td className="border-0 ">{person.profile.last_name}</td>
               <td className="border-0 ">{person.profile.first_name}</td>
@@ -103,7 +109,10 @@ function handleChange(e) {
               <td className="border-0 ">            {person.athlete.grade_id}           </td>
               <td className="border-0 ">            {person.athlete.id_degree}           </td>
               <td className="border-0 ">            {person.profile.role}           </td>
-              <td className="border-0 ">       <img      width={150} src={person.athlete.identity_photo}    />       </td>
+              <td className="border-0 ">       <img    height={80}  width={80} src={person.athlete.photo}    />       </td>
+              <td className="border-0 ">       <img    height={80}   width={80} src={person.athlete.identity_photo}    />       </td>
+              <td className="border-0 ">       <img     height={80}  width={80} src={person.athlete.medical_photo}    />       </td>
+
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                  
@@ -117,7 +126,7 @@ function handleChange(e) {
               )}>Supprimer 
               </Button> &nbsp;
               <Button variant="primary" className="my-0"  as={Link} to={Routes.AthleteUpd.path} onClick={() => setShowDefault(
-                localStorage.setItem('at',person.profile.id)
+                localStorage.setItem('at',person.athlete.id)
                 
              )}>Modifier</Button></td>
              

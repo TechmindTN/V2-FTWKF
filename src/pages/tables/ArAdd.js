@@ -17,12 +17,17 @@ const ArAdd = () =>{
   const[grade, setGrade] = useState();
   const[cin,setCin]=useState();
   const[phone,setPhone]=useState();
-
   const[first_name, setF_name] = useState (false) ;
   const[last_name, setL_name] = useState();
   const[sex, setSex] = useState();
   const[birthday, setBirthday] = useState();
-  const[profile, setProfile] = useState();
+  const[password, setPassword] = useState();
+  const[addresse, setAddresse] = useState();
+  const[ville,setVille] = useState();
+  const[gouv,setGouv] = useState();
+  const[code,setCode] = useState();
+
+  const[username, setUsername] = useState();
   const[success,setSuccess] = useState();
   const [progress1, setProgress1] = useState()
   const [progress, setProgress] = useState()
@@ -98,27 +103,21 @@ const ph= localStorage.getItem('ph')
           <div className="text-center"><p>{success}</p></div>
           <Row>
               <Col md={4} className="mb-3">
-                <Form.Group id="cin">
-                  <Form.Label>CIN</Form.Label>    
-                  <Form.Control  type="text" id="cin" name="cin" placeholder="cin" 
-                     value={cin }    onChange={(e) =>setCin(e.target.value)}                                    />
+                <Form.Group id="username">
+                  <Form.Label>username</Form.Label>    
+                  <Form.Control  type="text" id="username" name="username" 
+                     value={username }    onChange={(e) =>setUsername(e.target.value)}                                    />
                 </Form.Group>
                  
               </Col>
         
               <Col md={4} className="mb-3">
-                <Form.Group id="lastName">
-                  <Form.Label>Nom</Form.Label>
-                  <Form.Control  type="text" id="prenom" name="prenom" placeholder="Nom" value={first_name } onChange={(e) =>setF_name(e.target.value)} />
+                <Form.Group id="pwd">
+                  <Form.Label>Mot de passe</Form.Label>
+                  <Form.Control  type="text" id="pwd" name="pwd"  value={password } onChange={(e) =>setPassword(e.target.value)} />
                 </Form.Group>
               </Col>
-              <Col md={4} className="mb-3">
-                <Form.Group id="lastName">
-                  <Form.Label>Prénom</Form.Label>
-                  <Form.Control  type="text" id="prenom" name="prenom" placeholder="prenom" 
-                     value={last_name }    onChange={(e) =>setL_name(e.target.value)}      />
-                </Form.Group>
-              </Col>
+            
             </Row>
             <Row>
             <Col md={3} className="mb-3">
@@ -147,8 +146,8 @@ const ph= localStorage.getItem('ph')
               <Col md={3} className="mb-3">
                 <Form.Group id="cin">
                   <Form.Label>addresse</Form.Label>    
-                  <Form.Control  type="text" id="cin" name="cin" placeholder="cin" 
-                     value={cin }    onChange={(e) =>setCin(e.target.value)}                                    />
+                  <Form.Control  type="text" id="addresse" name="addresse"  
+                     value={addresse }    onChange={(e) =>setAddresse(e.target.value)}                                    />
                 </Form.Group>
                  
               </Col>
@@ -196,7 +195,7 @@ const ph= localStorage.getItem('ph')
               <Form.Group  >
                 <Form.Label>ville</Form.Label>
                 <Form.Control  type="text" id="phone" name="phone"
-                     value={phone }    onChange={(e) =>setPhone(e.target.value)}      />
+                     value={ville }    onChange={(e) =>setVille(e.target.value)}      />
               </Form.Group>
              
             </Col>
@@ -210,7 +209,7 @@ const ph= localStorage.getItem('ph')
               <Form.Group  >
                 <Form.Label>gouvernerat</Form.Label>
                 <Form.Control  type="text" id="phone" name="phone"
-                     value={phone }    onChange={(e) =>setPhone(e.target.value)}      />
+                     value={gouv }    onChange={(e) =>setGouv(e.target.value)}      />
               </Form.Group>
              
             </Col>
@@ -218,7 +217,7 @@ const ph= localStorage.getItem('ph')
               <Form.Group  >
                 <Form.Label>code postal </Form.Label>
                 <Form.Control  type="text" id="phone" name="phone"
-                     value={phone }    onChange={(e) =>setPhone(e.target.value)}      />
+                     value={code }    onChange={(e) =>setCode(e.target.value)}      />
               </Form.Group>
              
             </Col>

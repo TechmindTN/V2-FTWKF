@@ -10,7 +10,7 @@ import { PageTrafficTable, RankingTable } from "../../components/Tables";
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
 
-const ENT_URL='coach/'
+const ENT_URL='add_coach/'
 const PARAMETER_URL='parameters/'
 
 const Licenceadd = () =>{

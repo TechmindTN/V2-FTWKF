@@ -88,7 +88,8 @@ try {
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
-    setSuccess("Licence added");
+    setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+    <div>Licence added</div></div>);
    // window.location.href = "dashboard/tables/Licence";
 }catch(error) {
   console.log(error)

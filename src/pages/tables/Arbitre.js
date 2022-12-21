@@ -69,7 +69,7 @@ Ajouter arbitre
               <th className="border-0">Prenom</th>
               <th className="border-0">Sexe</th>
               <th className="border-0">Date de naissance </th>
-              <th className="border-0">Profile </th>
+              <th className="border-0">téléphone </th>
               <th className="border-0">Actions</th>
               {/* <th className="border-0">sexe</th>
               <th className="border-0">Club</th>
@@ -84,7 +84,7 @@ Ajouter arbitre
               <td className="border-0 ">{person.profile.id}</td>
               <td className="border-0 ">{person.profile.cin}</td>
               <td className="border-0 ">{person.profile.last_name}</td>
-              <td className="border-0 ">{person.first_name}</td>
+              <td className="border-0 ">{person.profile.first_name}</td>
               <td className="border-0 ">{person.profile.sex}</td>
               <td className="border-0 ">{person.profile.birthday}</td>
               <td className="border-0 ">{person.profile.phone}</td>

@@ -212,10 +212,7 @@ try {
     Athlete ajouté avec succès 
    </div>
   </div>);
-  localStorage.removeItem('iden');
-  localStorage.removeItem('pr');
-  localStorage.removeItem('im');
-  localStorage.removeItem('mid');
+
   
     // window.location.href = "/tables/Athletes/"
 }catch(error) {

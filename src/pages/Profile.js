@@ -15,7 +15,6 @@ export const Profile = () =>  {
   }, []);
   const [first_name, setFname] = useState();
   const [photo,setPhoto] = useState();
-
   const [last_name, setLname] = useState();
   const [country, setCountry] = useState();
   const [birthday, setBirthday] = useState();

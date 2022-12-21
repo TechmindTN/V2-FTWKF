@@ -48,12 +48,9 @@ const handlesubmit = async (e) => {
   const token = localStorage.getItem("token");
   const formData = new FormData();
   formData.append('club', {'name':club,'ligue':ligue});
-  
- 
-  try {
+    try {
     const token = localStorage.getItem("token");
     const formData2 = new FormData();
-  
     formData2.append("url",selectedFile);
     formData2.append("path","image/club/logo");
     formData2.append("user",localStorage.getItem('id'));

@@ -122,7 +122,8 @@ const Licence = () =>{
             window.location.reload(false);
         }) 
 
-        )}>Verifier</Button>&nbsp;<Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
+        )}>Verifier</Button>&nbsp;
+        <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
           
           axios.delete(`licences/${person.num_licences}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
           'Access-Control-Allow-Origin':'Accept'} })
@@ -134,13 +135,12 @@ const Licence = () =>{
             const persons = res.data;
           
             console.log(persons);
-            window.location.reload(false);
+            window.location.reload(true);
         }) 
 
         )}>Supprimer</Button>&nbsp; 
-        <Button variant="primary" className="my-0" onClick={() => setShowDefault(true
-        
-        )}>Details</Button>
+        <Button variant="primary" className="my-0"  as={Link} to={Routes.LicenceUpd.path} onClick={() => 
+        setShowDefault(localStorage.setItem('lic',person.num_licences))}>Modifier</Button>
     
               </td> 
               {/* <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details</Button></td> */}

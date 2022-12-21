@@ -13,6 +13,7 @@ import EditeProfile from "./Editprofile";
 import BootstrapTables from "./tables/BootstrapTables";
 import Athletes from "./tables/Athletes";
 import Sportadd from "./tables/Sportadd";
+import ClubUpd from "./tables/ClubUpd";
 
 import SuppAdd from "./tables/SuppAdd";
 import PoidsAdd from "./tables/PoidsAdd";
@@ -20,6 +21,8 @@ import AgeAdd from "./tables/AgeAdd";
 
 import LigueAdd from "./tables/LigueAdd";
 import AthleteUpd from "./tables/AthleteUpd";
+import LicenceUpd from "./tables/LicenceUpd";
+
 import ArAdd from "./tables/ArAdd";
 
 import SaisonAdd from "./tables/SaisonAdd";
@@ -174,6 +177,9 @@ export default () => (
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
     <RouteWithSidebar exact path={Routes.Athletes.path} component={Athletes} />
     <RouteWithSidebar exact path={Routes.AthleteUpd.path} component={AthleteUpd} />
+    <RouteWithSidebar exact path={Routes.LicenceUpd.path} component={LicenceUpd} />
+    <RouteWithSidebar exact path={Routes.ClubUpd.path} component={ClubUpd} />
+
     <RouteWithSidebar exact path={Routes.SuppAdd.path} component={SuppAdd} />
     <RouteWithSidebar exact path={Routes.PoidsAdd.path} component={PoidsAdd} />
     <RouteWithSidebar exact path={Routes.Sportadd.path} component={Sportadd} />

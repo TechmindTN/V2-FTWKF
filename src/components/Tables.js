@@ -179,6 +179,8 @@ export const PageTrafficTable = () => {
 export const ClubTable = () => {
   const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
+const [showDefaultss, setShowDefaultss] = useState();
+const token=localStorage.getItem('token')
 const handleClose = () => setShowDefault(false);
 const [state,setState]=useState([])
 useEffect(() => {
@@ -249,7 +251,30 @@ useEffect(() => {
               <td className="border-0 ">{person.profile}</td>
               
               
-              <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
+              <td className="border-0 "> <Button variant="primary" className="my-0" as={Link} to={Routes.ClubUpd.path}
+              onClick={() => 
+        setShowDefault(localStorage.setItem('cl',person.id))} >Modifier {person.id}</Button>&nbsp;
+           <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
+          
+          axios.delete(`club/${person.id}/`,{ headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+          'Access-Control-Allow-Origin':'Accept'} })
+          .then(res => {
+            const num_licences =person.id;
+           
+            console.log(num_licences);
+            setState([...state, num_licences]);
+            const persons = res.data;
+          
+            console.log(persons);
+         window.location.reload(false);
+        }) 
+
+        )}>Supprimer</Button>
+        
+        
+        
+        
+        </td>
 
               <React.Fragment>
 

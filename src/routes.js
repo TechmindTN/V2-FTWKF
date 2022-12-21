@@ -11,6 +11,9 @@ export const Routes = {
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Athletes:{path: "/tables/Athletes"},
     AthleteUpd:{path: "/tables/AthleteUpd"},
+    LicenceUpd:{path: "/tables/LicenceUpd"},
+    ClubUpd:{path: "/tables/ClubUpd"},
+
     SuppAdd:{path: "/tables/SuppAdd"},
     PoidsAdd:{path: "/tables/PoidsAdd"},
     AgeAdd:{path: "/tables/AgeAdd"},

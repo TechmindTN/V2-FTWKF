@@ -31,7 +31,8 @@ useEffect(() => {
   
 
 
-  
+const token = localStorage.getItem("token");
+
   
 function update() {
   axios.get(ATHLETE_URLs)
@@ -115,16 +116,18 @@ Ajouter entraineur
               <td className="border-0 "><img  src={person.grade_photo}/></td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
-                axios.put(`validateLicence/${person.id}/`)
+                
+                axios.delete(`coach/${person.id}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'} })
                 .then(res => {
                   const persons = res.data;
                   setState(persons);
                   console.log(persons);
-              
+                  window.location.reload(true);          
               })
            
                  
-              )}>Details 
+              )}>Supprimer 
               </Button> &nbsp;
               <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
              

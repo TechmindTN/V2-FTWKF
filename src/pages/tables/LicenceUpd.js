@@ -2,11 +2,11 @@
 import React , {useEffect,useState,useRef} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { Form, Col, Row, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
+import { Form, Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
 const PARAMETER_URL='parameters/'
-const Athleteadd = () =>{
+const LicenceUpd = () =>{
 const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
@@ -33,121 +33,9 @@ const [addresse,setAddresse]=useState([]);
 const [Role,setRole]=useState([]);
 const [phone,setPhone]=useState([]);
 const [code,setCode]=useState([]);
-const [im1,setIm1]=useState([]);
-const [im2,setIm2]=useState([]);
-const [im3,setIm3]=useState([]);
 const [gouv,setGouv]=useState([]);
-const [selectedFile, setSelectedFile] = React.useState(null);
-
-
-const [progress, setProgress] = useState()
-const [progress2, setProgress2] = useState();
-const [progress3, setProgress3] = useState()
-const Image_url='upload_photo/'
-const [selectedFile3, setSelectedFile3] = React.useState(null);
-const [selectedFile2, setSelectedFile2] = React.useState(null);
-function handleFileSelect(e) {
-  console.log(e.target.files);
-  setIm1(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile(e.target.files[0])
-}
-function handleFileSelect2(e) {
-  console.log(e.target.files);
-  setIm2(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile2(e.target.files[0])
-}
-function handleFileSelect3(e) {
-  console.log(e.target.files);
-  setIm3(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile3(e.target.files[0])
-}
-const submit3 = async (e) => {
-  e.preventDefault();
-  try {
-    const token = localStorage.getItem("token");
-    const formData2 = new FormData();
-  
-    formData2.append("url",selectedFile3);
-    formData2.append("path","image/athlete/medical");
-    formData2.append("user",localStorage.getItem('id'));
-    formData2.append("season",'2');
-      axios.post(
-        Image_url,
-         formData2,
-         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
-          'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
-            //Set the progress value to show the progress bar
-            setProgress3(Math.round((100 * data.loaded) / data.total))
-          },},
-      ).then((value) => {
-        const url= value.data.url;
-        localStorage.setItem('mid',url) 
-      }
-        )
-  }catch(error) {
-    console.log(error)
-  }
-}
-
-const submit2 = async (e) => {
-  e.preventDefault();
-  try {
-    const token = localStorage.getItem("token");
-    const formData2 = new FormData();
-  
-    formData2.append("url",selectedFile2);
-    formData2.append("path","image/athlete/identity");
-    formData2.append("user",localStorage.getItem('id'));
-    formData2.append("season",'2');
-      axios.post(
-        Image_url,
-         formData2,
-         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
-          'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
-            //Set the progress value to show the progress bar
-            setProgress2(Math.round((100 * data.loaded) / data.total))
-          },},
-      ).then((value) => {
-        const url= value.data.url;
-        localStorage.setItem('iden',url) 
-      }
-        )
-  }catch(error) {
-    console.log(error)
-  }
-}
-
-
-const submit = async (e) => {
-  e.preventDefault();
-  try {
-    const token = localStorage.getItem("token");
-    const formData2 = new FormData();
-  
-    formData2.append("url",selectedFile);
-    formData2.append("path","image/profile/");
-    formData2.append("user",localStorage.getItem('id'));
-    formData2.append("season",'2');
-      axios.post(
-        Image_url,
-         formData2,
-         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
-          'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
-            //Set the progress value to show the progress bar
-            setProgress(Math.round((100 * data.loaded) / data.total))
-          },},
-      ).then((value) => {
-        const url= value.data.url;
-        localStorage.setItem('pr',url) 
-      }
-        )
-  }catch(error) {
-    console.log(error)
-  }
-}
-
-
-
+const [club,setClub]=useState([]);
+const [sport,setSport]=useState([]);
 
 useEffect(() => {
   axios.get(PARAMETER_URL,``)
@@ -159,6 +47,7 @@ useEffect(() => {
     const Weights=res.data.Weights;
     const Degrees=res.data.Degrees;
     const Disciplines=res.data.Disciplines;
+    console.log(res.data)
     setState2(Degrees);
     setState3(Weights);
     setState4(Grades);
@@ -167,61 +56,65 @@ useEffect(() => {
     setState6(Clubs);
     setState7(Disciplines);
 })},[])
-const at=localStorage.getItem("at");
-const ATHLETE_URL=`athlete/${at}/`
+const lic=localStorage.getItem("lic");
+const LICENCE_URL=`licence_info/${lic}/`
 useEffect(() => {
-  axios.get(ATHLETE_URL,{
+  axios.get(LICENCE_URL,{
     headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
     withCredentials: false
  })
   .then(res => {
     const persons = res.data;
     console.log(persons)
-    setGrade(persons.grade_id)
-    setCategorie(persons.category_id)
-    setWeights(persons.weights)
-    setId(persons.profile)
-    SetNationality("Tunisienne")
-    setSelectedFile(persons.photo)
-    setIm2(persons.identity_photo)
-    setIm3(persons.medical_photo)
-    localStorage.setItem('p',persons.profile)
-
+     setGrade(persons.grade)
+     setCategorie(persons.categorie)
+    // setWeights(persons.weights)
+    // setId(persons.profile)
+     SetNationality("Tunisienne")
+    // localStorage.setItem('p',persons.profile)
+       setCin(persons.user.cin)
+   setFname(persons.user.first_name)
+  setLname(persons.user.last_name)
+  setBirthday(persons.user.birthday)
+   setRole(persons.role)
+     setAddresse(persons.user.address)
+   setVille(persons.user.city)
+ setPhone(persons.user.phone)
+ setCode(persons.user.zip_code)
+ setGouv(persons.user.state)
+setClub(persons.club)
+setSport(persons.discipline)
 })
 },[])
-useEffect(() => {
-const id=localStorage.getItem('p')
-console.log(id)
-const PROFILE_URL=`pro/${id}/`;
-axios.get(PROFILE_URL,{
-  headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
-  withCredentials: false
-})
-.then(res => {
-  const persons = res.data;
-  console.log(persons)
-  setCin(persons.cin)
-  setFname(persons.first_name)
-  setLname(persons.last_name)
-  setBirthday(persons.birthday)
-  setRole(persons.role)
-  setAddresse(persons.address)
-  setVille(persons.city)
-setPhone(persons.phone)
-setCode(persons.zip_code)
-setGouv(persons.state)
+// useEffect(() => {
+// const id=localStorage.getItem('p')
+// console.log(id)
+// const PROFILE_URL=`pro/${id}/`;
+// axios.get(PROFILE_URL,{
+//   headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
+//   withCredentials: false
+// })
+// .then(res => {
+//   const persons = res.data;
+//   console.log(persons)
+//   setCin(persons.cin)
+//   setFname(persons.first_name)
+//   setLname(persons.last_name)
+//   setBirthday(persons.birthday)
+//   setRole(persons.role)
+//   setAddresse(persons.address)
+//   setVille(persons.city)
+// setPhone(persons.phone)
+// setCode(persons.zip_code)
+// setGouv(persons.state)
 
-}
+// }
 
-)},[])
-const iden=localStorage.getItem('iden');
-const pr=localStorage.getItem('pr');
-const im=localStorage.getItem('im');
-const mid=localStorage.getItem('mid');
-
+// )},[])
 
 const handlesubmit = async (e) => {
   e.preventDefault();
+  const token = localStorage.getItem("token");
   const formData = new FormData();
   formData.append("first_name", first_name);
   formData.append("last_name", last_name);
@@ -232,38 +125,52 @@ const handlesubmit = async (e) => {
   formData.append("weights", weights);
   formData.append("nationality", nationality);
   formData.append("grade_id", grade);
-  formData.append("photo",`https://c3dd-197-14-10-36.ngrok.io${pr}`);
-  formData.append("identity_photo",`https://c3dd-197-14-10-36.ngrok.io${iden}`);
-  formData.append("medical_photo",`https://c3dd-197-14-10-36.ngrok.io${mid}`);
+  const headers = { 
+    'Authorization':  `TOKEN ${token}`,
+    'Content-Type':'multipart/form-data',
+    'Access-Control-Allow-Origin':'Accept'
+};
 try {
+  const lic=localStorage.getItem("lic");
+  const LICENCEs=`licences/${lic}/`
   const token = localStorage.getItem("token");
     axios.put(
-      ATHLETE_URL,
-       formData,
-       { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+      LICENCEs,
+      ({'grade':grade,'num_licences':lic,'categorie':categorie,'club':club,'discipline':sport,'weight':weights,
+      'user':{'first_name':first_name,'last_name':last_name,
+         'country':'Tunisie','state':gouv,'address':addresse,'zip_code':code,'phone':phone,'birthday':birthday,
+       'cin':cin}
+    }),
+      
+    //   ,'club':club,'discipline':sport,'weight':weights,'categorie':categorie,'user':{'first_name':first_name,'last_name':last_name,
+    //   'country':'Tunisie','state':gouv,'address':addresse,'zip_code':code,'phone':phone,'birthday':birthday,
+    // 'cin':cin}
+    //   }),
+       { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
-    <div>Athlete modifié</div></div>);
+    <div>Licence modifié</div></div>);
    // window.location.href = "http://localhost:3000/#/tables/Athletes";
-    localStorage.removeItem("at");
+  // localStorage.removeItem("at");
  
 }catch(error) {
   console.log(error)
 }
 
-}
 
+
+ 
+}
 
     return (
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
-          <h5 className="mb-4">Modifier athlete </h5>
+          <h5 className="mb-4">Modifier Licence </h5>
        
-          
+          <Form onSubmit={handlesubmit}>
           <div className="text-center"><p>{success}</p></div>
-          <Form onSubmit={handlesubmit}><Row>
-              
+            <Row>
             <Col md={3} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>CIN</Form.Label>
@@ -374,7 +281,7 @@ try {
                     <Form.Label>Grade</Form.Label>
                     <Form.Select id="grade"  name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
+                                      <option>{grade} </option>
                                     {state4.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -385,10 +292,10 @@ try {
             <Col sm={3} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>Catégorie</Form.Label>
+                    <Form.Label>Catégorie</Form.Label> 
                     <Form.Select id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
+                                      <option> {categorie}  </option>
                                     {state5.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -434,56 +341,45 @@ try {
                     />
                   </Form.Group>
             </Col>
+            
+          </Row>
+          <Row>
+          <Col sm={3} className="mb-3">
+            
+            <Form.Group id="category">
+                    <Form.Label>Discipline :</Form.Label>
+                    <Form.Select id="sport"  name="sport"  value={sport}  onChange={(e) =>setSport(e.target.value)}
+                                  autoComplete="off" >
+                                      <option>{sport} </option>
+                                    {state7.map((person) => (<>
+                                  
+                              <option value={person.id}> 
+        {person.name}</option>    </>   ))}
+                  </Form.Select>
+                  </Form.Group>
+            </Col>
+            <Col sm={3} className="mb-3">
+            
+            <Form.Group id="category">
+                    <Form.Label>Club :</Form.Label>
+                    <Form.Select id="club"  name="club"  value={club}  onChange={(e) =>setClub(e.target.value)}
+                                  autoComplete="off" >
+                                      <option>{club} </option>
+                                    {state6.map((person) => (<>
+                                  
+                              <option value={person.id}> 
+        {person.name}</option>    </>   ))}
+                  </Form.Select>
+                  </Form.Group>
+            </Col>
           </Row>
           <div className="mt-3">
               <Button variant="primary" type="submit">Enregistrer</Button>
-            </div><br/>
-            </Form>
-          <Row>
-          <Col sm={4} className="mb-3">
-            <Form onSubmit={submit}>
-            <Form.Group id="category">
-                    <Form.Label>Photo profile :</Form.Label><br/>
-                   <img src={im1} width={80} height={80} />
-                   <input type="file" onChange={handleFileSelect}   />
-            {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />}
-                  </Form.Group>
-                  <div className="mt-3" >
-              <Button variant="primary" type="submit">Enregistrer</Button>
-            </div> <br/>
-                  </Form>
-            </Col>
-            <Col sm={4} className="mb-3">
-            <Form onSubmit={submit2}>
-            <Form.Group id="category">
-                    <Form.Label>Photo identité :</Form.Label><br/>
-                    <img src={im2} width={80} height={80} /><br/>
-                                       <input type="file" onChange={handleFileSelect2}   />
-            {progress2 && <ProgressBar   now={progress2} label={`${progress2}%`} style={{ height: 20}} />}
-                  </Form.Group>
-                  <div className="mt-3" >
-              <Button variant="primary" type="submit">Enregistrer</Button>
-            </div> <br/></Form>
-            </Col>
-            <Col sm={4} className="mb-3">
-            <Form onSubmit={submit3}>
-            <Form.Group id="category">
-                    <Form.Label>Photo fiche Médicale :</Form.Label><br/>
-                    <img src={im3} width={80} height={80} /><br/>
-                    <input type="file" onChange={handleFileSelect3}   />
-            {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />}
-                  </Form.Group>
-                  <div className="mt-3" >
-              <Button variant="primary" type="submit">Enregistrer</Button>
-            </div> <br/>
-            </Form>
-            </Col>
-          </Row>
-     
-         
+            </div>
+          </Form>
         </Card.Body>
       </Card>
     );
 
 };
-export default (Athleteadd);
+export default (LicenceUpd);

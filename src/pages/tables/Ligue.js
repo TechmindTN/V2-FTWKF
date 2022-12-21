@@ -3,8 +3,9 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from '@themesberg/react-bootstrap';
-import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
-
+import { Col,  Button, } from '@themesberg/react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Routes } from "../../routes";
 import {LigueTable} from "../../components/Tables";
 
 
@@ -21,7 +22,7 @@ const Age = ()=> {
           <h4>Liste des ligues </h4>
           <Col md={8} >
           <Button
-            variant="primary" >
+            variant="primary"  as={Link} to={Routes.LigueAdd.path}>
              Ajouter Ligue
             </Button>
           </Col>

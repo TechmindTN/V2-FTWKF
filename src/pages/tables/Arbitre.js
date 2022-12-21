@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
 
 import axios from "../examples/api/axios";
-const ARBITRE_URL='arbitrator/';
+const ARBITRE_URL='arbitratorlist_info/';
 const ATHLETE_URLs='athlete/'
 
 const Arbitre = () =>{
@@ -21,27 +21,16 @@ const [showDefaults, setShowDefaults] = useState();
   
 const [state,setState]=useState([])
 useEffect(() => {
-  axios.get(ARBITRE_URL)
+  const token = localStorage.getItem("token");
+
+  axios.get(ARBITRE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+  'Access-Control-Allow-Origin':'Accept'} })
   .then(res => {
     const persons = res.data;
     setState(persons);
     console.log(persons)
 
 })},[])
-
-  
-
-
-
-function update() {
-  axios.get(ATHLETE_URLs)
-  .then(res => {
-    const persons = res.data;
-    setState(persons);
-    console.log(persons);
-
-})
-}
 
 
   return (
@@ -67,12 +56,6 @@ Ajouter arbitre
           <div >
 
     </div>
-
-
-         
-
-          {/* <button onClick={callAPI}>Call API</button>
-          {<pre>{JSON.stringify(user)}</pre>} */}
        </div>
       </div>
       <Card border="light" className="shadow-sm mb-4">
@@ -98,13 +81,13 @@ Ajouter arbitre
           <tbody>
           {state.map((person) => (
         <><tr>
-              <td className="border-0 ">{person.id}</td>
-              <td className="border-0 ">{person.cin}</td>
-              <td className="border-0 ">{person.last_name}</td>
+              <td className="border-0 ">{person.profile.id}</td>
+              <td className="border-0 ">{person.profile.cin}</td>
+              <td className="border-0 ">{person.profile.last_name}</td>
               <td className="border-0 ">{person.first_name}</td>
-              <td className="border-0 ">{person.sex}</td>
-              <td className="border-0 ">{person.birthday}</td>
-              <td className="border-0 ">{person.profile}</td>
+              <td className="border-0 ">{person.profile.sex}</td>
+              <td className="border-0 ">{person.profile.birthday}</td>
+              <td className="border-0 ">{person.profile.phone}</td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                 axios.put(`validateLicence/${person.id}/`)

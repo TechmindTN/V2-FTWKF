@@ -6,7 +6,8 @@ import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
 
 import { SportsTable, RankingTable } from "../../components/Tables";
-
+import { Routes } from "../../routes";
+import { Link } from 'react-router-dom';
 
 const Sports = ()=> {
   return (
@@ -21,7 +22,7 @@ const Sports = ()=> {
           <h4>Liste des Disciplines</h4>
           <Col md={8} >
           <Button
-            variant="primary" >
+            variant="primary"  as={Link} to={Routes.Sportadd.path} >
              Ajouter Discipline             
             </Button>
           </Col>

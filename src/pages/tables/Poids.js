@@ -6,7 +6,8 @@ import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
 
 import {PoidsTable } from "../../components/Tables";
-
+import { Link } from 'react-router-dom';
+import { Routes } from "../../routes";
 
 const Poids = ()=> {
   return (
@@ -21,7 +22,7 @@ const Poids = ()=> {
           <h4>Liste des poids</h4>
           <Col md={8} >
           <Button
-            variant="primary" >
+            variant="primary"  as={Link} to={Routes.PoidsAdd.path}>
              Ajouter poids           
             </Button>
           </Col>

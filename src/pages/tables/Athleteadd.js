@@ -1,67 +1,51 @@
 
 import React , {useEffect,useState,useRef} from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
-import { Form, Col, Row, Card, Button, InputGroup } from '@themesberg/react-bootstrap';
+import { Form, Col, Row, Card, Button, InputGroup,ProgressBar } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
-import Dropzone from "react-dropzone-uploader";
 const PARAMETER_URL='parameters/';
 const LIGUE_URL='ligue/';
-import {ChoosePhotoWidget, ProfileCardWidget } from "../../components/Widgets";
-import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
-
-const IMG_URL='/image/';
 const ATHLETE_URL='add_athlete/';
-import { getDroppedOrSelectedFiles } from 'html5-file-selector';
-
+import 'react-dropzone-uploader/dist/styles.css'
+const Image_url='upload_photo/'
 const Athleteadd = () =>{
-  // Get production API keys from Upload.io
-  const [selectedFile, setSelectedFile] = React.useState(null);
-  const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0])
+const [selectedFile, setSelectedFile] = React.useState(null);
+const [selectedFile1, setSelectedFile1] = React.useState(null);
+const [selectedFile2, setSelectedFile2] = React.useState(null);
+const [selectedFile3, setSelectedFile3] = React.useState(null);
 
-  }
-  const handleSubmits = async(event) => {
-    event.preventDefault()
-    const token = localStorage.getItem("token");
+const [progress, setProgress] = useState()
+const [progress1, setProgress1] = useState()
+const [progress2, setProgress2] = useState()
+const [progress3, setProgress3] = useState()
 
-    const formData = new FormData();
-    formData.append("url", selectedFile);
-     formData.append("path", "profile/blabla/");
-     formData.append("season", "2");
-     formData.append("user",localStorage.getItem("id"));
-    try {
-      const response = await axios({
-        method: "put",
-        url: "image/54/",
-        data: formData,
-        headers: { 'Authorization':`TOKEN ${token}`,"Content-Type": "multipart/form-data" },
-      });
-      console.log("rrrr")
-    } catch(error) {
-      console.log(error)
-    }
-  }
-const[datas,setData]=useState('');
-const [showDefault, setShowDefault] = useState(false);
-const handleClose = () => setShowDefault(false);
-
-const[id,setId]=useState([])
-const errRef = useRef();
 const [file, setFile] = useState();
+const [file1, setFile1] = useState();
+const [file2, setFile2] = useState();
+const [file3, setFile3] = useState();
 
+const [addresse, setAddresse] = useState();
+const [phone, setPhone] = useState();
+const [zip_code, setZip] = useState();
 const [first_name, setFname] = useState();
 const [last_name, setLname] = useState();
 const [birthday, setBirthday] = useState();
 const [cin, setCin] = useState();
 const [sexe, setSexe] = useState();
 const [categorie, setCategorie] = useState();
-const [licences, setLicences] = useState();
+const [username, setUsername] = useState();
+const [password, setPassword] = useState();
+const [degree, setDegree] = useState();
+const [city, setCity] = useState();
 const[weights,setWeights]=useState();
+const[role,setRole]=useState();
 const[grade,setGrade]=useState('');
 const[success, setSuccess] = useState (false) ;
 const [state,setState]=useState([]);
+const [states,setStates]=useState([]);
 const [state2,setState2]=useState([]);
 const [state3,setState3]=useState([]);
 const [state4,setState4]=useState([]);
@@ -80,6 +64,7 @@ useEffect(() => {
     const Weights=res.data.Weights;
     const Degrees=res.data.Degrees;
     const Disciplines=res.data.Disciplines;
+    const Roles=res.data.Roles;
     setState2(Degrees);
     setState3(Weights);
     setState4(Grades);
@@ -87,142 +72,222 @@ useEffect(() => {
     setState5(Categories);
     setState6(Clubs);
     setState7(Disciplines);
+    setState8(Roles);
+  
 })},[])
 useEffect(() => {
   axios.get(LIGUE_URL,``)
   .then(res => {
     const ligue = res.data;
-   
     setState8(ligue);
 })},[])
+const submit = async (e) => {
+  e.preventDefault();
+  try {
+    const token = localStorage.getItem("token");
+    const formData2 = new FormData();
+  
+    formData2.append("url",selectedFile);
+    formData2.append("path","image/profile/");
+    formData2.append("user",localStorage.getItem('id'));
+    formData2.append("season",'2');
+      axios.post(
+        Image_url,
+         formData2,
+         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+          'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+            //Set the progress value to show the progress bar
+            setProgress(Math.round((100 * data.loaded) / data.total))
+          },},
+      ).then((value) => {
+        const url= value.data.url;
+        localStorage.setItem('pr',url) 
+      }
+        )
+  }catch(error) {
+    console.log(error)
+  }
+}
+const submit1 = async (e) => {
+  e.preventDefault();
+  try {
+    const token = localStorage.getItem("token");
+    const formData2 = new FormData();
+  
+    formData2.append("url",selectedFile1);
+    formData2.append("path","image/athlete/identity");
+    formData2.append("user",localStorage.getItem('id'));
+    formData2.append("season",'2');
+      axios.post(
+        Image_url,
+         formData2,
+         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+          'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+            //Set the progress value to show the progress bar
+            setProgress1(Math.round((100 * data.loaded) / data.total))
+          },},
+      ).then((value) => {
+        const url= value.data.url;
+        localStorage.setItem('iden',url) 
+      }
+        )
+  }catch(error) {
+    console.log(error)
+  }
+}
+const submit2 = async (e) => {
+  e.preventDefault();
+  try {
+    const token = localStorage.getItem("token");
+    const formData2 = new FormData();
+  
+    formData2.append("url",selectedFile2);
+    formData2.append("path","image/athlete/photo");
+    formData2.append("user",localStorage.getItem('id'));
+    formData2.append("season",'2');
+      axios.post(
+        Image_url,
+         formData2,
+         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+          'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+            //Set the progress value to show the progress bar
+            setProgress2(Math.round((100 * data.loaded) / data.total))
+          },},
+      ).then((value) => {
+        const url= value.data.url;
+        localStorage.setItem('im',url) 
+      }
+        )
+  }catch(error) {
+    console.log(error)
+  }
+}
+const submit3 = async (e) => {
+  e.preventDefault();
+  try {
+    const token = localStorage.getItem("token");
+    const formData2 = new FormData();
+  
+    formData2.append("url",selectedFile3);
+    formData2.append("path","image/athlete/medical");
+    formData2.append("user",localStorage.getItem('id'));
+    formData2.append("season",'2');
+      axios.post(
+        Image_url,
+         formData2,
+         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+          'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+            //Set the progress value to show the progress bar
+            setProgress3(Math.round((100 * data.loaded) / data.total))
+          },},
+      ).then((value) => {
+        const url= value.data.url;
+        localStorage.setItem('mid',url) 
+      }
+        )
+  }catch(error) {
+    console.log(error)
+  }
+}
 const handlesubmit = async (e) => {
   e.preventDefault();
-  const token = localStorage.getItem("token");
-  const formData = new FormData();
-  formData.append("first_name", first_name);
-  formData.append("last_name", last_name);
-  formData.append("cin", cin);
-  formData.append("birthday", birthday);
-  formData.append("sex", sexe);
-  formData.append("category_id", categorie);
-  formData.append("weights", weights);
-  formData.append("grade_id", grade);
-  formData.append("country", "Tunisie");
-  formData.append("username",localStorage.getItem('username'))
 try {
   const token = localStorage.getItem("token");
+  const iden=localStorage.getItem('iden');
+  const pr=localStorage.getItem('pr');
+  const im=localStorage.getItem('im');
+  const mid=localStorage.getItem('mid');
 
     axios.post(
       ATHLETE_URL,
-       formData,
-       { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+      ({'athlete':{'id_degree':degree,'medical_photo':`https://c3dd-197-14-10-36.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':`https://c3dd-197-14-10-36.ngrok.io${iden} `,'photo':`https://c3dd-197-14-10-36.ngrok.io${im} `},'user':{'username':username,'password':password},'profile':{'first_name':first_name,'last_name':last_name,
+      'country':'Tunisie','state':states,'city':city,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
+    'cin':cin,'role':role,'profile_photo':`https://c3dd-197-14-10-36.ngrok.io${pr} `}
+      }),
+       { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
-   
     setSuccess(<div class="alert alert-success d-flex align-items-center" role="alert">
     <div>
-     Athlete ajouté avec succès
-    </div>
+    Athlete ajouté avec succès 
+   </div>
   </div>);
+  localStorage.removeItem('iden');
+  localStorage.removeItem('pr');
+  localStorage.removeItem('im');
+  localStorage.removeItem('mid');
+  
     // window.location.href = "/tables/Athletes/"
 }catch(error) {
-  console.log(error)
+  setSuccess(error)
 }
 
 
- 
 }
-const fileParams = ({ meta }) => {
-  return { url: file }
+
+
+function handleFileSelect(e) {
+  console.log(e.target.files);
+  setFile(URL.createObjectURL(e.target.files[0]));
+  setSelectedFile(e.target.files[0])
 }
-const onFileChange = ({ meta, file }, status) => { 
-  const name = file.name;
-  setFile(name) 
+function handleFileSelect1(e) {
+  console.log(e.target.files);
+  setFile1(URL.createObjectURL(e.target.files[0]));
+  setSelectedFile1(e.target.files[0])
 }
-const onSubmit = (files, allFiles) => {
-  const token = localStorage.getItem("token");
-  const formData2 = new FormData();
-  formData2.append("url", file);
-  formData2.append("season", "2");
-  formData2.append("user", localStorage.getItem("id"));
-  formData2.append("path", "profile/blaba");
-  allFiles.forEach(f => f.remove())
-  axios.post(
-    IMG_URL,
-     formData2,
-     { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
-      'Access-Control-Allow-Origin':'Accept'} },
-  )
+function handleFileSelect2(e) {
+  console.log(e.target.files);
+  setFile2(URL.createObjectURL(e.target.files[0]));
+  setSelectedFile2(e.target.files[0])
 }
-const getFilesFromEvent = e => {
-  return new Promise(resolve => {
-      getDroppedOrSelectedFiles(e).then(chosenFiles => {
-          resolve(chosenFiles.map(f => f.fileObject))
-      })
-  })
-}
-const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
-  const textMsg = files.length > 0 ? 'Upload Again' : 'Select Files'
-  return (
-      <label className="btn btn-danger mt-4">
-          {textMsg}
-          <input
-              style={{ display: 'none' }}
-              type="file"
-              accept={accept}
-              multiple
-              onChange={e => {
-                  getFilesFromEvent(e).then(chosenFiles => {
-                      onFiles(chosenFiles)
-                  })
-              }}
-          />
-      </label>
-  )
+function handleFileSelect3(e) {
+  console.log(e.target.files);
+  setFile3(URL.createObjectURL(e.target.files[0]));
+  setSelectedFile3(e.target.files[0])
 }
     return (
-      <Form onSubmit={handlesubmit}>
+      
+   
       <Row>
+        <Form onSubmit={handlesubmit}>
         <Col xs={12} xl={8}>
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
           <h5 className="mb-4">Ajouter athlete </h5>
-          
-          
-         
-            <div className="col-4">
-            <Dropzone
-            name="file"
-            id="file"
-            value={file}
-            onSubmit={onSubmit}
-            onChange={handleFileSelect}
-            InputComponent={selectFileInput}
-            getUploadParams={fileParams}
-            getFilesFromEvent={getFilesFromEvent}
-            accept="image/*"
-            maxFiles={1}
-            inputContent="Drop A File"
-            styles={{
-                dropzone: { width:100, height: 100 },
-                dropzoneActive: { borderColor: 'green' },
-            }}            
-        />
-            </div>
-         <br></br>
-         <button
-              className="btn btn-success btn-sm"
-              // disabled={!currentFile}
-              // onClick={this.upload}
-            >
-              Upload
-            </button><br/><br/><br/><br/>
-        
-            <div className="row">
-         
-        </div>
-
           <div className="text-center"><p>{success}</p></div>
+          <Row>
+          <Col md={4} className="mb-3">
+                <Form.Group id="firstName">
+                  <Form.Label>Nom utilisateur</Form.Label>
+                  <Form.Control   type="text" id="user" name="user" 
+                  value={username}  onChange={(e) =>setUsername(e.target.value)}
+                 
+                  />
+                </Form.Group>
+          </Col>
+          <Col md={4} className="mb-3">
+                <Form.Group id="firstName">
+                  <Form.Label>Mot de passe</Form.Label>
+                  <Form.Control   type="text" id="pw" name="pw" 
+                  value={password}  onChange={(e) =>setPassword(e.target.value)}
+                 
+                  />
+                </Form.Group>
+          </Col>
+          <Col md={4} className="mb-3">
+                <Form.Group id="Role">
+                  <Form.Label>Role</Form.Label>
+                  <Form.Select id="role"  name="role"  value={role}  onChange={(e) =>setRole(e.target.value)}
+                                  autoComplete="off" >
+                                    {state8.map((person) => (<>
+                                  <option></option>
+                              <option value={person.id}> 
+        {person.roles}</option>    </>   ))}
+                  </Form.Select>
+                </Form.Group>
+          </Col>
+          </Row>
             <Row>
             <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
@@ -288,8 +353,8 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
             
             <Form.Group id="category">
                     <Form.Label>Téléphone</Form.Label>
-                    <Form.Control   type="text" id="last_name" name="last_name"
-                           value={last_name}     onChange={(e) =>setLname(e.target.value)}
+                    <Form.Control   type="text" id="phone" name="phone"
+                           value={phone}     onChange={(e) =>setPhone(e.target.value)}
                          
                   />
                   </Form.Group>
@@ -301,23 +366,19 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
           <Col sm={4} className="mb-3">
           
           <Form.Group id="category">
-                  <Form.Label>Gouvernerat</Form.Label>
-                  <Form.Select id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
-                                autoComplete="off" >
-                                    <option></option>
-                                  {state5.map((person) => (<>
-                                
-                            <option value={person.id}> 
-      {person.categorie_age}</option>    </>   ))}
-                </Form.Select>
+                  <Form.Label>Ville</Form.Label>
+                  <Form.Control   type="text" id="ville" name="ville"
+                           value={city}     onChange={(e) =>setCity(e.target.value)}
+                         
+                  />
                 </Form.Group>
           </Col>
           <Col sm={4} className="mb-3">
           
           <Form.Group id="category">
                   <Form.Label>Addresse</Form.Label>
-                  <Form.Control   type="text" id="last_name" name="last_name" 
-                           value={last_name}     onChange={(e) =>setLname(e.target.value)}
+                  <Form.Control   type="text" id="addresse" name="addresse" 
+                           value={addresse}     onChange={(e) =>setAddresse(e.target.value)}
                          
                   />
                 </Form.Group>
@@ -326,10 +387,10 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
               <Row>
           <Col sm={4} className="mb-3">
             
-            <Form.Group id="category">
-                    <Form.Label>Zip-code</Form.Label>
-                   <Form.Control   type="text" id="last_name" name="last_name" 
-                           value={last_name}     onChange={(e) =>setLname(e.target.value)}
+            <Form.Group id="zip_code">
+                    <Form.Label>Zip_code</Form.Label>
+                   <Form.Control   type="text" id="zip_code" name="zip_code" 
+                           value={zip_code}     onChange={(e) =>setZip(e.target.value)}
                          
                   />
                   </Form.Group>
@@ -338,15 +399,11 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>Ligue</Form.Label>
-                    <Form.Select id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
-                                  autoComplete="off" >
-                                      <option></option>
-                                    {state8.map((person) => (<>
-                                  
-                              <option value={person.id}> 
-        {person.name}</option>    </>   ))}
-                  </Form.Select>
+                    <Form.Label>Gouvernerat</Form.Label>
+                    <Form.Control   type="text" id="last_name" name="last_name"
+                           value={states}     onChange={(e) =>setStates(e.target.value)}
+                         
+                  />
                   </Form.Group>
             </Col>
             <Col sm={4} className="mb-3">
@@ -354,7 +411,6 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
                   <Form.Label>Poids</Form.Label>
                   <Form.Select id="weight"  name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
                                     {state3.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -371,7 +427,6 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
                     <Form.Label>Grade</Form.Label>
                     <Form.Select id="grade"  name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
                                     {state4.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -395,9 +450,9 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
             </Col>
             <Col sm={4} className="mb-3">
             
-            <Form.Group id="category">
+            <Form.Group id="degree">
                     <Form.Label>Degré</Form.Label>
-                    <Form.Select id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
+                    <Form.Select id="degree"  name="degree"  value={degree}  onChange={(e) =>setDegree(e.target.value)}
                                   autoComplete="off" >
                                     {state2.map((person) => (<>
                                   
@@ -411,26 +466,88 @@ const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
           </Row>
         
           
-          
+          <div className="mt-3">
+              <Button variant="primary" type="submit">Enregistrer</Button>
+            </div>
         </Card.Body>
       </Card></Col>
+        </Form>
+  
+      <Card border="light" className="bg-white shadow-sm mb-4">
+        <Card.Body>
+        
       
-      <Col xs={12} xl={4}>
+      <Row>
+      <Form onSubmit={submit}>
+      <Col sm={4}>
+            <div className="App">
+            <h5>Ajouter  photo de profile :</h5>
+            <input type="file" onChange={handleFileSelect}   />
+            <img src={file}  height={80}/><br/>
+            {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />}
+        </div>
+        </Col>
+        <div className="mt-3" >
+              <Button variant="primary" type="submit">Enregistrer</Button>
+            </div> <br/></Form> 
+            <Form onSubmit={submit1}>
+      <Col sm={4}>
+            <div className="App">
+            <h5>Ajouter  Identité  :</h5>
+            <input type="file" onChange={handleFileSelect1}   />
+            <img src={file1}  height={80}/>
+          
+            {progress1 && <ProgressBar   now={progress1} label={`${progress1}%`} style={{ height: 20}} />}
+        </div>
+        </Col>
+        <div className="mt-3" >
+              <Button variant="primary" type="submit">Enregistrer</Button>
+            </div><br></br>
+        </Form></Row>
+        <Form onSubmit={submit2}>
+        <Col sm={4}>
+            <div className="App">
+            <h5>Ajouter Image مضمون ولادة :</h5>
+            <input type="file" onChange={handleFileSelect2}   />
+            <img src={file2}  height={80}/>
+            
+            {progress2 && <ProgressBar   now={progress2} label={`${progress2}%`} style={{ height: 20}} />}
+        </div>
+        </Col>
+        <div className="mt-3" >
+              <Button variant="primary" type="submit">Enregistrer</Button>
+            </div><br></br>
+        </Form>
+        <Form onSubmit={submit3}>
+
+        <Col sm={4}>
+            <div className="App">
+            <h5>Ajouter  Fiche médicale:</h5>
+            <input type="file" onChange={handleFileSelect3}   />
+            <img src={file3}  height={80}/>
+     
+            {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />}
+        </div>
+        </Col>
+        <div className="mt-3" >
+              <Button variant="primary" type="submit">Enregistrer</Button>
+            </div>
+        </Form>
+
+        </Card.Body></Card>
+      
+      {/* <Col xs={12} xl={4}>
       <Row>
             <Col xs={12}>
               <ProfileCardWidget />
             </Col>
-            <Col xs={12}>
-              <ChoosePhotoWidget
-                title="Select profile photo"
-                photo={Profile3}
-              />
-            </Col>
+            
           </Row>
-        </Col></Row><div className="mt-3">
-              <Button variant="primary" type="submit">Enregistrer</Button>
-            </div>
-          </Form>
+        </Col> */}
+        </Row>
+         
+          
+          
     );
 
 };

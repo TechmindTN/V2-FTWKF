@@ -12,7 +12,13 @@ import EditeProfile from "./Editprofile";
 
 import BootstrapTables from "./tables/BootstrapTables";
 import Athletes from "./tables/Athletes";
+import Sportadd from "./tables/Sportadd";
 
+import SuppAdd from "./tables/SuppAdd";
+import PoidsAdd from "./tables/PoidsAdd";
+import AgeAdd from "./tables/AgeAdd";
+
+import LigueAdd from "./tables/LigueAdd";
 import AthleteUpd from "./tables/AthleteUpd";
 import ArAdd from "./tables/ArAdd";
 
@@ -168,6 +174,9 @@ export default () => (
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
     <RouteWithSidebar exact path={Routes.Athletes.path} component={Athletes} />
     <RouteWithSidebar exact path={Routes.AthleteUpd.path} component={AthleteUpd} />
+    <RouteWithSidebar exact path={Routes.SuppAdd.path} component={SuppAdd} />
+    <RouteWithSidebar exact path={Routes.PoidsAdd.path} component={PoidsAdd} />
+    <RouteWithSidebar exact path={Routes.Sportadd.path} component={Sportadd} />
 
     <RouteWithSidebar exact path={Routes.SaisonAdd.path} component={SaisonAdd} />
     <RouteWithSidebar exact path={Routes.ArAdd.path} component={ArAdd} />
@@ -184,6 +193,8 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Poids.path} component={Poids} />
     <RouteWithSidebar exact path={Routes.Saison.path} component={Saison} />
     <RouteWithSidebar exact path={Routes.Ligue.path} component={Ligue} />
+    <RouteWithSidebar exact path={Routes.LigueAdd.path} component={LigueAdd} />
+    <RouteWithSidebar exact path={Routes.AgeAdd.path} component={AgeAdd} />
 
     <RouteWithSidebar exact path={Routes.Athleteadd.path} component={Athleteadd} />
     <RouteWithSidebar exact path={Routes.Clubs.path} component={Clubs} />

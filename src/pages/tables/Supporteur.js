@@ -4,9 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
-
+import { Link } from 'react-router-dom';
 import axios from "../examples/api/axios";
 const SUP_URL='supporter/';
 
@@ -42,7 +41,7 @@ useEffect(() => {
           </Col>    
           <Col md={4} className="mb-3">
           <Button
-            variant="primary"  >
+            variant="primary" as={Link} to={Routes.SuppAdd.path}>
 Ajouter Supporteur             
             </Button>
           </Col>

@@ -50,7 +50,6 @@ const handleSubmit = async (e) =>{
        withCredentials: false
     }
  ).then((value) => {
-  console.log("ffffffee")
  console.log(value?.status)
   if(value?.status=="200"){
     setUsername('');
@@ -71,7 +70,6 @@ const handleSubmit = async (e) =>{
   if(e?.response?.status=="500"){
     setErrMsg('no Server response')
    } else if(e?.response?.status=="400") {
-    console.log("ffff")
     setErrMsg('username ou password incorrecte');
     } else if (e?.response?.status == "401"){
       setErrMsg('unautherized');

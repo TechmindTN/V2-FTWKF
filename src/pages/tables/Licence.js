@@ -19,27 +19,15 @@ const Licence = () =>{
   const [showDefault1, setShowDefault1] = useState();
   const [state,setState]=useState([]);
    const [state1,setState1]=useState([]);
-   useEffect(() => {
-  axios.get(LICENCE_URL)
-  .then(res => {
+    useEffect(() => {
+    axios.get(LICENCE_URL,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+    'Access-Control-Allow-Origin':'Accept'} })
+    .then(res => {
     const persons = res.data;
     setState(persons);
-    const lic=res.data;
-   // console.log(persons[0].user);
-    persons.map(x => console.log(x.user));
-    for (var index = 0; index < persons.length; index++) {
-     
-         console.log(`FirstName=${persons[index].first_name} LastName= ${details[index].first_name}`);
-      
-   }
-    // console.log(lic);
-    // console.log(persons);
-    //console.log(Object.values(persons));
-
-    const roles=persons.map(roles => roles.user);
+    const roles=persons.map(roles => roles.profile);
     const mapData = ([...roles]);
-   console.log(mapData);
-    setState1(mapData);
+    console.log(mapData);
     
     
 })},[])
@@ -90,13 +78,13 @@ const Licence = () =>{
             </tr>
           </thead>
           <tbody>
-          {state.map(x => console.log(x.user))}
+      
           {state.map(person => (
        
         
         <>
        
-        <tr key={person}>
+        <tr >
               <td className="border-0 "  >{person.seasons}</td>
               <td className="border-0 "  >{person.num_licences}</td>
               <td className="border-0 "  >{person.club}</td>

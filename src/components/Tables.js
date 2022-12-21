@@ -243,7 +243,7 @@ useEffect(() => {
           {state.map((person) => (
         <><tr>
               <td className="border-0 ">{person.id}</td>
-              <td className="border-0 "> <Image src={logo} width={30} height={30}  /> </td>
+              <td className="border-0 "> <Image src={person.logo} style={{ width: 30, height: 30 }} alt="icons" /> </td>
               <td className="border-0 ">{person.name}</td>
               <td className="border-0 ">{person.ligue}</td>
               <td className="border-0 ">{person.profile}</td>
@@ -394,6 +394,7 @@ export const TransactionsTable = () => {
 };
 
 export const SportsTable = () => {
+
   const [state,setState]=useState([])
     useEffect(() => {
       axios.get(SPORT_URL)
@@ -411,6 +412,8 @@ export const SportsTable = () => {
           <thead className="thead-light">
             <tr>
               <th className="border-0" style={{ width: '5%' }}>ID</th>
+              <th className="border-0" style={{ width: '5%' }}>LOGO</th>
+
               <th className="border-0" style={{ width: '5%' }}>Nom</th>
           {/* <th className="border-0" style={{ width: '50%' }}>Description</th>
               <th className="border-0" style={{ width: '40%' }}>Extra</th> */}
@@ -420,6 +423,7 @@ export const SportsTable = () => {
           {state.map((person) => (
         <><tr>
               <td className="border-0 ">{person.id}</td>
+              <td className="border-0 "><img src={person.image} style={{ width: 30, height: 30 }} alt="icons" /></td>
               <td className="border-0 ">{person.name}</td>
             
               

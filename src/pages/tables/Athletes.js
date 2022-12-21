@@ -8,8 +8,7 @@ import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
 
 import axios from "../examples/api/axios";
-const ATHLETE_URL='athlete/';
-const token = localStorage.getItem("token");
+const ATHLETE_URL='athletelist_info/';
 const Athletes = () =>{
 const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
@@ -19,14 +18,21 @@ const [showDefaults, setShowDefaults] = useState();
  
 
 const [state,setState]=useState([])
+const token = localStorage.getItem("token");
 useEffect(() => {
-  axios.get(ATHLETE_URL)
+  axios.get(ATHLETE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+  'Access-Control-Allow-Origin':'Accept'} })
   .then(res => {
     const persons = res.data;
     setState(persons);
     console.log(state)
 
 })},[])
+const [file, setFile] = useState();
+function handleChange(e) {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+}
 
 
   return (
@@ -42,6 +48,7 @@ useEffect(() => {
           <Col md={8} className="mb-3">
           <h4>Liste des athletes</h4>
           </Col>    
+      
           <Col md={4} className="mb-3">
           <Button
             variant="primary" as={Link} to={Routes.Athleteadd.path} >
@@ -66,13 +73,16 @@ useEffect(() => {
         <Table responsive className="table-centered table-nowrap rounded mb-0">
           <thead className="thead-light">
             <tr>
-              <th className="border-0">Licence</th>
               <th className="border-0">CIN</th>
               <th className="border-0">Nom</th>
               <th className="border-0">Prenom</th>
               <th className="border-0">Date Naissance</th>
-              <th className="border-0">Nationalité </th>
+              <th className="border-0">Addresse </th>
               <th className="border-0">Age</th>
+              <th className="border-0">Grade</th>
+              <th className="border-0">Degré</th>
+              <th className="border-0">Role</th>
+              <th className="border-0">Photo</th>
               <th className="border-0">Actions</th>
               {/* <th className="border-0">sexe</th>
               <th className="border-0">Club</th>
@@ -82,37 +92,32 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-          {state.map((person) => (
+          {state.map(person => (
         <><tr>
-              <td className="border-0 ">{person.id}</td>
-              <td className="border-0 ">{person.cin}</td>
-              <td className="border-0 ">{person.last_name}</td>
-              <td className="border-0 ">{person.first_name}</td>
-              <td className="border-0 ">{person.birthday}</td>
-              <td className="border-0 ">{person.nationality}</td>
-              <td className="border-0 ">             Akaber             </td>
+              <td className="border-0 ">{person.profile.cin}</td>
+              <td className="border-0 ">{person.profile.last_name}</td>
+              <td className="border-0 ">{person.profile.first_name}</td>
+              <td className="border-0 ">{person.profile.birthday}</td>
+              <td className="border-0 ">{person.profile.address}</td>
+              <td className="border-0 ">            {person.athlete.category_id}           </td>
+              <td className="border-0 ">            {person.athlete.grade_id}           </td>
+              <td className="border-0 ">            {person.athlete.id_degree}           </td>
+              <td className="border-0 ">            {person.profile.role}           </td>
+              <td className="border-0 ">       <img      width={150} src={person.athlete.identity_photo}    />       </td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                  
-                axios.delete(`athlete/${person.id}/`, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+                axios.delete(`athlete/${person.athlete.id}/`, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
                 'Access-Control-Allow-Origin':'Accept'} })
                 .then(res => {
-                  
-                  const num_licences =person.id;
-                 
-                  console.log(num_licences);
+                  const num_licences =person.profile.id;
                   setState([...state, num_licences]);
-                  const persons = res.data;
-                
-                  console.log(persons);
-                  window.location.reload(false);
-              })
-           
-                 
+                  window.location.reload(true);
+              })                 
               )}>Supprimer 
               </Button> &nbsp;
               <Button variant="primary" className="my-0"  as={Link} to={Routes.AthleteUpd.path} onClick={() => setShowDefault(
-                localStorage.setItem('at',person.id)
+                localStorage.setItem('at',person.profile.id)
                 
              )}>Modifier</Button></td>
              
@@ -120,11 +125,11 @@ useEffect(() => {
 
                 <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
                   <Modal.Header>
-                    <Modal.Title className="h6"> {person.id}</Modal.Title>
+                    <Modal.Title className="h6"> {person.profile.id}</Modal.Title>
                     <Button variant="close" aria-label="Close" onClick={handleClose} />
                   </Modal.Header>
                   <Modal.Body>
-                 {person.cin}
+                 {person.profile.id}
                     <p>With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.</p>
                     <p>The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.</p>
                   </Modal.Body>

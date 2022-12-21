@@ -15,28 +15,11 @@ const PARAMETER_URL='parameters/'
 
 const Licenceadd = () =>{
 
-  const [state,setState]=useState([]);
-  const [state2,setState2]=useState([]);
   const [state3,setState3]=useState([]);
   const [state4,setState4]=useState([]);
-  const [state5,setState5]=useState([]);
-  const [state6,setState6]=useState([]);
-  const [state7,setState7]=useState([]);
-
-  useEffect(() => {
-    axios.get(PARAMETER_URL,``)
-    .then(res => {
-    
-      const Grades=res.data.Grades;
-      
-    
-      setState4(Grades);
-      
-  })},[])
-const[datas,setData]=useState('');
-const [showDefault, setShowDefault] = useState(false);
-const handleClose = () => setShowDefault(false);
   const[grade, setGrade] = useState();
+  const[Degrees, setDegrees] = useState();
+
   const[cin,setCin]=useState();
   const[first_name, setF_name] = useState (false) ;
   const[last_name, setL_name] = useState();
@@ -44,31 +27,149 @@ const handleClose = () => setShowDefault(false);
   const[birthday, setBirthday] = useState();
   const[profile, setProfile] = useState();
   const[success,setSuccess] = useState();
+  const [file1, setFile1] = useState();
+  const [file2, setFile2] = useState();
+  const [file3, setFile3] = useState();
+  const [file4, setFile4] = useState();
+  const [selectedFile1, setSelectedFile1] = React.useState(null);
+  const [selectedFile2, setSelectedFile2] = React.useState(null);
+  const [selectedFile3, setSelectedFile3] = React.useState(null);
+  const [selectedFile4, setSelectedFile4] = React.useState(null);
+  const [progress1, setProgress1] = useState()
+  const [progress2, setProgress2] = useState()
+  const [progress3, setProgress3] = useState()
+  const [progress4, setProgress4] = useState()
+
+  const Image_url='upload_photo/'
+  const submit4 = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const formData2 = new FormData();
+      formData2.append("url",selectedFile4);
+      formData2.append("path","image/coach/photo");
+      formData2.append("user",localStorage.getItem('id'));
+      formData2.append("season",'2');
+        axios.post(
+          Image_url,
+           formData2,
+           { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+              setProgress4(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
+          localStorage.setItem('ph',url)
+        }
+          )    }catch(error) {      console.log(error)    }  }
+          
+  const submit3 = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const formData2 = new FormData();
+      formData2.append("url",selectedFile3);
+      formData2.append("path","image/coach/grade");
+      formData2.append("user",localStorage.getItem('id'));
+      formData2.append("season",'2');
+        axios.post(
+          Image_url,
+           formData2,
+           { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+              setProgress3(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
+          localStorage.setItem('gr',url)
+        }
+          )    }catch(error) {      console.log(error)    }  }
+  const submit2 = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const formData2 = new FormData();
+      formData2.append("url",selectedFile2);
+      formData2.append("path","image/coach/degree");
+      formData2.append("user",localStorage.getItem('id'));
+      formData2.append("season",'2');
+        axios.post(
+          Image_url,
+           formData2,
+           { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+              setProgress2(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
+          localStorage.setItem('deg',url)
+        }
+          )    }catch(error) {      console.log(error)    }  }
+  const submit1 = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const formData2 = new FormData();
+      formData2.append("url",selectedFile1);
+      formData2.append("path","image/coach/identity");
+      formData2.append("user",localStorage.getItem('id'));
+      formData2.append("season",'2');
+        axios.post(
+          Image_url,
+           formData2,
+           { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+              setProgress1(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
+          localStorage.setItem('ent',url)
+          ;        }          )        // window.location.href = "/tables/Athletes/"
+    }catch(error) {      console.log(error)    }  }
+  useEffect(() => {
+    axios.get(PARAMETER_URL,``)
+    .then(res => {
+      const Grades=res.data.Grades;
+      const Degrees=res.data.Degrees;
+      setState4(Grades);
+      setState3(Degrees);
+  })},[])
+  function handleFileSelect1(e) {
+    console.log(e.target.files);
+    setFile1(URL.createObjectURL(e.target.files[0]));
+    setSelectedFile1(e.target.files[0])
+}
+function handleFileSelect2(e) {
+  console.log(e.target.files);
+  setFile2(URL.createObjectURL(e.target.files[0]));
+  setSelectedFile2(e.target.files[0])
+}
+function handleFileSelect3(e) {
+  console.log(e.target.files);
+  setFile3(URL.createObjectURL(e.target.files[0]));
+  setSelectedFile3(e.target.files[0])
+}
+function handleFileSelect4(e) {
+  console.log(e.target.files);
+  setFile4(URL.createObjectURL(e.target.files[0]));
+  setSelectedFile4(e.target.files[0])
+}
+
 const handlesubmit = async (e) => {
   e.preventDefault();
   const token = localStorage.getItem("token");
-  const formData = new FormData();
-  formData.append("cin", cin);
-  formData.append("first_name",first_name);
-  //formData.append("discipline", discipline);
-  formData.append("last_name", last_name);  
-  formData.append("sex", sex);
-  formData.append("birthday", birthday);
-  formData.append("profile", profile);
-  formData.append("grade",grade);
+  
 try {
   const token = localStorage.getItem("token");
+  const ent=localStorage.getItem('ent');
+  const deg=localStorage.getItem('deg');
+  const gr=localStorage.getItem('gr');
+  const ph=localStorage.getItem('ph');
+
     axios.post(
       ENT_URL
-      ,({'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'profile':profile,'grade':grade}),
+      ,({'cin':cin,'photo':`https://c3dd-197-14-10-36.ngrok.io${ph} `,'degree':Degrees,'grade_photo':`https://c3dd-197-14-10-36.ngrok.io${gr} `,'identity_photo':`https://c3dd-197-14-10-36.ngrok.io${ent} `,'degree_photo':`https://c3dd-197-14-10-36.ngrok.io${deg} `,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'profile':profile,'grade':grade}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
-    setSuccess("Entraineur ajouté");
+    setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+    <div>
+    Entraineur ajouté
+    </div>
+  </div>);
+  localStorage.removeItem('ent');
+  localStorage.removeItem('deg');
+localStorage.removeItem('ph');
+localStorage.removeItem('gr');
   //  window.location.href = "dashboard/tables/Clubs";
 }catch(error) {
   console.log(error)
 }
+
 
 
  
@@ -174,15 +275,86 @@ try {
                   </Col>
          
           
+                  <Col md={4} className="mb-3">
+            <Form.Label>Degré</Form.Label>
+            <Form.Select id="grade"  name="grade"  value={Degrees}  onChange={(e) =>setDegrees(e.target.value)}
+                                  autoComplete="off" >
+                                    {state3.map((person) => (<>
+                                  
+                              <option value={person.id}> 
+        {person.Degree}</option>    </>   ))}
+                  </Form.Select>
+          
            
+                  </Col>
 
           </Row>
           <div className="mt-3">
               <Button variant="primary" type="submit">Ajouter</Button>
             </div>
           </Form>
+          <Form>
+<br/>
+
+          
+        <Row className="align-items-center">
+        <Form onSubmit={submit1}>
+            
+          <Col md={6} className="mb-3">
+              <Form.Group id="image">
+                <Form.Label>Photo d'identité:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
+                <input type="file"   onChange={handleFileSelect1}  required />
+            <img src={file1} width={80} required />
+            {progress1 && <ProgressBar   now={progress1} label={`${progress1}%`} style={{ height: 20}} />}
+            <div className="mt-3">
+              <Button variant="primary" type="submit">Ajouter identité</Button>
+            </div>
+              </Form.Group>
+            </Col></Form>
+            <Form onSubmit={submit2}>
+            <Col md={6} className="mb-3">
+              <Form.Group id="image">
+                <Form.Label>Degré:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
+                <input type="file"   onChange={handleFileSelect2}  required />
+            <img src={file2} width={80} required />
+            {progress2 && <ProgressBar   now={progress2} label={`${progress2}%`} style={{ height: 20}} />}
+            <div className="mt-3">
+              <Button variant="primary" type="submit">Ajouter Degré</Button>
+            </div>
+              </Form.Group>
+            </Col>  </Form>
+
+        </Row>
+        <Row className="align-items-center">
+             <Form onSubmit={submit3}>
+            <Col md={6} className="mb-3">
+              <Form.Group id="image">
+                <Form.Label>Grade:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
+                <input type="file"   onChange={handleFileSelect3}  required />
+            <img src={file3} width={80} required />
+            {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />}
+            <div className="mt-3">
+              <Button variant="primary" type="submit">Ajouter Grade</Button>
+            </div>
+              </Form.Group>
+            </Col></Form><Form onSubmit={submit4}>
+            <Col md={6} className="mb-3">
+              <Form.Group id="image">
+                <Form.Label>Photo: ملتقى المدربين&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
+                <input type="file"   onChange={handleFileSelect4}  required />
+            <img src={file4} width={80} required />
+            {progress4 && <ProgressBar   now={progress4} label={`${progress4}%`} style={{ height: 20}} />}
+            <div className="mt-3">
+              <Button variant="primary" type="submit">Ajouter Photo</Button>
+            </div>
+              </Form.Group>
+            </Col></Form>
+
+        </Row>
+          </Form>
         </Card.Body>
       </Card>
+      
     );
 
 };

@@ -7,21 +7,22 @@ export const Routes = {
     Settings: { path: "/settings" },
     Profile: { path: "/profile" },
     EditeProfile: { path: "/edite-profile" },
-
     Upgrade: { path: "/upgrade" },
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Athletes:{path: "/tables/Athletes"},
-
     AthleteUpd:{path: "/tables/AthleteUpd"},
+    SuppAdd:{path: "/tables/SuppAdd"},
+    PoidsAdd:{path: "/tables/PoidsAdd"},
+    AgeAdd:{path: "/tables/AgeAdd"},
+    Sportadd:{path: "/tables/Sportadd"},
 
     ArAdd:{path: "/tables/ArrAdd"},
     Supporteur:{path: "/tables/Supporteur"},
     SaisonAdd:{path: "/tables/SaisonAdd"},
-
+    LigueAdd:{path: "/tables/LigueAdd"},
     Arbitre:{path: "/tables/Arbitre"},
     Entraineur:{path: "/tables/Entraineur"},
     EntAdd:{path: "/tables/EntAdd"},
-
     Saison:{path: "/tables/Saison"},
     Age:{path: "/tables/age"},
     Poids:{path: "/tables/Poids"},

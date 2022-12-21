@@ -88,6 +88,9 @@ Ajouter entraineur
               <th className="border-0">Date Naissance</th>
               <th className="border-0">Profile </th>
               <th className="border-0">Grade </th>
+              <th className="border-0">Photo </th>
+              <th className="border-0">Degré </th>
+              <th className="border-0">Grade </th>
               <th className="border-0">Actions</th>
               {/* <th className="border-0">sexe</th>
               <th className="border-0">Club</th>
@@ -105,9 +108,11 @@ Ajouter entraineur
               <td className="border-0 ">{person.first_name}</td>
               <td className="border-0 ">{person.sex}</td>
               <td className="border-0 ">{person.birthday}</td>
-              <td className="border-0 ">             {person.profile}             </td>
-              <td className="border-0 ">             {person.grade}             </td>
-
+              <td className="border-0 ">{person.profile}</td>
+              <td className="border-0 ">{person.grade}</td>
+              <td className="border-0 "><img  src={person.identity_photo}/></td>
+              <td className="border-0 "><img  src={person.degree_photo}/></td>
+              <td className="border-0 "><img  src={person.grade_photo}/></td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                 axios.put(`validateLicence/${person.id}/`)

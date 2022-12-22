@@ -10,22 +10,15 @@ import { PageTrafficTable, RankingTable } from "../../components/Tables";
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
 
-const ENT_URL='add_coach/'
+
 const PARAMETER_URL='parameters/'
-
-const Licenceadd = () =>{
-
+const EntUpd = () =>{
   const [state3,setState3]=useState([]);
   const [state4,setState4]=useState([]);
   const[grade, setGrade] = useState();
   const[Degrees, setDegrees] = useState();
-
   const[cin,setCin]=useState();
-  const[username,setUsername]=useState();
-
-  const[password,setPassword]=useState();
-
-  const[first_name, setF_name] = useState () ;
+  const[first_name, setF_name] = useState (false) ;
   const[last_name, setL_name] = useState();
   const[sex, setSex] = useState();
   const[birthday, setBirthday] = useState();
@@ -43,6 +36,42 @@ const Licenceadd = () =>{
   const [progress2, setProgress2] = useState()
   const [progress3, setProgress3] = useState()
   const [progress4, setProgress4] = useState()
+  const ent=localStorage.getItem("ent");
+  const Ent_URL =`coach_info/${ent}/`
+  const Ents_URL=`edit_coach_profile/${ent}/`
+  useEffect(() => {
+    axios.get(Ent_URL,{
+      headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
+      withCredentials: false
+   })
+    .then(res => {
+      const persons = res.data;
+      console.log(persons)
+       setGrade(persons.coach.grade)
+       setDegrees(persons.coach.degree)
+    //   setCategorie(persons.athlete.category_id)
+    //   setWeights(persons.athlete.weights)
+    //   SetNationality("Tunisienne")
+    //   setSelectedFile(persons.athlete.photo)
+    //   setIm2(persons.athlete.identity_photo)
+    //   setIm3(persons.athlete.medical_photo)
+       setCin(persons.profile.cin)
+       setF_name(persons.profile.first_name)
+       setL_name(persons.profile.last_name)
+       setBirthday(persons.profile.birthday)
+    //   setRole(persons.profile.role)
+      // setAddresse(persons.profile.address)
+    //   setVille(persons.profile.city)
+    // setPhone(persons.profile.phone)
+   // setCode(persons.profile.zip_code)
+    // setGouv(persons.profile.state)
+    setFile1(persons.coach.identity_photo)
+    setFile2(persons.coach.degree_photo)
+    setFile3(persons.coach.grade_photo)
+    setFile4(persons.coach.photo)
+    
+  })
+  },[])
 
   const Image_url='upload_photo/'
   const submit4 = async (e) => {
@@ -154,28 +183,27 @@ try {
   const gr=localStorage.getItem('gr');
   const ph=localStorage.getItem('ph');
 
-    axios.post(
-      ENT_URL
-      ,({'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://c3dd-197-14-10-36.ngrok.io${ph} `,'degree':Degrees,
-      'grade_photo':`https://c3dd-197-14-10-36.ngrok.io${gr} `,'identity_photo':`https://c3dd-197-14-10-36.ngrok.io${ent} `,'degree_photo':`https://c3dd-197-14-10-36.ngrok.io${deg} `},'user':{'username':username,'password':password}}),
+    axios.put(
+      Ents_URL
+      ,({'cin':cin,'photo':file4,'degree':Degrees,'grade_photo':file3,'identity_photo':file1,'degree_photo':file2,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'profile':profile,'grade':grade}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>
-    Entraineur ajouté
+    Entraineur modifié
     </div>
   </div>);
-  localStorage.removeItem('ent');
-  localStorage.removeItem('deg');
-localStorage.removeItem('ph');
-localStorage.removeItem('gr');
+//
+  //localStorage.removeItem('deg');
+//localStorage.removeItem('ph');
+//localStorage.removeItem('gr');
   //  window.location.href = "dashboard/tables/Clubs";
 }catch(error) {
   console.log(error)
 }
 
-
+localStorage.removeItem('ent');
 
  
 }
@@ -183,7 +211,7 @@ localStorage.removeItem('gr');
     return (
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
-          <h5 className="mb-4">Ajouter Entraineur </h5>
+          <h5 className="mb-4">Modifier Entraineur </h5>
          
           {/* {state.map((person) => (
         <>
@@ -202,26 +230,6 @@ localStorage.removeItem('gr');
                  
                 </Form.Group>
               </Col> */}
-              <Col md={4} className="mb-3">
-                <Form.Group id="cin">
-                  <Form.Label>Username</Form.Label>    
-                  <Form.Control  type="text" id="cin" name="cin"
-                     value={username }    onChange={(e) =>setUsername(e.target.value)} 
-                 
-                  />
-                </Form.Group>
-                 
-              </Col>
-              <Col md={4} className="mb-3">
-                <Form.Group id="cin">
-                  <Form.Label>Password</Form.Label>    
-                  <Form.Control  type="text" id="cin" name="cin"
-                     value={password }    onChange={(e) =>setPassword(e.target.value)} 
-                 
-                  />
-                </Form.Group>
-                 
-              </Col>
             <Col md={4} className="mb-3">
                 <Form.Group id="cin">
                   <Form.Label>CIN</Form.Label>    
@@ -289,7 +297,7 @@ localStorage.removeItem('gr');
             <Form.Label>Grade</Form.Label>
             <Form.Select id="grade"  name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
+                                      <option>{grade} </option>
                                     {state4.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -325,11 +333,11 @@ localStorage.removeItem('gr');
         <Row className="align-items-center">
         <Form onSubmit={submit1}>
             
-          <Col md={6} className="mb-3">
+          <Col md={12} className="mb-3">
               <Form.Group id="image">
                 <Form.Label>Photo d'identité:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
                 <input type="file"   onChange={handleFileSelect1}  required />
-            <img src={file1} width={80} required />
+            <img src={file1} width={150} required />
             {progress1 && <ProgressBar   now={progress1} label={`${progress1}%`} style={{ height: 20}} />}
             <div className="mt-3">
               <Button variant="primary" type="submit">Ajouter identité</Button>
@@ -337,11 +345,11 @@ localStorage.removeItem('gr');
               </Form.Group>
             </Col></Form>
             <Form onSubmit={submit2}>
-            <Col md={6} className="mb-3">
+            <Col md={12} className="mb-3">
               <Form.Group id="image">
                 <Form.Label>Degré:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
                 <input type="file"   onChange={handleFileSelect2}  required />
-            <img src={file2} width={80} required />
+            <img src={file2} width={150} required />
             {progress2 && <ProgressBar   now={progress2} label={`${progress2}%`} style={{ height: 20}} />}
             <div className="mt-3">
               <Button variant="primary" type="submit">Ajouter Degré</Button>
@@ -352,22 +360,22 @@ localStorage.removeItem('gr');
         </Row>
         <Row className="align-items-center">
              <Form onSubmit={submit3}>
-            <Col md={6} className="mb-3">
+            <Col md={12} className="mb-3">
               <Form.Group id="image">
                 <Form.Label>Grade:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
                 <input type="file"   onChange={handleFileSelect3}  required />
-            <img src={file3} width={80} required />
+            <img src={file3} width={150} required />
             {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />}
             <div className="mt-3">
               <Button variant="primary" type="submit">Ajouter Grade</Button>
             </div>
               </Form.Group>
             </Col></Form><Form onSubmit={submit4}>
-            <Col md={6} className="mb-3">
+            <Col md={12} className="mb-3">
               <Form.Group id="image">
                 <Form.Label>Photo: ملتقى المدربين&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
                 <input type="file"   onChange={handleFileSelect4}  required />
-            <img src={file4} width={80} required />
+            <img src={file4} width={150} required />
             {progress4 && <ProgressBar   now={progress4} label={`${progress4}%`} style={{ height: 20}} />}
             <div className="mt-3">
               <Button variant="primary" type="submit">Ajouter Photo</Button>
@@ -383,4 +391,4 @@ localStorage.removeItem('gr');
     );
 
 };
-export default (Licenceadd);
+export default (EntUpd);

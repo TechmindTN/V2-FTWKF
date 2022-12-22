@@ -70,6 +70,11 @@ Ajouter arbitre
               <th className="border-0">Sexe</th>
               <th className="border-0">Date de naissance </th>
               <th className="border-0">téléphone </th>
+              <th className="border-0">Addresse </th>
+              <th className="border-0">Club </th>
+              <th className="border-0">Photo </th>
+              <th className="border-0">Grade </th>
+
               <th className="border-0">Actions</th>
               {/* <th className="border-0">sexe</th>
               <th className="border-0">Club</th>
@@ -88,6 +93,10 @@ Ajouter arbitre
               <td className="border-0 ">{person.profile.sex}</td>
               <td className="border-0 ">{person.profile.birthday}</td>
               <td className="border-0 ">{person.profile.phone}</td>
+              <td className="border-0 ">{person.profile.address}</td>
+              <td className="border-0 ">{person.arbitrator.club}</td>
+              <td className="border-0 ">{person.arbitrator.grade}</td>
+              <td className="border-0 "><img src={person.arbitrator.photo} height={80} width={80}/></td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                 axios.put(`validateLicence/${person.id}/`)

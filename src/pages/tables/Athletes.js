@@ -80,10 +80,11 @@ function handleChange(e) {
               <th className="border-0">Prenom</th>
               <th className="border-0">Date Naissance</th>
               <th className="border-0">Addresse </th>
+              <th className="border-0">Téléphone </th>
               <th className="border-0">Age</th>
               <th className="border-0">Grade</th>
               <th className="border-0">Degré</th>
-              <th className="border-0">Role</th>
+              <th className="border-0">Poids</th>
               <th className="border-0">Photo</th>
               <th className="border-0">Identité</th>
               <th className="border-0">fiche médicale</th>
@@ -105,24 +106,34 @@ function handleChange(e) {
               <td className="border-0 ">{person.profile.first_name}</td>
               <td className="border-0 ">{person.profile.birthday}</td>
               <td className="border-0 ">{person.profile.address}</td>
-              <td className="border-0 ">            {person.athlete.category_id}           </td>
-              <td className="border-0 ">            {person.athlete.grade_id}           </td>
-              <td className="border-0 ">            {person.athlete.id_degree}           </td>
-              <td className="border-0 ">            {person.profile.role}           </td>
-              <td className="border-0 ">       <img    height={80}  width={80} src={person.athlete.photo}    />       </td>
-              <td className="border-0 ">       <img    height={80}   width={80} src={person.athlete.identity_photo}    />       </td>
-              <td className="border-0 ">       <img     height={80}  width={80} src={person.athlete.medical_photo}    />       </td>
+              <td className="border-0 ">{person.profile.phone}</td>
+              <td className="border-0 ">{person.athlete.category_id}</td>
+              <td className="border-0 ">{person.athlete.grade_id}</td>
+              <td className="border-0 ">{person.athlete.id_degree}</td>
+              <td className="border-0 ">{person.athlete.weights}</td>
+              <td className="border-0 "><img height={80} width={80} src={person.athlete.photo}    /></td>
+              <td className="border-0 "><img height={80} width={80} src={person.athlete.identity_photo}    /></td>
+              <td className="border-0 "><img height={80} width={80} src={person.athlete.medical_photo}    /></td>
 
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                  
                 axios.delete(`athlete/${person.athlete.id}/`, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
                 'Access-Control-Allow-Origin':'Accept'} })
-                .then(res => {
-                  const num_licences =person.profile.id;
-                  setState([...state, num_licences]);
-                  window.location.reload(true);
-              })                 
+                .then(
+                  res => {
+                    const num_licences =person.athlete.id;
+                   
+                    console.log(num_licences);
+                    setState([...state, num_licences]);
+                    const persons = res.data;
+                  
+                    console.log(persons);
+                    window.location.reload(true);
+                }
+
+
+                    )                 
               )}>Supprimer 
               </Button> &nbsp;
               <Button variant="primary" className="my-0"  as={Link} to={Routes.AthleteUpd.path} onClick={() => setShowDefault(

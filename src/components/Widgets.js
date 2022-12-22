@@ -14,29 +14,37 @@ import teamMembers from "../data/teamMembers";
 const PROFILE_URL ='profile/';
 export const ProfileCardWidget = () => {
   const [username, setUsername] = useState('');
+  const [img, setImg] = useState('');
 
   useEffect(() => {
     setUsername(window.localStorage.getItem("username"));
   }, []);
   const [rol, setRol] = useState('');
-
+  const PHOTO_URL=`pro/${localStorage.getItem("id")}`;
+  const token= localStorage.getItem("token");
   useEffect(() => {
     setRol(window.localStorage.getItem("rol"));
-  }, []);
+      axios.get(PHOTO_URL,   { headers: {"Content-Type": "multipart/form-data" ,
+      'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  })
+      .then(res => {
+        const stat = res.data;
+        setImg(stat.profile_photo)
+        console.log(stat.profile_photo)
+  }, [])});
 
   return (
     <Card border="light" className="text-center p-0 mb-4">
       <div style={{ backgroundImage: `url(${ProfileCover})` }} className="profile-cover rounded-top" />
       <Card.Body className="pb-5">
-        <Card.Img src={Profile1} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />
+        <Card.Img src={img} alt="Neil Portrait" className="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" />
         <Card.Title>{username}</Card.Title>
-        <Card.Subtitle className="fw-normal">{rol}</Card.Subtitle>
+        <Card.Subtitle className="fw-normal"></Card.Subtitle>
         <Card.Text className="text-gray mb-4"></Card.Text>
 
         <Button variant="primary" size="sm" className="me-2">
-          <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Connect
+          <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Connecter
         </Button>
-        <Button variant="secondary" size="sm">Send Message</Button>
+        <Button variant="secondary" size="sm">Envoyer  Message</Button>
       </Card.Body>
     </Card>
   );
@@ -152,13 +160,14 @@ export const CounterWidget = (props) => {
               <h5>{category}</h5>
               <h3 className="mb-1">{title}</h3>
             </div>
-            <small>{period}, <FontAwesomeIcon icon={faGlobeEurope} size="xs" /> WorldWide</small>
+            {/* <small>{period},
+             <FontAwesomeIcon icon={faGlobeEurope} size="xs" /> WorldWide</small>
             <div className="small mt-2">
               <FontAwesomeIcon icon={percentageIcon} className={`${percentageColor} me-1`} />
               <span className={`${percentageColor} fw-bold`}>
                 {percentage}%
               </span> Since last month
-            </div>
+            </div> */}
           </Col>
         </Row>
       </Card.Body>

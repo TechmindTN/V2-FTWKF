@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import Datetime from "react-datetime";
 import { faCalendarAlt,faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import axios from "./examples/api/axios";
+import { ChoosePhotoWidget, ProfileCardWidget } from "../components/Widgets";
+
 
 export const Profile = () =>  {
   const [id,  setId]=useState('')
@@ -83,6 +85,9 @@ export const Profile = () =>  {
 
 
     return (
+      <>
+      <Row>
+    <Col xs={12} xl={8}>
       <Card border="light" className="bg-white shadow-sm mb-4">
          
         <Card.Body>
@@ -161,7 +166,7 @@ export const Profile = () =>  {
               </Col>
               <Col sm={4} className="mb-3">
                 <Form.Group id="addressNumber">
-                  <Form.Label>Numero :  <br/> +216 11111111</Form.Label> 
+                  <Form.Label>Numero :<br/> +216 111 111 11</Form.Label> 
                 
                   
                 </Form.Group>
@@ -170,7 +175,7 @@ export const Profile = () =>  {
             <Row>
               <Col sm={4} className="mb-3">
                 <Form.Group id="country">
-                  <Form.Label>country : <br/> {country} </Form.Label>
+                  <Form.Label>pays : <br/> Tunisie </Form.Label>
                  
                 </Form.Group>
               </Col>
@@ -187,11 +192,21 @@ export const Profile = () =>  {
                 </Form.Group>
               </Col>
             </Row>
+            
+           
           
           </Form>
         </Card.Body>
-      </Card>
-
+      </Card></Col>
+      <Col xs={12} xl={4}>
+      <Row>
+        <Col xs={12}>
+          <ProfileCardWidget />
+        </Col>
+     
+      </Row>
+    </Col></Row>
+</>
   );
 };
 export default(Profile)

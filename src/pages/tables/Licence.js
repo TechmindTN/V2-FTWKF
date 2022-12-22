@@ -8,7 +8,6 @@ import axios from "../examples/api/axios";
 const LICENCE_URL=`licencelist_info/`;
 import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
-const INFO_URL='licence_info/';
 const Licence = () =>{
   const token = localStorage.getItem("token");
 
@@ -17,14 +16,15 @@ const Licence = () =>{
   const [showDefaults, setShowDefaults] = useState(); 
   const [showDefaultss, setShowDefaultss] = useState();
   const [showDefault1, setShowDefault1] = useState();
-  const [state,setState]=useState([]);
+  const [state,setState]=useState([])
    const [state1,setState1]=useState([]);
     useEffect(() => {
     axios.get(LICENCE_URL,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
     'Access-Control-Allow-Origin':'Accept'} })
     .then(res => {
     const persons = res.data;
-    setState(persons);
+    console.log(persons)
+    setState1(persons);
     const roles=persons.map(roles => roles.profile);
     const mapData = ([...roles]);
     console.log(mapData);
@@ -67,8 +67,12 @@ const Licence = () =>{
             <tr>
               <th className="border-bottom">Saison</th>
               <th className="border-bottom">Licence</th>
+              <th className="border-bottom">Nom</th>
+              <th className="border-bottom">Prenom</th>
               <th className="border-bottom">Club</th>
               <th className="border-bottom">Role</th>
+              <th className="border-bottom">addresse</th>
+
               <th className="border-bottom">Weight</th>
               <th className="border-bottom">Grade</th>
               <th className="border-bottom">Degre</th>
@@ -79,20 +83,23 @@ const Licence = () =>{
           </thead>
           <tbody>
       
-          {state.map(person => (
+          {state1.map(person => (
        
         
         <>
        
         <tr >
-              <td className="border-0 "  >{person.seasons}</td>
-              <td className="border-0 "  >{person.num_licences}</td>
-              <td className="border-0 "  >{person.club}</td>
-              <td className="border-0 "  >{person.role}</td>
-              <td className="border-0 "  >{person.weight}</td>
-              <td className="border-0 "  >{person.grade}</td>
-              <td className="border-0 "  >{person.degree}</td>
-              <td className="border-0 "  >{person.state}</td>
+              <td className="border-0 "  >{person.licence.seasons}</td>
+              <td className="border-0 "  >{person.licence.num_licences}</td>
+              <td className="border-0 "  >{person.profile.first_name}</td>
+              <td className="border-0 "  >{person.profile.last_name}</td>
+              <td className="border-0 "  >{person.licence.club}</td>
+              <td className="border-0 "  >{person.licence.role}</td>
+              <td className="border-0 "  >{person.profile.address}</td>
+              <td className="border-0 "  >{person.licence.weight}</td>
+              <td className="border-0 "  >{person.licence.grade}</td>
+              <td className="border-0 "  >{person.licence.degree}</td>
+              <td className="border-0 "  >{person.licence.state}</td>
               <td className="border-0 "><Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
           
                 axios.put(`validateLicence/${person.num_licences}/`)
@@ -140,7 +147,7 @@ const Licence = () =>{
 
         )}>Supprimer</Button>&nbsp; 
         <Button variant="primary" className="my-0"  as={Link} to={Routes.LicenceUpd.path} onClick={() => 
-        setShowDefault(localStorage.setItem('lic',person.num_licences))}>Modifier</Button>
+        setShowDefault(localStorage.setItem('lic',person.licence.num_licences))}>Modifier</Button>
     
               </td> 
               {/* <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details</Button></td> */}

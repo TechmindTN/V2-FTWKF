@@ -4,10 +4,9 @@ import moment from "moment-timezone";
 import Datetime from "react-datetime";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt,faPaperclip } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Card, Form, Button, InputGroup } from '@themesberg/react-bootstrap';
+import { Col, Row, Card, Form, Button, InputGroup ,ProgressBar} from '@themesberg/react-bootstrap';
 import axios from "../pages/examples/api/axios";
 const PROFILE_URL ='profile/';
-
 export const GeneralInfoForm = () => {
 
   const [file, setFile] = useState()
@@ -127,7 +126,7 @@ export const GeneralInfoForm = () => {
           <Col md={4} className="mb-3">
               <Form.Group id="firstName">
                 <Form.Label>CIN</Form.Label>
-                <Form.Control  type="text" id="cin" name="cin" placeholder="CIN" 
+                <Form.Control  type="text" id="cin" name="cin"
                  onChange={(e) =>setCin(e.target.value)} value={cin}
                
                 />
@@ -136,7 +135,7 @@ export const GeneralInfoForm = () => {
             <Col md={4} className="mb-3">
               <Form.Group id="firstName">
                 <Form.Label>Nom</Form.Label>
-                <Form.Control  type="text" id="fname" name="fname" placeholder="votre Nom" 
+                <Form.Control  type="text" id="fname" name="fname"
                  onChange={(e) =>setFname(e.target.value)} value={fname}
                
                 />
@@ -145,7 +144,7 @@ export const GeneralInfoForm = () => {
             <Col md={4} className="mb-3">
               <Form.Group id="lastName">
                 <Form.Label>Prenom</Form.Label>
-                <Form.Control  type="text" id="lname" name="lname" placeholder="votre prenom"
+                <Form.Control  type="text" id="lname" name="lname" 
                             value={lname}    autoComplete="off" onChange={(e) =>setLname(e.target.value)}
                        
                 />
@@ -203,7 +202,7 @@ export const GeneralInfoForm = () => {
                 <Form.Control  type="number" 
                                                 autoComplete="off" onChange={(e) =>setPhone(e.target.value)}
                                                 value={phone}
-                id="phone"  name="phone" placeholder="+12-345 678 910" />
+                id="phone"  name="phone"/>
               </Form.Group>
             </Col>
           </Row>
@@ -216,13 +215,13 @@ export const GeneralInfoForm = () => {
                 <Form.Control  type="text" id="address"  name="address" 
                                                 autoComplete="off" onChange={(e) =>setAddress(e.target.value)}
                                                 value={address}
-                placeholder="Enter your home address" />
+                 />
               </Form.Group>
             </Col>
             <Col sm={3} className="mb-3">
               <Form.Group id="addressNumber">
                 <Form.Label>Numero</Form.Label>
-                <Form.Control  type="number" placeholder="No."  id=""  name=""/>
+                <Form.Control  type="number" id=""  name=""/>
               </Form.Group>
             </Col>
           </Row>
@@ -230,7 +229,7 @@ export const GeneralInfoForm = () => {
             <Col sm={4} className="mb-3">
               <Form.Group id="country">
                 <Form.Label>country</Form.Label>
-                <Form.Control  type="text" placeholder="country"  id="country"  name="country"
+                <Form.Control  type="text"  id="country"  name="country"
                 
                 autoComplete="off" onChange={(e) =>setCountry(e.target.value)}
                                                 value={country}
@@ -304,7 +303,7 @@ export const GeneralInfoForm = () => {
             <Col sm={4}>
               <Form.Group id="zip">
                 <Form.Label>Code Postal</Form.Label>
-                <Form.Control  type="tel" placeholder="ZIP" />
+                <Form.Control  type="tel" />
               </Form.Group>
             </Col>
           </Row>
@@ -417,32 +416,53 @@ export const GeneralInfoForm = () => {
   );
 };
 export const EditeProfile = () => {
+  const Image_url='upload_photo/'
 
-  const [file, setFile] = useState()
   const [selectedFile, setSelectedFile] = React.useState(null);
-  const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0])
 
+  const [progress, setProgress] = useState()
+  
+  const [file, setFile] = useState();
+  
+  function handleFileSelect(e) {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setSelectedFile(e.target.files[0])
   }
-  function handleChange(event) {
-    setFile(event.target.files[0])
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      const token = localStorage.getItem("token");
+      const formData2 = new FormData();
+    
+      formData2.append("url",selectedFile);
+      formData2.append("path","image/profile/");
+      formData2.append("user",localStorage.getItem('id'));
+      formData2.append("season",'2');
+        axios.post(
+          Image_url,
+           formData2,
+           { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+            'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+              //Set the progress value to show the progress bar
+              setProgress(Math.round((100 * data.loaded) / data.total))
+            },},
+        ).then((value) => {
+          const url= value.data.url;
+          localStorage.setItem('pr',url) 
+        }
+          )
+    }catch(error) {
+      console.log(error)
+    }
   }
   const [fname, setFname] = useState();
-  const [valideFname , setValidFname] = useState('');
   const [lname, setLname] = useState('');
-  const [valideLname , setValidLname] = useState('');
   const [birthday, setBirthday] = useState("");
-  const [valideBirthday , setValidBirthday] = useState('');
   const [gender, setGender] = useState('');
-  const [valideGender , setValidGender] = useState('');
   const [phone, setPhone] = useState('');
-  const [validePhone , setValidPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [valideAddress , setValidAddress] = useState('');
-
-  const [email, setEmail] = useState('');
-  const [valideEmail , setValidEmail] = useState('');
-   
+  const [email, setEmail] = useState('');   
   const [city, setCity] = useState('');
   const [valideVille , setValidVille] = useState('');
   const [club, setClub] = useState('');
@@ -492,7 +512,7 @@ export const EditeProfile = () => {
       console.log(id)
       localStorage.setItem('idP',id)
       console.log(persons.profile_photo)
-      setCountry(persons.country)
+      setCountry("Tunisie")
       setFname(persons.first_name)
       setLname(persons.last_name)
       setPhone(persons.phone)
@@ -500,6 +520,7 @@ export const EditeProfile = () => {
       setRole(persons.role)
       localStorage.setItem('rol',persons.role)
       setZipCode(persons.zip_code)
+      setCin(persons.cin)
     if(persons.role ===1){
      setRole("arbitre")
     } else if(persons.role===2){
@@ -521,13 +542,16 @@ export const EditeProfile = () => {
   },[city,country,phone])
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+    const token = localStorage.getItem("token");
+    const pr=localStorage.getItem('pr');
+  
     try {
       const token = localStorage.getItem("token");
       const id=localStorage.getItem("idP");
-      const response = axios.put(`profile/${window.localStorage.getItem("idP")}/`,({'profile_photo':selectedFile
+      const response = axios.put(`profile/${window.localStorage.getItem("idP")}/`,({'profile_photo':`https://c3dd-197-14-10-36.ngrok.io${pr} `,'address':address,'birthday':birthday,'first_name':fname,'last_name':lname,
+      'phone':phone,'zip_code':zip_code,'city':city
     }), {
-         headers: {'Authorization':`TOKEN ${token}`,  'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW',
+         headers: {'Authorization':`TOKEN ${token}`,  'content-type': 'Application/json',
          'X-CSRFTOKEN': 'CSRF_TOKEN','Access-Control-Allow-Origin':'Accept'},
          withCredentials: false
       });
@@ -536,7 +560,6 @@ export const EditeProfile = () => {
       console.log(error);
     }
   };
-   // a local state to store the currently selected file.
 
    const handleSubmits = async(event) => {
      event.preventDefault()
@@ -544,9 +567,7 @@ export const EditeProfile = () => {
 
      const formData = new FormData();
      formData.append("profile_photo", "image/".selectedFile);
-    //  formData.append("path", "profile/blabla/");
-    //  formData.append("season", "2");
-    //  formData.append("user",localStorage.getItem("id"));
+   
      try {
        const response = await axios({
          method: "put",
@@ -663,12 +684,12 @@ export const EditeProfile = () => {
                 placeholder="Enter your home address" />
               </Form.Group>
             </Col>
-            <Col sm={3} className="mb-3">
+            {/* <Col sm={3} className="mb-3">
               <Form.Group id="addressNumber">
                 <Form.Label>Numero</Form.Label>
                 <Form.Control  type="number" placeholder="No."  id=""  name=""/>
               </Form.Group>
-            </Col>
+            </Col> */}
           </Row>
           <Row>
             <Col sm={4} className="mb-3">
@@ -766,44 +787,26 @@ export const EditeProfile = () => {
                 />
               </Form.Group>
             </Col>
-        
-            <Col sm={4}>
-              <Form.Group id="identite">
-                <Form.Label>Photo d'identite</Form.Label>
-                <div className="file-field">
-            <div className="d-flex justify-content-xl ">
-              <div className="d-flex">
-                <span className="icon icon-md">
-                  <FontAwesomeIcon icon={faPaperclip} className="me-3" />
-                </span>
-                <input type="file" onChange={handleFileSelect}/>
 
-                <div className="d-md-block text-start">
-                  <div className="fw-normal text-dark mb-1">Choisir Image</div>
-                  <div className="text-gray small">JPG, GIF, PDF ou PNG</div>
-                </div>
-              </div>
-            </div>
-          </div>
-              </Form.Group>
-            </Col>
-            {/* <Col sm={4}>
-              <Form.Group id="medical">
-                <Form.Label>Certificat Médicale</Form.Label>
-                
-          <input type="file" onChange={handleChange}/>
-          <button type="submit">Upload</button>
-              </Form.Group>
-            </Col> */}
           </Row>
           <div className="mt-3">
             <Button variant="primary" type="submit">Enregistrer</Button>
           </div>
-        </Form><br/>
-        <form onSubmit={handleSubmits}>
-      <input type="file" onChange={handleFileSelect}/>
-      <input type="submit" value="Upload File" />
-    </form>
+        </Form>
+        <Form onSubmit={submit}>
+      <Col sm={4}>
+            <div className="App">
+            <h5>Ajouter  photo de profile :</h5>
+            <input type="file" onChange={handleFileSelect}   />
+            <img src={file}  height={80}/><br/>
+            {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />}
+        </div>
+        </Col>
+        <div className="mt-3" >
+              <Button variant="primary" type="submit">Enregistrer</Button>
+            </div> <br/></Form> 
+        
+      
       </Card.Body>
     </Card>
   );

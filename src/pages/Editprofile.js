@@ -6,7 +6,6 @@ import { ChoosePhotoWidget, ProfileCardWidget } from "../components/Widgets";
 import { EditeProfile } from "../components/Forms";
 import { Input } from "@material-ui/core";
 import Profile3 from "../assets/img/team/profile-picture-3.jpg";
-import axios from "axios";
 
 // const handleSubmit = async (e) => {
 //   e.preventDefault();
@@ -116,12 +115,13 @@ export default class CreateEmployee extends React.Component {
             <Col xs={12}>
               <ProfileCardWidget />
             </Col>
-            <Col xs={12}>
+             
+            {/* <Col xs={12}>
               <ChoosePhotoWidget
                 title="Select profile photo"
                 photo={Profile3}
               />
-            </Col>
+            </Col> */}
           </Row>
         </Col>
       </Row>

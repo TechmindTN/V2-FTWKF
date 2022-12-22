@@ -168,7 +168,7 @@ useEffect(() => {
     setState7(Disciplines);
 })},[])
 const at=localStorage.getItem("at");
-const ATHLETE_URL=`athlete/${at}/`
+const ATHLETE_URL=`athlete_info/${at}/`
 useEffect(() => {
   axios.get(ATHLETE_URL,{
     headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
@@ -177,49 +177,30 @@ useEffect(() => {
   .then(res => {
     const persons = res.data;
     console.log(persons)
-    setGrade(persons.grade_id)
-    setCategorie(persons.category_id)
-    setWeights(persons.weights)
-    setId(persons.profile)
+    setGrade(persons.athlete.grade_id)
+    setCategorie(persons.athlete.category_id)
+    setWeights(persons.athlete.weights)
     SetNationality("Tunisienne")
-    setSelectedFile(persons.photo)
-    setIm2(persons.identity_photo)
-    setIm3(persons.medical_photo)
-    localStorage.setItem('p',persons.profile)
-
+    setIm1(persons.athlete.photo)
+    setIm2(persons.athlete.identity_photo)
+    setIm3(persons.athlete.medical_photo)
+    setCin(persons.profile.cin)
+    setFname(persons.profile.first_name)
+    setLname(persons.profile.last_name)
+    setBirthday(persons.profile.birthday)
+    setRole(persons.profile.role)
+    setAddresse(persons.profile.address)
+    setVille(persons.profile.city)
+  setPhone(persons.profile.phone)
+  setCode(persons.profile.zip_code)
+  setGouv(persons.profile.state)
+  
 })
 },[])
-useEffect(() => {
-const id=localStorage.getItem('p')
-console.log(id)
-const PROFILE_URL=`pro/${id}/`;
-axios.get(PROFILE_URL,{
-  headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
-  withCredentials: false
-})
-.then(res => {
-  const persons = res.data;
-  console.log(persons)
-  setCin(persons.cin)
-  setFname(persons.first_name)
-  setLname(persons.last_name)
-  setBirthday(persons.birthday)
-  setRole(persons.role)
-  setAddresse(persons.address)
-  setVille(persons.city)
-setPhone(persons.phone)
-setCode(persons.zip_code)
-setGouv(persons.state)
-
-}
-
-)},[])
 const iden=localStorage.getItem('iden');
 const pr=localStorage.getItem('pr');
 const im=localStorage.getItem('im');
 const mid=localStorage.getItem('mid');
-
-
 const handlesubmit = async (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -232,15 +213,18 @@ const handlesubmit = async (e) => {
   formData.append("weights", weights);
   formData.append("nationality", nationality);
   formData.append("grade_id", grade);
-  formData.append("photo",`https://c3dd-197-14-10-36.ngrok.io${pr}`);
-  formData.append("identity_photo",`https://c3dd-197-14-10-36.ngrok.io${iden}`);
-  formData.append("medical_photo",`https://c3dd-197-14-10-36.ngrok.io${mid}`);
+  formData.append("photo",im1);
+  formData.append("identity_photo",im2);
+  formData.append("medical_photo",im3);
 try {
   const token = localStorage.getItem("token");
+  const ATHLETES_URL=`edit_athlete_profile/${at}/`
     axios.put(
-      ATHLETE_URL,
-       formData,
-       { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+      ATHLETES_URL,
+      ({'athlete':{'medical_photo':im3,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':im2,'photo':im1},'profile':{'first_name':first_name,'last_name':last_name,
+      'country':'Tunisie','address':addresse,'phone':phone,'birthday':birthday,'cin':cin,'profile_photo':im1}
+      }),
+       { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">

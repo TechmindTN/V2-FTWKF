@@ -125,11 +125,6 @@ const handlesubmit = async (e) => {
   formData.append("weights", weights);
   formData.append("nationality", nationality);
   formData.append("grade_id", grade);
-  const headers = { 
-    'Authorization':  `TOKEN ${token}`,
-    'Content-Type':'multipart/form-data',
-    'Access-Control-Allow-Origin':'Accept'
-};
 try {
   const lic=localStorage.getItem("lic");
   const LICENCEs=`licences/${lic}/`
@@ -140,13 +135,7 @@ try {
       'user':{'first_name':first_name,'last_name':last_name,
          'country':'Tunisie','state':gouv,'address':addresse,'zip_code':code,'phone':phone,'birthday':birthday,
        'cin':cin}
-    }),
-      
-    //   ,'club':club,'discipline':sport,'weight':weights,'categorie':categorie,'user':{'first_name':first_name,'last_name':last_name,
-    //   'country':'Tunisie','state':gouv,'address':addresse,'zip_code':code,'phone':phone,'birthday':birthday,
-    // 'cin':cin}
-    //   }),
-       { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+    }), { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">

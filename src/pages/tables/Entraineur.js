@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
 
 import axios from "../examples/api/axios";
-const ENT_URL='coach/';
+const ENT_URL='coachlist_info/';
 const ATHLETE_URLs='athlete/'
 
 const Entraineur = () =>{
@@ -17,10 +17,13 @@ const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
 const [showDefaults, setShowDefaults] = useState();
   const[id,setId]=useState([])
- 
+  const token = localStorage.getItem("token");
+
 const [state,setState]=useState([])
 useEffect(() => {
-  axios.get(ENT_URL)
+  axios.get(ENT_URL,
+  { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+    'Access-Control-Allow-Origin':'Accept'} })
   .then(res => {
     const persons = res.data;
     setState(persons);
@@ -28,21 +31,8 @@ useEffect(() => {
 
 })},[])
 
-  
 
 
-const token = localStorage.getItem("token");
-
-  
-function update() {
-  axios.get(ATHLETE_URLs)
-  .then(res => {
-    const persons = res.data;
-    setState(persons);
-    console.log(persons);
-
-})
-}
 
 
   return (
@@ -103,33 +93,37 @@ Ajouter entraineur
           <tbody>
           {state.map((person) => (
         <><tr>
-           <td className="border-0 ">{person.id}</td>
-              <td className="border-0 ">{person.cin}</td>
-              <td className="border-0 ">{person.last_name}</td>
-              <td className="border-0 ">{person.first_name}</td>
+           <td className="border-0 ">{person.coach.id}</td>
+              <td className="border-0 ">{person.profile.cin}</td>
+              <td className="border-0 ">{person.profile.last_name}</td>
+              <td className="border-0 ">{person.profile.first_name}</td>
               <td className="border-0 ">{person.sex}</td>
-              <td className="border-0 ">{person.birthday}</td>
-              <td className="border-0 ">{person.profile}</td>
-              <td className="border-0 ">{person.grade}</td>
-              <td className="border-0 "><img  src={person.identity_photo}/></td>
-              <td className="border-0 "><img  src={person.degree_photo}/></td>
-              <td className="border-0 "><img  src={person.grade_photo}/></td>
+              <td className="border-0 ">{person.profile.birthday}</td>
+              <td className="border-0 ">{person.coach.grade}</td>
+              <td className="border-0 "><img  src={person.coach.identity_photo}/></td>
+              <td className="border-0 "><img  src={person.coach.degree_photo}/></td>
+              <td className="border-0 "><img  src={person.coach.grade_photo}/></td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                 
-                axios.delete(`coach/${person.id}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+                axios.delete(`coach/${person.coach.id}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
                 'Access-Control-Allow-Origin':'Accept'} })
                 .then(res => {
                   const persons = res.data;
                   setState(persons);
                   console.log(persons);
-                  window.location.reload(true);          
+                  window.location.reload(false);          
               })
            
                  
               )}>Supprimer 
               </Button> &nbsp;
-              <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
+              <Button variant="primary" className="my-0"  as={Link} to={Routes.EntUpd.path} onClick={() => setShowDefault(
+                localStorage.setItem('ent',person.coach.id)
+                
+             )}>Modifier</Button>
+              {/* <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button> */}
+              </td>
              
               <React.Fragment>
 

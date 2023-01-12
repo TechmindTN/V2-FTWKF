@@ -10,6 +10,8 @@ export const Routes = {
     Upgrade: { path: "/upgrade" },
     BootstrapTables: { path: "/tables/bootstrap-tables" },
     Athletes:{path: "/tables/Athletes"},
+    updphotos:{path: "/tables/updphotos"},
+
     EntUpd:{path: "/tables/EntUpd"},
 
     AthleteUpd:{path: "/tables/AthleteUpd"},

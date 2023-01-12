@@ -200,9 +200,9 @@ try {
 
     axios.post(
       ATHLETE_URL,
-      ({'athlete':{'id_degree':degree,'medical_photo':`https://c3dd-197-14-10-36.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':`https://c3dd-197-14-10-36.ngrok.io${iden} `,'photo':`https://c3dd-197-14-10-36.ngrok.io${im} `},'user':{'username':username,'password':password},'profile':{'first_name':first_name,'last_name':last_name,
+      ({'athlete':{'id_degree':degree,'medical_photo':`https://d494-197-14-10-36.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':`https://d494-197-14-10-36.ngrok.io${iden} `,'photo':`https://d494-197-14-10-36.ngrok.io${im} `},'user':{'username':username,'password':password},'profile':{'first_name':first_name,'last_name':last_name,
       'country':'Tunisie','state':states,'city':city,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
-    'cin':cin,'role':role,'profile_photo':`https://c3dd-197-14-10-36.ngrok.io${pr} `}
+    'cin':cin,'role':role,'profile_photo':`https://d494-197-14-10-36.ngrok.io${pr} `}
       }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
@@ -248,7 +248,7 @@ function handleFileSelect3(e) {
    
       <Row>
         <Form onSubmit={handlesubmit}>
-        <Col xs={12} xl={8}>
+        <Col xs={12} xl={12}>
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
           <h5 className="mb-4">Ajouter athlete </h5>
@@ -470,7 +470,7 @@ function handleFileSelect3(e) {
       </Card></Col>
         </Form>
   
-      <Card border="light" className="bg-white shadow-sm mb-4">
+      {/* <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
         
       
@@ -531,7 +531,7 @@ function handleFileSelect3(e) {
             </div>
         </Form>
 
-        </Card.Body></Card>
+        </Card.Body></Card> */}
       
       {/* <Col xs={12} xl={4}>
       <Row>

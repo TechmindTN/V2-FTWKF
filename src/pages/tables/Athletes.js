@@ -10,10 +10,10 @@ import { Routes } from "../../routes";
 import axios from "../examples/api/axios";
 const ATHLETE_URL='athletelist_info/';
 const Athletes = () =>{
-  localStorage.removeItem('iden');
-  localStorage.removeItem('pr');
-  localStorage.removeItem('im');
-  localStorage.removeItem('mid');
+  // localStorage.removeItem('iden');
+  // localStorage.removeItem('pr');
+  // localStorage.removeItem('im');
+  // localStorage.removeItem('mid');
 const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
@@ -22,7 +22,7 @@ const [showDefaults, setShowDefaults] = useState();
 const [state,setState]=useState([])
 const token = localStorage.getItem("token");
 useEffect(() => {
-  axios.get(ATHLETE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+  axios.get(ATHLETE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
   'Access-Control-Allow-Origin':'Accept'} })
   .then(res => {
     const persons = res.data;
@@ -52,7 +52,7 @@ function handleChange(e) {
       
           <Col md={4} className="mb-3">
           <Button
-            variant="primary" as={Link} to={Routes.Athleteadd.path} >
+            variant="primary" as={Link} to={Routes.updphotos.path} >
             Ajouter athlete 
              
             </Button>

@@ -63,7 +63,6 @@ const handleSubmit = async (e) =>{
     localStorage.setItem('id',id)
     localStorage.setItem('username',username);
   }
-  
  }).catch((e)=>{
   console.log(e.response.status)
   console.log(e.status)

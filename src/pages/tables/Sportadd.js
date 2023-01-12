@@ -32,7 +32,7 @@ const handlesubmit = async (e) => {
   console.log(url)
   formData.append("name", sport);
   formData.append("description", description);
-  formData.append("image",`https://c3dd-197-14-10-36.ngrok.io${url} `);
+  formData.append("image",`https://d494-197-14-10-36.ngrok.io${url} `);
   formData2.append("url",selectedFile);
   formData2.append("path","image/discipline/photo");
   formData2.append("user",localStorage.getItem('id'));

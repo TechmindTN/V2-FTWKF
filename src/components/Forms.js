@@ -548,7 +548,7 @@ export const EditeProfile = () => {
     try {
       const token = localStorage.getItem("token");
       const id=localStorage.getItem("idP");
-      const response = axios.put(`profile/${window.localStorage.getItem("idP")}/`,({'profile_photo':`https://c3dd-197-14-10-36.ngrok.io${pr} `,'address':address,'birthday':birthday,'first_name':fname,'last_name':lname,
+      const response = axios.put(`profile/${window.localStorage.getItem("idP")}/`,({'profile_photo':`https://d494-197-14-10-36.ngrok.io${pr} `,'address':address,'birthday':birthday,'first_name':fname,'last_name':lname,
       'phone':phone,'zip_code':zip_code,'city':city
     }), {
          headers: {'Authorization':`TOKEN ${token}`,  'content-type': 'Application/json',

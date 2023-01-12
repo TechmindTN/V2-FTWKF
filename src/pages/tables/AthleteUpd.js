@@ -36,6 +36,8 @@ const [code,setCode]=useState([]);
 const [im1,setIm1]=useState([]);
 const [im2,setIm2]=useState([]);
 const [im3,setIm3]=useState([]);
+const [im4,setIm4]=useState([]);
+
 const [gouv,setGouv]=useState([]);
 const [selectedFile, setSelectedFile] = React.useState(null);
 
@@ -48,7 +50,7 @@ const [selectedFile3, setSelectedFile3] = React.useState(null);
 const [selectedFile2, setSelectedFile2] = React.useState(null);
 function handleFileSelect(e) {
   console.log(e.target.files);
-  setIm1(URL.createObjectURL(e.target.files[0]));
+  setIm4(URL.createObjectURL(e.target.files[0]));
   setSelectedFile(e.target.files[0])
 }
 function handleFileSelect2(e) {
@@ -82,7 +84,10 @@ const submit3 = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('mid',url) 
-      }
+    
+      },
+      localStorage.getItem(mid),
+      setIm3(`https://d494-197-14-10-36.ngrok.io${mid} `)
         )
   }catch(error) {
     console.log(error)
@@ -111,7 +116,9 @@ const submit2 = async (e) => {
         const url= value.data.url;
         localStorage.setItem('iden',url) 
       }
-        )
+        ),
+        localStorage.getItem(iden),
+        setIm2(`https://d494-197-14-10-36.ngrok.io${iden} `)
   }catch(error) {
     console.log(error)
   }
@@ -139,7 +146,9 @@ const submit = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('pr',url) 
-      }
+      },
+      localStorage.getItem(pr),
+      setIm1(`https://d494-197-14-10-36.ngrok.io${pr} `)
         )
   }catch(error) {
     console.log(error)
@@ -181,7 +190,7 @@ useEffect(() => {
     setCategorie(persons.athlete.category_id)
     setWeights(persons.athlete.weights)
     SetNationality("Tunisienne")
-    setIm1(persons.athlete.photo)
+     setIm1(persons.athlete.photo)
     setIm2(persons.athlete.identity_photo)
     setIm3(persons.athlete.medical_photo)
     setCin(persons.profile.cin)
@@ -218,6 +227,7 @@ const handlesubmit = async (e) => {
   formData.append("medical_photo",im3);
 try {
   const token = localStorage.getItem("token");
+  const mid=localStorage.getItem('mid');
   const ATHLETES_URL=`edit_athlete_profile/${at}/`
     axios.put(
       ATHLETES_URL,
@@ -428,7 +438,9 @@ try {
             <Form onSubmit={submit}>
             <Form.Group id="category">
                     <Form.Label>Photo profile :</Form.Label><br/>
-                   <img src={im1} width={80} height={80} />
+                   <img src={im1} width={80} height={80} /><br/>
+                   <Form.Label>Noveau Photo profile :</Form.Label><br/>
+                   <img src={im4} width={80} height={80} /><br/>
                    <input type="file" onChange={handleFileSelect}   />
             {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />}
                   </Form.Group>

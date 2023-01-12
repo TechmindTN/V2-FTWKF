@@ -156,8 +156,8 @@ try {
 
     axios.post(
       ENT_URL
-      ,({'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://c3dd-197-14-10-36.ngrok.io${ph} `,'degree':Degrees,
-      'grade_photo':`https://c3dd-197-14-10-36.ngrok.io${gr} `,'identity_photo':`https://c3dd-197-14-10-36.ngrok.io${ent} `,'degree_photo':`https://c3dd-197-14-10-36.ngrok.io${deg} `},'user':{'username':username,'password':password}}),
+      ,({'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://d494-197-14-10-36.ngrok.io${ph} `,'degree':Degrees,
+      'grade_photo':`https://d494-197-14-10-36.ngrok.io${gr} `,'identity_photo':`https://d494-197-14-10-36.ngrok.io${ent} `,'degree_photo':`https://d494-197-14-10-36.ngrok.io${deg} `},'user':{'username':username,'password':password}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )

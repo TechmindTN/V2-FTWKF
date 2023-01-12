@@ -100,9 +100,9 @@ Ajouter entraineur
               <td className="border-0 ">{person.sex}</td>
               <td className="border-0 ">{person.profile.birthday}</td>
               <td className="border-0 ">{person.coach.grade}</td>
-              <td className="border-0 "><img  src={person.coach.identity_photo}/></td>
-              <td className="border-0 "><img  src={person.coach.degree_photo}/></td>
-              <td className="border-0 "><img  src={person.coach.grade_photo}/></td>
+              <td className="border-0 "><img  src={person.coach.identity_photo} width={100} /></td>
+              <td className="border-0 "><img  src={person.coach.degree_photo}  width={100} /></td>
+              <td className="border-0 "><img  src={person.coach.grade_photo} width={100} /></td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                 

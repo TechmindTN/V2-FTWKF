@@ -23,11 +23,12 @@ const Licence = () =>{
     'Access-Control-Allow-Origin':'Accept'} })
     .then(res => {
     const persons = res.data;
-    console.log(persons)
+    console.log(persons.licence)
     setState1(persons);
-    const roles=persons.map(roles => roles.profile);
-    const mapData = ([...roles]);
-    console.log(mapData);
+    // if (persons.licence.state==""){};
+    // const roles=persons.map(roles => roles.profile);
+    // const mapData = ([...roles]);
+    // console.log(mapData);
     
     
 })},[])

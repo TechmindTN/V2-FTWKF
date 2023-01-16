@@ -142,10 +142,11 @@ function handleFileSelect4(e) {
   setFile4(URL.createObjectURL(e.target.files[0]));
   setSelectedFile4(e.target.files[0])
 }
+const errRef = useRef();
+const[errMsg, setErrMsg] = useState ('') ;
 
 const handlesubmit = async (e) => {
   e.preventDefault();
-  const token = localStorage.getItem("token");
   
 try {
   const token = localStorage.getItem("token");
@@ -154,26 +155,56 @@ try {
   const gr=localStorage.getItem('gr');
   const ph=localStorage.getItem('ph');
 
-    axios.post(
-      ENT_URL
-      ,({'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://d494-197-14-10-36.ngrok.io${ph} `,'degree':Degrees,
-      'grade_photo':`https://d494-197-14-10-36.ngrok.io${gr} `,'identity_photo':`https://d494-197-14-10-36.ngrok.io${ent} `,'degree_photo':`https://d494-197-14-10-36.ngrok.io${deg} `},'user':{'username':username,'password':password}}),
+  axios.post(
+    ENT_URL,({'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://3462-197-14-10-36.eu.ngrok.io${ph} `,'degree':Degrees,
+      'grade_photo':`https://3462-197-14-10-36.eu.ngrok.io${gr} `,'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${ent} `,'degree_photo':`https://3462-197-14-10-36.eu.ngrok.io${deg} `},'user':{'username':username,'password':password}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
-        'Access-Control-Allow-Origin':'Accept'} },
-    )
-    setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
-    <div>
-    Entraineur ajouté
-    </div>
-  </div>);
-  localStorage.removeItem('ent');
-  localStorage.removeItem('deg');
-localStorage.removeItem('ph');
-localStorage.removeItem('gr');
+        'Access-Control-Allow-Origin':'Accept'} }
+    ).then((value) =>{
+      console.log(value?.status)
+      if(value?.status=="200"){
+        setErrMsg(<div className="alert alert-success d-flex align-items-center" role="alert">
+     <div>
+     Entraineur ajouté
+     </div>
+   </div>)
+      }
+      }).catch((e)=>{
+        console.log(e.response.status)
+        console.log(e.status)
+        if(e?.response?.status=="500"){
+          setErrMsg('no Server response')
+         } else if(e?.response?.status=="400") {
+          setErrMsg('utilisateur deja existe ');
+          } else if (e?.response?.status == "401"){
+            setErrMsg('unautherized');
+         }else if (e?.response?.status == "404"){
+          setErrMsg("unautherized");
+        } else{ setErrMsg('Erreur');
+        } 
+        errRef.current.focus();
+        
+        
+      })
+   
+ 
   //  window.location.href = "dashboard/tables/Clubs";
-}catch(error) {
-  console.log(error)
-}
+} catch(err){
+  console.log(e.response.status)
+  console.log(e.status)
+  // if(e?.response?.status=="500"){
+  //   setErrMsg('no Server response')
+  //  } else if(e?.response?.status=="400") {
+  //   setErrMsg('username ou password incorrecte');
+  //   } else if (e?.response?.status == "401"){
+  //     setErrMsg('unautherized');
+  //  }else if (e?.response?.status == "404"){
+  //   setErrMsg("unautherized");
+  // } else{ setErrMsg('Erreur');
+  // } 
+  errRef.current.focus();
+  console.log("ay hgkaya")
+};
 
 
 
@@ -202,6 +233,8 @@ localStorage.removeItem('gr');
                  
                 </Form.Group>
               </Col> */}
+              <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+
               <Col md={4} className="mb-3">
                 <Form.Group id="cin">
                   <Form.Label>Username</Form.Label>    
@@ -322,60 +355,8 @@ localStorage.removeItem('gr');
 <br/>
 
           
-        <Row className="align-items-center">
-        <Form onSubmit={submit1}>
-            
-          <Col md={6} className="mb-3">
-              <Form.Group id="image">
-                <Form.Label>Photo d'identité:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
-                <input type="file"   onChange={handleFileSelect1}  required />
-            <img src={file1} width={80} required />
-            {progress1 && <ProgressBar   now={progress1} label={`${progress1}%`} style={{ height: 20}} />}
-            <div className="mt-3">
-              <Button variant="primary" type="submit">Ajouter identité</Button>
-            </div>
-              </Form.Group>
-            </Col></Form>
-            <Form onSubmit={submit2}>
-            <Col md={6} className="mb-3">
-              <Form.Group id="image">
-                <Form.Label>Degré:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
-                <input type="file"   onChange={handleFileSelect2}  required />
-            <img src={file2} width={80} required />
-            {progress2 && <ProgressBar   now={progress2} label={`${progress2}%`} style={{ height: 20}} />}
-            <div className="mt-3">
-              <Button variant="primary" type="submit">Ajouter Degré</Button>
-            </div>
-              </Form.Group>
-            </Col>  </Form>
-
-        </Row>
-        <Row className="align-items-center">
-             <Form onSubmit={submit3}>
-            <Col md={6} className="mb-3">
-              <Form.Group id="image">
-                <Form.Label>Grade:&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
-                <input type="file"   onChange={handleFileSelect3}  required />
-            <img src={file3} width={80} required />
-            {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />}
-            <div className="mt-3">
-              <Button variant="primary" type="submit">Ajouter Grade</Button>
-            </div>
-              </Form.Group>
-            </Col></Form><Form onSubmit={submit4}>
-            <Col md={6} className="mb-3">
-              <Form.Group id="image">
-                <Form.Label>Photo: ملتقى المدربين&nbsp;&nbsp;&nbsp;&nbsp;</Form.Label>
-                <input type="file"   onChange={handleFileSelect4}  required />
-            <img src={file4} width={80} required />
-            {progress4 && <ProgressBar   now={progress4} label={`${progress4}%`} style={{ height: 20}} />}
-            <div className="mt-3">
-              <Button variant="primary" type="submit">Ajouter Photo</Button>
-            </div>
-              </Form.Group>
-            </Col></Form>
-
-        </Row>
+       
+      
           </Form>
         </Card.Body>
       </Card>

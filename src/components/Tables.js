@@ -253,7 +253,7 @@ useEffect(() => {
               
               <td className="border-0 "> <Button variant="primary" className="my-0" as={Link} to={Routes.ClubUpd.path}
               onClick={() => 
-        setShowDefault(localStorage.setItem('cl',person.id))} >Modifier {person.id}</Button>&nbsp;
+        setShowDefault(localStorage.setItem('cl',person.id))} >Modifier</Button>&nbsp;
            <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
           
           axios.delete(`club/${person.id}/`,{ headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
@@ -417,7 +417,6 @@ export const TransactionsTable = () => {
     </Card>
   );
 };
-
 export const SportsTable = () => {
 
   const [state,setState]=useState([])
@@ -451,6 +450,85 @@ export const SportsTable = () => {
               <td className="border-0 "><img src={person.image} style={{ width: 30, height: 30 }} alt="icons" /></td>
               <td className="border-0 ">{person.name}</td>
             
+              
+              {/* <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
+
+              <React.Fragment>
+
+                <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
+                  <Modal.Header>
+                    <Modal.Title className="h6"> {person.id}</Modal.Title>
+                    <Button variant="close" aria-label="Close" onClick={handleClose} />
+                  </Modal.Header>
+                  <Modal.Body>
+                 {person.cin}
+                    <p>With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.</p>
+                    <p>The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.</p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      I Got It
+                    </Button>
+                    <Button variant="link" className="text-gray ms-auto" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
+              </React.Fragment> */}
+              {/* </> ))} */}
+            </tr></>))}
+      
+            {/* {pageRanking.map(r => <TableRow key={`ranking-${r.id}`} {...r} />)} */}
+          </tbody>
+          {/* <tbody>
+            {commands.map(c => <TableRow key={`command-${c.id}`} {...c} />)}
+          </tbody> */}
+        </Table>
+      </Card.Body>
+    </Card>
+  );
+};
+const COMP_URL="competition/";
+export const CompTable = () => {
+
+  const [state,setState]=useState([])
+    useEffect(() => {
+      axios.get(COMP_URL)
+      .then(res => {
+        const persons = res.data;
+        setState(persons);
+    
+    })},[])
+ 
+
+  return (
+    <Card border="light" className="shadow-sm">
+      <Card.Body className="p-0">
+        <Table responsive className="table-centered rounded" style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word' }}>
+          <thead className="thead-light">
+            <tr>
+              <th className="border-0" style={{ width: '5%' }}>ID</th>
+              <th className="border-0" style={{ width: '5%' }}>Name</th>
+              <th className="border-0" style={{ width: '5%' }}>Descipline</th>
+              <th className="border-0" style={{ width: '5%' }}>Max participants</th>
+              <th className="border-0" style={{ width: '5%' }}>season </th>
+
+              <th className="border-0" style={{ width: '5%' }}>duration</th>
+              <th className="border-0" style={{ width: '5%' }}>Actions</th>
+          {/* <th className="border-0" style={{ width: '50%' }}>Description</th>
+              <th className="border-0" style={{ width: '40%' }}>Extra</th> */}
+            </tr>
+          </thead>
+          <tbody>
+          {state.map((person) => (
+        <><tr>
+              <td className="border-0 ">{person.id}</td>
+              <td className="border-0 ">{person.name}</td>
+              <td className="border-0 ">{person.discipline}</td>
+              <td className="border-0 ">{person.max_participants}</td>
+              <td className="border-0 ">{person.season}</td>
+              <td className="border-0 ">{person.duration}</td>
+              <td className="border-0 "><Button> Modifier</Button></td>
               
               {/* <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
 

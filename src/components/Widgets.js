@@ -29,7 +29,6 @@ export const ProfileCardWidget = () => {
       .then(res => {
         const stat = res.data;
         setImg(stat.profile_photo)
-        console.log(stat.profile_photo)
   }, [])});
 
   return (
@@ -59,17 +58,9 @@ export const ChoosePhotoWidget = (props) => {
     event.preventDefault()
 
     const formData = new FormData();
-    console.log(selectedFile)
     formData.append("profile_photo", selectedFile);
   
-    // console.log(formData.keys())
-    // for(var k in formData.keys()){
-    //   console.log(k)
-    // }
-    // for(var v in formData.values()){
-    //   console.log(v)
-    // }
-    // console.log(formData.keys+formData.values)
+    
     try {
       const token = localStorage.getItem("token");
 
@@ -126,11 +117,7 @@ export const ChoosePhotoWidget = (props) => {
             </div>
           </div>
           
-          {/* <div>
-      IMAGE UPLOAD
-      <input type="file" onChange={handleChange} /> <br />
-      <button onClick={handleApi} >SUBMIT</button>
-    </div> */}
+    
         </div>
       </Card.Body>
     </Card>

@@ -12,8 +12,12 @@ import EditeProfile from "./Editprofile";
 
 import BootstrapTables from "./tables/BootstrapTables";
 import Athletes from "./tables/Athletes";
+import Comp from "./tables/Comp";
+
 import EntUpd from "./tables/EntUpd";
 import UpdPhotos from "./tables/updphotos";
+import photosent from "./tables/photosent";
+import photosarb from "./tables/photosarb";
 
 import Sportadd from "./tables/Sportadd";
 import ClubUpd from "./tables/ClubUpd";
@@ -179,6 +183,11 @@ export default () => (
 
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
     <RouteWithSidebar exact path={Routes.Athletes.path} component={Athletes} />
+    <RouteWithSidebar exact path={Routes.Comp.path} component={Comp} />
+
+    <RouteWithSidebar exact path={Routes.photosent.path} component={photosent} />
+    <RouteWithSidebar exact path={Routes.photosarb.path} component={photosarb} />
+
     <RouteWithSidebar exact path={Routes.EntUpd.path} component={EntUpd} />
 
     <RouteWithSidebar exact path={Routes.AthleteUpd.path} component={AthleteUpd} />

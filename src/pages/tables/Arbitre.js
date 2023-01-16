@@ -3,27 +3,20 @@ import React , {useEffect,useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from '@themesberg/react-bootstrap';
-import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
+import { Col, Row, Card, Button, Table,Modal } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
 
 import axios from "../examples/api/axios";
 const ARBITRE_URL='arbitratorlist_info/';
-const ATHLETE_URLs='athlete/'
-
 const Arbitre = () =>{
-const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
-const [showDefaults, setShowDefaults] = useState();
-  const[id,setId]=useState([])
- 
-  
+const [showDefaults, setShowDefaults] = useState();  
 const [state,setState]=useState([])
 useEffect(() => {
   const token = localStorage.getItem("token");
-
-  axios.get(ARBITRE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+  axios.get(ARBITRE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
   'Access-Control-Allow-Origin':'Accept'} })
   .then(res => {
     const persons = res.data;
@@ -48,7 +41,7 @@ useEffect(() => {
           </Col>    
           <Col md={4} className="mb-3">
           <Button
-            variant="primary" as={Link} to={Routes.ArAdd.path} >
+            variant="primary" as={Link} to={Routes.photosarb.path} >
 Ajouter arbitre             
             </Button>
           </Col>
@@ -72,8 +65,9 @@ Ajouter arbitre
               <th className="border-0">téléphone </th>
               <th className="border-0">Addresse </th>
               <th className="border-0">Club </th>
-              <th className="border-0">Photo </th>
               <th className="border-0">Grade </th>
+              <th className="border-0">Grade Photo </th>
+              <th className="border-0">Identité Photo </th>
 
               <th className="border-0">Actions</th>
               {/* <th className="border-0">sexe</th>
@@ -96,6 +90,7 @@ Ajouter arbitre
               <td className="border-0 ">{person.profile.address}</td>
               <td className="border-0 ">{person.arbitrator.club}</td>
               <td className="border-0 ">{person.arbitrator.grade}</td>
+              <td className="border-0 "><img src={person.arbitrator.identity_photo}  height={80} width={80}/></td>
               <td className="border-0 "><img src={person.arbitrator.photo} height={80} width={80}/></td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(

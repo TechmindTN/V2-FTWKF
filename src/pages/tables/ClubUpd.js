@@ -3,7 +3,67 @@ import React , {useEffect,useState,useRef} from "react";
 import { Form, Col, Row, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 const PARAMETER_URL='ligue/'
+const Image_url='upload_photo/'
+
 const ClubUpd = () =>{
+
+  const [file, setFile] = useState();
+  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [inputArray,setInputArray]= useState();
+  const [inputFiles,setInputFiles]= useState();
+
+  function upload  (e)  {
+
+    const inputArr = new Array()
+    
+    Array.from(e.target.files).forEach((piece)=>{
+    
+    inputArr.push(piece.name)
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setSelectedFile(e.target.files[0])
+    
+    }) 
+    
+    setInputArray({inputArray: inputArr})
+    setInputFiles({inputFiles:e.target.files})
+    
+    } 
+    function uploadHandler  () {
+
+      const fd = new FormData();
+      
+      if(inputFiles!=null)
+      {
+        for ( var element of inputFiles.inputFiles) {
+          console.log(element)
+          fd.append('file',element)
+          fd.append("url",element);
+          fd.append("path","image/club/logo");
+          fd.append("user",localStorage.getItem('id'));
+          fd.append("season",'2');
+        }
+      }
+      const token = localStorage.getItem("token");
+  
+      axios.post(Image_url, fd, { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+      'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+        //Set the progress value to show the progress bar
+      //  setProgress(Math.round((100 * data.loaded) / data.total))
+      },})
+      .then(function (response) {
+        const url= response.data.url;
+        localStorage.setItem('url',url) 
+        setIm1(`https://3462-197-14-10-36.eu.ngrok.io${url} `)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      }
+      useEffect(() => {
+        uploadHandler(inputFiles); 
+     }, [inputFiles]);
+
 const [name, setName] = useState();
 const[success, setSuccess] = useState (false) ;
 const [state3,setState3]=useState([]);
@@ -38,6 +98,7 @@ const handlesubmit = async (e) => {
   const formData = new FormData();
   formData.append("name", name);
   formData.append("ligue", Ligue);
+  formData.append("logo", im1);
 try {
   const token = localStorage.getItem("token");
     axios.put(
@@ -60,7 +121,7 @@ try {
 function handleFileSelect3(e) {
   console.log(e.target.files);
   setIm1(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile3(e.target.files[0])
+  setSelectedFile(e.target.files[0])
 }
 
     return (
@@ -94,11 +155,12 @@ function handleFileSelect3(e) {
               </Col>
               <Col sm={3} className="mb-3">
             
-            <Form.Group id="category">
+                    <Form.Group id="category">
                     <Form.Label>Logo  </Form.Label><br/>
-                   <img src={im1} width={80} height={80} />
-                   <input type="file" onChange={handleFileSelect3}   />
-                  </Form.Group>
+                    <input type="file" onChange={upload} required  />
+                    <img src={im1}  height={80}/><br/>
+                    </Form.Group>
+               
             </Col>
             </Row>
 

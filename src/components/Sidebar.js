@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt,faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {faChartPie, faCog, faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Routes } from "../routes";
@@ -137,6 +137,8 @@ export const Sidebar = () => {
 
               <NavItem title="Liste de saisons" icon={faTable} link={Routes.Saison.path} />
               <NavItem title="Liste des disciplines" icon={faTable} link={Routes.Sports.path} />
+              <NavItem title="Liste des compétitions" icon={faTable} link={Routes.Comp.path} />
+
               {/* <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
                 <NavItem title="Sign In" link={Routes.Signin.path} />
                 <NavItem title="Sign Up" link={Routes.Signup.path} />

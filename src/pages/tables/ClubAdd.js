@@ -12,7 +12,61 @@ import { NoMeals } from "@mui/icons-material";
 const CLUB_URL='add_club/';
 const LIGUE_URL='ligue/';
 const ClubAdd = () =>{
+  const [file, setFile] = useState();
+  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [inputArray,setInputArray]= useState();
+  const [inputFiles,setInputFiles]= useState();
 
+  function upload  (e)  {
+
+    const inputArr = new Array()
+    
+    Array.from(e.target.files).forEach((piece)=>{
+    
+    inputArr.push(piece.name)
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setSelectedFile(e.target.files[0])
+    
+    }) 
+    
+    setInputArray({inputArray: inputArr})
+    setInputFiles({inputFiles:e.target.files})
+    
+    } 
+    function uploadHandler  () {
+
+      const fd = new FormData();
+      
+      if(inputFiles!=null)
+      {
+        for ( var element of inputFiles.inputFiles) {
+          console.log(element)
+          fd.append('file',element)
+          fd.append("url",element);
+          fd.append("path","image/club/logo");
+          fd.append("user",localStorage.getItem('id'));
+          fd.append("season",'2');
+        }
+      }
+      const token = localStorage.getItem("token");
+  
+      axios.post(Image_url, fd, { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+      'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+        //Set the progress value to show the progress bar
+        setProgress(Math.round((100 * data.loaded) / data.total))
+      },})
+      .then(function (response) {
+        console.log(response.data.url);
+        localStorage.setItem("url",response.data.url)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      }
+      useEffect(() => {
+        uploadHandler(inputFiles); 
+     }, [inputFiles]);
 
 const [name, setName] = useState();
 const [ligue, setLigue] = useState();
@@ -31,7 +85,6 @@ const [cin, setCin] = useState();
 const[success,setSuccess] = useState();
 const [state2,setState2]=useState([]);
 const Image_url='upload_photo/'
-const [selectedFile, setSelectedFile] = React.useState(null);
 const handleFileSelect = (event) => {
   setSelectedFile(event.target.files[0])
 }
@@ -48,49 +101,28 @@ const handlesubmit = async (e) => {
   const token = localStorage.getItem("token");
   const formData = new FormData();
   formData.append('club', {'name':club,'ligue':ligue});
-    try {
-    const token = localStorage.getItem("token");
-    const formData2 = new FormData();
-    formData2.append("url",selectedFile);
-    formData2.append("path","image/club/logo");
-    formData2.append("user",localStorage.getItem('id'));
-    formData2.append("season",'2');
-      axios.post(
-        Image_url,
-         formData2,
-         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
-          'Access-Control-Allow-Origin':'Accept'} },
-      ).then((value) => {
-        const url= value.data.url;
-        localStorage.setItem('urlc',url)
-        //console.log(url)
-      }
-        )
-      // window.location.href = "/tables/Athletes/"
-  }catch(error) {
-    console.log(error)
-  }
+  
 try {
   const token = localStorage.getItem("token");
-  const url=localStorage.getItem('urlc');
+  const url=localStorage.getItem('url');
 
     axios.post(
       CLUB_URL,
-      ({'club':{'name':club,'ligue':ligue,'logo':`https://d494-197-14-10-36.ngrok.io${url} `},'user':{'username':username,'password':password},'profile':{'first_name':name,'last_name':Prenom,
-    'country':'Tunisie','state':state,'city':ville,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
-  'cin':cin,'role':'7'}
-    }),
+      ({'club':{'name':club,'ligue':ligue,'logo':`https://3462-197-14-10-36.eu.ngrok.io${url} `},'user':{'username':username,'password':password},'profile':{'first_name':name,'last_name':Prenom,
+      'country':'Tunisie','state':state,'city':ville,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
+      'cin':cin,'role':'7'}
+      }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
-    )
-    setSuccess("Club ajouté");
+      )
+      setSuccess("Club ajouté");
    
 
 }catch(error) {
   console.log(error)
 }
-localStorage.removeItem('urlc');
-window.location.href = "http://localhost:3000/#/tables/Clubs"
+//localStorage.removeItem('urlc');
+//window.location.href = "http://localhost:3000/#/tables/Clubs"
 
 
  
@@ -148,7 +180,12 @@ window.location.href = "http://localhost:3000/#/tables/Clubs"
                 <Form.Group id="firstName">
                   <Form.Label>Image</Form.Label>
                  
-      <input type="file" onChange={handleFileSelect}  />
+  
+          
+            <input type="file" onChange={upload} required  />
+            <img src={file}  height={80}/><br/>
+           
+       
                 </Form.Group>
               </Col>
             </Row>

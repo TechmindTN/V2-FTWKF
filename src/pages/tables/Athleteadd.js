@@ -10,6 +10,7 @@ const PARAMETER_URL='parameters/';
 const LIGUE_URL='ligue/';
 const ATHLETE_URL='add_athlete/';
 import 'react-dropzone-uploader/dist/styles.css'
+import { Phone } from "@mui/icons-material";
 const Image_url='upload_photo/'
 const Athleteadd = () =>{
 const [selectedFile, setSelectedFile] = React.useState(null);
@@ -200,14 +201,14 @@ try {
 
     axios.post(
       ATHLETE_URL,
-      ({'athlete':{'id_degree':degree,'medical_photo':`https://d494-197-14-10-36.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':`https://d494-197-14-10-36.ngrok.io${iden} `,'photo':`https://d494-197-14-10-36.ngrok.io${im} `},'user':{'username':username,'password':password},'profile':{'first_name':first_name,'last_name':last_name,
+      ({'athlete':{'id_degree':degree,'medical_photo':`https://3462-197-14-10-36.eu.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${iden} `,'photo':`https://3462-197-14-10-36.eu.ngrok.io${ph} `},'user':{'username':username,'password':password},'profile':{'first_name':first_name,'last_name':last_name,
       'country':'Tunisie','state':states,'city':city,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
-    'cin':cin,'role':role,'profile_photo':`https://d494-197-14-10-36.ngrok.io${pr} `}
+    'cin':cin,'role':role,'profile_photo':`https://3462-197-14-10-36.eu.ngrok.io${pr} `}
       }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
-    setSuccess(<div class="alert alert-success d-flex align-items-center" role="alert">
+    setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>
     Athlete ajouté avec succès 
    </div>

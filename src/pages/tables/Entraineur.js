@@ -50,7 +50,7 @@ useEffect(() => {
           </Col>    
           <Col md={4} className="mb-3">
           <Button
-            variant="primary" as={Link} to={Routes.EntAdd.path} >
+            variant="primary" as={Link} to={Routes.photosent.path} >
 Ajouter entraineur             
             </Button>
           </Col>
@@ -81,7 +81,6 @@ Ajouter entraineur
               <th className="border-0">Grade </th>
               <th className="border-0">Photo </th>
               <th className="border-0">Degré </th>
-              <th className="border-0">Grade </th>
               <th className="border-0">Actions</th>
               {/* <th className="border-0">sexe</th>
               <th className="border-0">Club</th>

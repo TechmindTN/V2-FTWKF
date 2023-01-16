@@ -55,7 +55,8 @@ const handleSubmit = async (e) =>{
     setUsername('');
     setPassword('');
     setSuccess(true);
-    console.log(value.data)
+    
+    console.log(success);
     const token=value.data['token'];
     const id=value.data.user_data['id'];
     const username=value.data.user_data['username'];
@@ -84,25 +85,7 @@ const handleSubmit = async (e) =>{
 
   
 }
-// useEffect(() => {
-//     fetch(`https://6e73-197-14-10-36.eu.ngrok.io/api/athlete/?format=json`,{
-//       headers: {'Authentication':'BEARER ',  'Content-Type': 'application/x-www-form-urlencoded','Access-Control-Allow-Methods': 'Accept'},
-//       withCredentials: false
-//    })
-//       .then((response) => {
-        
-//         if (!response.ok) {
-//           throw new Error(
-//             `This is an HTTP error: The status is ${response.status}`
-//           );
-//         }
-//         return data=response.json();
-//       })
-//       .then((actualData) => console.log(actualData))
-//       .catch((err) => {
-//         console.log(err.message);
-//       });
-//   }, []);
+
  
   return (
     <> 

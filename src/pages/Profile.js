@@ -31,7 +31,6 @@ export const Profile = () =>  {
   const [mail, setMail] = useState();
   const [zip,setZip]= useState();
   const [img, setImg] = useState();
-  const imageUrl = "https://xsgames.co/randomusers/assets/avatars/male/2.jpg";
   const PROFILE_URL=`pro/${window.localStorage.getItem("id")}/`;
   const fetchImage = async () => {
     const res = await fetch(imageUrl);

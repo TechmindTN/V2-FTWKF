@@ -33,7 +33,7 @@ const history = useHistory()
 
 const submit = async (e) => {
   e.preventDefault();
-history.push('/tables/Athleteadd')
+history.push('/tables/EntAdd')
 
 }
 
@@ -125,7 +125,7 @@ function upload  (e)  {
         console.log(element)
         fd.append('file',element)
         fd.append("url",element);
-        fd.append("path","image/profile/");
+        fd.append("path","image/coach/identity");
         fd.append("user",localStorage.getItem('id'));
         fd.append("season",'2');
       }
@@ -139,7 +139,7 @@ function upload  (e)  {
     },})
     .then(function (response) {
       console.log(response.data.url);
-      localStorage.setItem("pr",response.data.url)
+      localStorage.setItem("ent",response.data.url)
     })
     .catch(function (error) {
       console.log(error);
@@ -155,7 +155,7 @@ function upload  (e)  {
           console.log(element)
           fd.append('file',element)
           fd.append("url",element);
-          fd.append("path","image/athlete/identity");
+          fd.append("path","image/coach/degree");
           fd.append("user",localStorage.getItem('id'));
           fd.append("season",'2');
         }
@@ -169,7 +169,7 @@ function upload  (e)  {
       },})
       .then(function (response) {
         console.log(response);
-        localStorage.setItem("iden",response.data.url)
+        localStorage.setItem("deg",response.data.url)
       })
       .catch(function (error) {
         console.log(error);
@@ -185,7 +185,7 @@ function upload  (e)  {
             console.log(element)
             fd.append('file',element)
             fd.append("url",element);
-            fd.append("path","image/athlete/photo");
+            fd.append("path","image/coach/grade");
             fd.append("user",localStorage.getItem('id'));
             fd.append("season",'2');
           }
@@ -199,7 +199,7 @@ function upload  (e)  {
         },})
         .then(function (response) {
           console.log(response);
-          localStorage.setItem("ph",response.data.url)
+          localStorage.setItem("gr",response.data.url)
         })
         .catch(function (error) {
           console.log(error);
@@ -215,7 +215,7 @@ function upload  (e)  {
               console.log(element)
               fd.append('file',element)
               fd.append("url",element);
-              fd.append("path","image/athlete/medical");
+              fd.append("path","image/coach/photo");
               fd.append("user",localStorage.getItem('id'));
               fd.append("season",'2');
             }
@@ -228,7 +228,7 @@ function upload  (e)  {
             setProgress3(Math.round((100 * data.loaded) / data.total))
           },})
           .then(function (response) {
-            localStorage.setItem("mid",response.data.url);
+            localStorage.setItem("ph",response.data.url);
             
           })
           .catch(function (error) {
@@ -259,7 +259,7 @@ function upload  (e)  {
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
      
-          <h5 className="mb-4">Ajouter  pieces jointes pour athlete </h5>
+          <h5 className="mb-4">Ajouter  pieces jointes pour entraineur </h5>
           <div className="text-center"><p>{success}</p></div>
        <Row>
           {/* <Col>
@@ -273,7 +273,7 @@ function upload  (e)  {
             
     
             <div className="App">
-            <h5>Photo de profile :</h5>
+            <h5>Photo d'identité' :</h5>
             <input type="file" onChange={upload} required  />
             <img src={file}  height={80}/><br/>
             {/* {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />} */}
@@ -288,7 +288,7 @@ function upload  (e)  {
             <Col sm={3} className="mb-3">
             
             <div className="App">
-            <h5>Photo Identité  :</h5>
+            <h5>Photo Degré:  :</h5>
             <input type="file" onChange={upload1}   required/>
             <img src={file1}  height={80}/>
           
@@ -303,7 +303,7 @@ function upload  (e)  {
            
         
             <div className="App">
-            <h5> Image مضمون ولادة :</h5>
+            <h5> Photo Grade:</h5>
             <input type="file" onChange={upload2}  required/>
             <img src={file2}  height={80}/>
             
@@ -315,11 +315,11 @@ function upload  (e)  {
             </div><br></br>
         
             </Col>
-<Col  sm={3} className="mb-3">
+     <Col  sm={3} className="mb-3">
 
    
-    <h5>Fiche médicale:</h5>
-    <input type="file"onChange={upload3}   required />
+    <h5>Photo ملتقى المدربين :</h5>
+    <input type="file" onChange={upload3}   required />
     <img src={file3}  height={80}/>
 
     {/* {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />} */}

@@ -101,7 +101,7 @@ const handleSubmit = async (e) =>{
 
                 </div>
                 <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">Login successful {username}</h3>
+                  <h3 className="mb-0">Connexion réussie {username}</h3>
                 </div>
                 <p className="text-center">
             <Card.Link as={Link} to={Routes.DashboardOverview.path} className="text-gray-700">

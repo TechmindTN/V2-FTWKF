@@ -38,7 +38,7 @@ const EntUpd = () =>{
   const [progress4, setProgress4] = useState()
   const ent=localStorage.getItem("ent");
   const Ent_URL =`coach_info/${ent}/`
-  const Ents_URL=`edit_coach_profile/${ent}/`
+  
   useEffect(() => {
     axios.get(Ent_URL,{
       headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
@@ -49,22 +49,12 @@ const EntUpd = () =>{
       console.log(persons)
        setGrade(persons.coach.grade)
        setDegrees(persons.coach.degree)
-    //   setCategorie(persons.athlete.category_id)
-    //   setWeights(persons.athlete.weights)
-    //   SetNationality("Tunisienne")
-    //   setSelectedFile(persons.athlete.photo)
-    //   setIm2(persons.athlete.identity_photo)
-    //   setIm3(persons.athlete.medical_photo)
+  
        setCin(persons.profile.cin)
        setF_name(persons.profile.first_name)
        setL_name(persons.profile.last_name)
        setBirthday(persons.profile.birthday)
-    //   setRole(persons.profile.role)
-      // setAddresse(persons.profile.address)
-    //   setVille(persons.profile.city)
-    // setPhone(persons.profile.phone)
-   // setCode(persons.profile.zip_code)
-    // setGouv(persons.profile.state)
+  
     setFile1(persons.coach.identity_photo)
     setFile2(persons.coach.degree_photo)
     setFile3(persons.coach.grade_photo)
@@ -89,6 +79,7 @@ const EntUpd = () =>{
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress4(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
           localStorage.setItem('ph',url)
+          setFile4(`https://3462-197-14-10-36.eu.ngrok.io${url} `);
         }
           )    }catch(error) {      console.log(error)    }  }
           
@@ -106,7 +97,7 @@ const EntUpd = () =>{
            formData2,
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress3(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-          localStorage.setItem('gr',url)
+                setFile3(`https://3462-197-14-10-36.eu.ngrok.io${url} `);
         }
           )    }catch(error) {      console.log(error)    }  }
   const submit2 = async (e) => {
@@ -123,7 +114,7 @@ const EntUpd = () =>{
            formData2,
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress2(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-          localStorage.setItem('deg',url)
+                setFile2(`https://3462-197-14-10-36.eu.ngrok.io${url} `);
         }
           )    }catch(error) {      console.log(error)    }  }
   const submit1 = async (e) => {
@@ -140,8 +131,7 @@ const EntUpd = () =>{
            formData2,
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress1(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-          localStorage.setItem('ent',url)
-          ;        }          )        // window.location.href = "/tables/Athletes/"
+                setFile1(`https://3462-197-14-10-36.eu.ngrok.io${url} `);          ;        }          )        // window.location.href = "/tables/Athletes/"
     }catch(error) {      console.log(error)    }  }
   useEffect(() => {
     axios.get(PARAMETER_URL,``)
@@ -174,18 +164,18 @@ function handleFileSelect4(e) {
 
 const handlesubmit = async (e) => {
   e.preventDefault();
-  const token = localStorage.getItem("token");
-  
+  const formData = new FormData();
 try {
   const token = localStorage.getItem("token");
   const ent=localStorage.getItem('ent');
   const deg=localStorage.getItem('deg');
   const gr=localStorage.getItem('gr');
   const ph=localStorage.getItem('ph');
-
+  const Ents_URL=`edit_coach_profile/${ent}/`
     axios.put(
       Ents_URL
-      ,({'cin':cin,'photo':file4,'degree':Degrees,'grade_photo':file3,'identity_photo':file1,'degree_photo':file2,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'profile':profile,'grade':grade}),
+      ,({'coach':{'profile':profile,'grade':grade,'photo':file4,'degree':Degrees,'grade_photo':file3,'identity_photo':file1,'degree_photo':file2},
+      'profile':{'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'cin':cin}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     )
@@ -203,7 +193,7 @@ try {
   console.log(error)
 }
 
-localStorage.removeItem('ent');
+//localStorage.removeItem('ent');
 
  
 }

@@ -22,7 +22,7 @@ const Comp = ()=> {
           <h4>Liste des compétitions</h4>
           <Col md={12} >
           <Button
-            variant="primary"  as={Link} to={Routes.Sportadd.path} >
+            variant="primary"  as={Link} to={Routes.CompAdd.path} >
              Ajouter Compétition              
             </Button>
           </Col>

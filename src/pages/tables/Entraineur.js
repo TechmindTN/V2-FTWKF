@@ -105,13 +105,24 @@ Ajouter entraineur
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                 
-                axios.delete(`coach/${person.coach.id}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
-                'Access-Control-Allow-Origin':'Accept'} })
-                .then(res => {
-                  const persons = res.data;
-                  setState(persons);
-                  console.log(persons);
-                  window.location.reload(false);          
+              //   axios.delete(`coach/${person.coach.id}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+              //   'Access-Control-Allow-Origin':'Accept'} })
+              //   .then(res => {
+              //     const persons = res.data;
+              //     setState(persons);
+              //     console.log(persons);
+              //     window.location.reload(false);          
+              // })
+
+              axios
+              .delete(`coach/${person.coach.id}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+                 'Access-Control-Allow-Origin':'Accept'} })
+              .then(response => {
+                console.log("deleted successfully!")
+                window.location.reload(false);
+              })
+              .catch(error => {
+                console.log("Something went wrong", error)
               })
            
                  

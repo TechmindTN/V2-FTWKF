@@ -23,7 +23,7 @@ const Licenceadd = () =>{
   const[cin,setCin]=useState();
   const[username,setUsername]=useState();
 
-  const[password,setPassword]=useState();
+  const[phone,setPhone]=useState();
 
   const[first_name, setF_name] = useState () ;
   const[last_name, setL_name] = useState();
@@ -156,8 +156,8 @@ try {
   const ph=localStorage.getItem('ph');
 
   axios.post(
-    ENT_URL,({'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://3462-197-14-10-36.eu.ngrok.io${ph} `,'degree':Degrees,
-      'grade_photo':`https://3462-197-14-10-36.eu.ngrok.io${gr} `,'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${ent} `,'degree_photo':`https://3462-197-14-10-36.eu.ngrok.io${deg} `},'user':{'username':username,'password':password}}),
+    ENT_URL,({'profile':{'phone':phone,'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://3462-197-14-10-36.eu.ngrok.io${ph} `,'degree':Degrees,
+      'grade_photo':`https://3462-197-14-10-36.eu.ngrok.io${gr} `,'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${ent} `,'degree_photo':`https://3462-197-14-10-36.eu.ngrok.io${deg} `},'user':{'username':phone,'password':phone}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} }
     ).then((value) =>{
@@ -235,29 +235,9 @@ try {
               </Col> */}
               <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
-              <Col md={4} className="mb-3">
-                <Form.Group id="cin">
-                  <Form.Label>Username</Form.Label>    
-                  <Form.Control  type="text" id="cin" name="cin"
-                     value={username }    onChange={(e) =>setUsername(e.target.value)} 
-                 
-                  />
-                </Form.Group>
-                 
-              </Col>
-              <Col md={4} className="mb-3">
-                <Form.Group id="cin">
-                  <Form.Label>Password</Form.Label>    
-                  <Form.Control  type="text" id="cin" name="cin"
-                     value={password }    onChange={(e) =>setPassword(e.target.value)} 
-                 
-                  />
-                </Form.Group>
-                 
-              </Col>
             <Col md={4} className="mb-3">
                 <Form.Group id="cin">
-                  <Form.Label>CIN</Form.Label>    
+                  <Form.Label>CIN ب ت و</Form.Label>    
                   <Form.Control  type="text" id="cin" name="cin" placeholder="cin" 
                      value={cin }    onChange={(e) =>setCin(e.target.value)} 
                  
@@ -267,7 +247,7 @@ try {
               </Col>
               <Col md={4} className="mb-3">
                 <Form.Group id="firstname">
-                  <Form.Label>Nom</Form.Label>
+                  <Form.Label>Nom اسم</Form.Label>
                   <Form.Control  type="text" id="nom" name="nom" 
                      value={first_name }    onChange={(e) =>setF_name(e.target.value)} 
                  
@@ -276,8 +256,8 @@ try {
               </Col>
               <Col md={4} className="mb-3">
                 <Form.Group id="lastName">
-                  <Form.Label>Prénom</Form.Label>
-                  <Form.Control  type="text" id="prenom" name="prenom" placeholder="prenom" 
+                  <Form.Label>Prénom لقب</Form.Label>
+                  <Form.Control  type="text" id="prenom" name="prenom" 
                      value={last_name }    onChange={(e) =>setL_name(e.target.value)} 
                  
                   />
@@ -286,10 +266,19 @@ try {
             </Row>
             <Row className="align-items-center">
           
-            
+            <Col md={4} className="mb-3">
+                <Form.Group id="cin">
+                  <Form.Label>Telephone هاتف</Form.Label>    
+                  <Form.Control  type="text" id="cin" name="cin"
+                     value={phone }    onChange={(e) =>setPhone(e.target.value)} 
+                 
+                  />
+                </Form.Group>
+                 
+              </Col>
             <Col md={4} className="mb-3">
                 <Form.Group id="sex">
-                  <Form.Label>sex</Form.Label>
+                  <Form.Label>sex جنس</Form.Label>
                   <Form.Select id="sex"  name="sex"
                                   autoComplete="off" value={sex}  onChange={(e) =>setSex(e.target.value)}
                   >
@@ -301,7 +290,7 @@ try {
               </Col>
               <Col md={4} className="mb-3">
               <Form.Group id="birthday"  name="birthday" >
-                <Form.Label>Date de naissance</Form.Label>
+                <Form.Label>Date de naissance تاريخ الميلاد</Form.Label>
                 <Datetime
                   timeFormat={false}
                   onChange={setBirthday}
@@ -319,7 +308,7 @@ try {
               </Form.Group>
             </Col>
             <Col md={4} className="mb-3">
-            <Form.Label>Grade</Form.Label>
+            <Form.Label>Grade رتبة</Form.Label>
             <Form.Select id="grade"  name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
@@ -334,7 +323,7 @@ try {
          
           
                   <Col md={4} className="mb-3">
-            <Form.Label>Degré</Form.Label>
+            <Form.Label>Degré درجة </Form.Label>
             <Form.Select id="grade"  name="grade"  value={Degrees}  onChange={(e) =>setDegrees(e.target.value)}
                                   autoComplete="off" >
                                     {state3.map((person) => (<>

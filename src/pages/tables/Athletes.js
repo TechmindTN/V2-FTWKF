@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
+import { Link, useHistory  } from "react-router-dom";
 
 import axios from "../examples/api/axios";
 const ATHLETE_URL='athletelist_info/';
 const Athletes = () =>{
+const history = useHistory()
+
   // localStorage.removeItem('iden');
   // localStorage.removeItem('pr');
   // localStorage.removeItem('im');
@@ -98,7 +100,7 @@ function handleChange(e) {
           </thead>
           <tbody>
           {state.map(person => (
-        <><tr>
+        <><tr key={person.athlete.id}>
                         <td className="border-0 ">{person.athlete.id}</td>
 
               <td className="border-0 ">{person.profile.cin}</td>
@@ -118,22 +120,31 @@ function handleChange(e) {
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                  
-                axios.delete(`athlete/${person.athlete.id}/`, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
-                'Access-Control-Allow-Origin':'Accept'} })
-                .then(
-                  res => {
-                    const num_licences =person.athlete.id;
-                   
-                    console.log(num_licences);
-                    setState([...state, num_licences]);
-                    const persons = res.data;
-                  
-                    console.log(persons);
-                    window.location.reload(true);
-                }
+              //   axios.delete(`athlete/${person.athlete.id}/`, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+              //   'Access-Control-Allow-Origin':'Accept'} })
+              //   .then(res => {
+              //     const num_licences =person.athlete.id;
+                 
+              //     console.log(num_licences);
+              //     setState([...state, num_licences]);
+              //     const persons = res.data;
+                
+              //     console.log(persons);
+              //     history.push('/tables/ArrAdd')
 
-
-                    )                 
+              // })    
+              
+  
+  axios
+    .delete(`athlete/${person.athlete.id}/`, { headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+       'Access-Control-Allow-Origin':'Accept'}})
+    .then(response => {
+      console.log("deleted successfully!")
+      window.location.reload(false);
+    })
+    .catch(error => {
+      console.log("Something went wrong", error)
+    })
               )}>Supprimer 
               </Button> &nbsp;
               <Button variant="primary" className="my-0"  as={Link} to={Routes.AthleteUpd.path} onClick={() => setShowDefault(

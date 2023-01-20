@@ -1,7 +1,7 @@
 
 import React, {useState, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faEdit, faEllipsisH, faExternalLinkAlt, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBell,faBellSlash ,faAngleDown, faAngleUp, faArrowDown, faArrowUp, faEdit, faEllipsisH, faExternalLinkAlt, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ import transactions from "../data/transactions";
 import commands from "../data/commands";
 import axios from "../pages/examples/api/axios";
 import logo from "../assets/img/logo-ftwkf.png";
+import { ContentCutOutlined } from "@mui/icons-material";
 
 const CLUB_URL='club/'
 const SPORT_URL='discipline/';
@@ -191,7 +192,7 @@ useEffect(() => {
     console.log(state)
 
 })},[])
-  const[id,setId]=useState([])
+ // const[id,setId]=useState([])
   const TableRow = (props) => {
     const { country, countryImage, overallRank, overallRankChange, travelRank, travelRankChange, widgetsRank, widgetsRankChange } = props;
 
@@ -492,7 +493,8 @@ const COMP_URL="competition/";
 export const CompTable = () => {
 
   const [state,setState]=useState([])
-    useEffect(() => {
+  const [showDefault, setShowDefault] = useState(false);
+  useEffect(() => {
       axios.get(COMP_URL)
       .then(res => {
         const persons = res.data;
@@ -528,7 +530,10 @@ export const CompTable = () => {
               <td className="border-0 ">{person.max_participants}</td>
               <td className="border-0 ">{person.season}</td>
               <td className="border-0 ">{person.duration}</td>
-              <td className="border-0 "><Button> Modifier</Button></td>
+              <td className="border-0 ">
+              <Button variant="primary" className="my-0"  as={Link} to={Routes.CompUpd.path} onClick={() => setShowDefault(
+                localStorage.setItem("comp",person.id)
+             )}>Modifier</Button></td>
               
               {/* <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
 
@@ -757,21 +762,19 @@ export const PoidsTable = () => {
     </Card>
   );
 };
+const token = localStorage.getItem("token");
 
 export const SaisonTable = () => {
+  const [activated, setActivated]=useState([])
   const [state,setState]=useState([])
     useEffect(() => {
       axios.get(SAISON_URL)
       .then(res => {
         const saison=res.data;
-        console.log(saison);
-        setState(saison);
-        // if(saison.activated ===false){
-        //   state("Disactive")
-        //  } else {
-        //   state("Activé")
 
-        //  }
+      
+         setState(saison);
+     
     
     })},[])
   const TableRow = (props) => {
@@ -821,8 +824,30 @@ export const SaisonTable = () => {
         <><tr>
               <td className="border-0 ">{person.id}</td>
               <td className="border-0 ">{person.Seasons}</td>
-              <td className="border-0 ">{person.activated}</td>
-              <td className="border-0 "> <Button variant="primary" className="my-0" >Modifier</Button></td>
+              <td className="border-0 "> 
+              {(() => {
+                switch (person.activated) {
+                  case     false: return  <FontAwesomeIcon icon={faBellSlash} color={"red"}  /> ;
+                  case     true:  return <FontAwesomeIcon icon={faBell} color={"green"}  />;
+                  default:        return "--";
+                }
+              })()}    
+              </td><td className="border-0 "><Button onClick={(e) => setActivated(
+                axios.put(`activate_season/${person.id}/`,{ headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'}})
+                .then(response => {
+                  console.log("deleted successfully!")
+                  window.location.reload(false);
+                })
+                .catch(error => {
+                  console.log("Something went wrong", error)
+                })
+              )}>Activé</Button> &nbsp;
+
+
+
+               {/* <Button variant="primary" className="my-0" >Modifier</Button>*/}
+               </td> 
               
               {/* <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
 

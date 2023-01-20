@@ -15,7 +15,7 @@ export const Sidebar = () => {
   const [username, setRol] = useState('');
 
   useEffect(() => {
-    setRol(JSON.parse(window.sessionStorage.getItem("username")));
+    setRol(localStorage.getItem("username"));
   }, []);
 
 
@@ -92,9 +92,9 @@ export const Sidebar = () => {
                   <Image src={ProfilePicture} className="card-img-top rounded-circle " />
                 </div>
                 <div className="d-block">
-                  <h6>Hi, Jane</h6>
+                  <h6>{username}</h6>
                   <Button as={Link} variant="secondary" size="xs" to={Routes.Signin.path} className="text-dark">
-                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Sign Out
+                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Déconnecter
                   </Button>
                 </div>
               </div>
@@ -103,7 +103,7 @@ export const Sidebar = () => {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
-              <Image src={logo} width={100} height={100}  /> <p> {username}</p>
+              <Image src={logo} width={100} height={100}  /> 
     
               <NavItem title="Acceuil" link={Routes.DashboardOverview.path} icon={faChartPie} />
               {/* <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} /> */}

@@ -1,11 +1,13 @@
 
 import React , {useEffect,useState,useRef} from "react";
-
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
 import { Link, useHistory  } from "react-router-dom";
 import { Routes } from "../../routes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
-import { Form, Col, Row, Card, Button, InputGroup,ProgressBar } from '@themesberg/react-bootstrap';
+
+import { Form, Col, Row, Card, Button, Modal} from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
 const PARAMETER_URL='parameters/';
@@ -14,6 +16,15 @@ const ATHLETE_URL='add_athlete/';
 import 'react-dropzone-uploader/dist/styles.css'
 const Image_url='upload_photo/'
 const Athleteadd = () =>{
+const [showDefault, setShowDefault] = useState(false);
+const [showDefault1, setShowDefault1] = useState(false);
+const [showDefault2, setShowDefault2] = useState(false);
+const [showDefault3, setShowDefault3] = useState(false);
+const handleClose = () => setShowDefault(false);
+const handleClose1 = () => setShowDefault1(false);
+const handleClose2 = () => setShowDefault2(false);
+const handleClose3= () => setShowDefault3(false);
+
 const [selectedFile, setSelectedFile] = React.useState(null);
 const [selectedFile1, setSelectedFile1] = React.useState(null);
 const [selectedFile2, setSelectedFile2] = React.useState(null);
@@ -27,7 +38,8 @@ const [file1, setFile1] = useState();
 const [file2, setFile2] = useState();
 const [file3, setFile3] = useState();
 const[success, setSuccess] = useState (false) ;
-
+const [isOpen, setIsOpen] = useState(false);
+const [imgIndex, setImgIndex] = useState(0);
 
 const history = useHistory()
 
@@ -167,11 +179,10 @@ function upload  (e)  {
         //Set the progress value to show the progress bar
         setProgress1(Math.round((100 * data.loaded) / data.total))
       },})
-      .then(function (response) {
-        console.log(response);
+      .then((response) => {
         localStorage.setItem("iden",response.data.url)
       })
-      .catch(function (error) {
+      .catch( (error)=> {
         console.log(error);
       });
       }
@@ -197,13 +208,17 @@ function upload  (e)  {
           //Set the progress value to show the progress bar
           setProgress2(Math.round((100 * data.loaded) / data.total))
         },})
-        .then(function (response) {
+        .then((response)=> {
           console.log(response);
           localStorage.setItem("ph",response.data.url)
+          
+   
         })
-        .catch(function (error) {
+        .catch( (error)=> {
           console.log(error);
-        });
+        })
+      //  const ph= localStorage.getItem("ph")
+      //   setFile(`https://3462-197-14-10-36.eu.ngrok.io${ph} `);
         }
         function uploadHandler3  () {
 
@@ -227,11 +242,11 @@ function upload  (e)  {
             //Set the progress value to show the progress bar
             setProgress3(Math.round((100 * data.loaded) / data.total))
           },})
-          .then(function (response) {
+          .then((response) =>{
             localStorage.setItem("mid",response.data.url);
             
           })
-          .catch(function (error) {
+          .catch((error)=> {
             console.log(error);
           });
           }
@@ -260,6 +275,8 @@ function upload  (e)  {
         <Card.Body>
      
           <h5 className="mb-4">Ajouter  pieces jointes pour athlete </h5>
+
+          
           <div className="text-center"><p>{success}</p></div>
        <Row>
           {/* <Col>
@@ -273,9 +290,9 @@ function upload  (e)  {
             
     
             <div className="App">
-            <h5>Photo de profile :</h5>
+            <h5>Photo de profile : صورة شمسية</h5>
             <input type="file" onChange={upload} required  />
-            <img src={file}  height={80}/><br/>
+            <img src={file}  height={80} onClick={() => setShowDefault(true)}/><br/>
             {/* {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />} */}
         </div>
     
@@ -285,12 +302,24 @@ function upload  (e)  {
             
            
             </Col>
+ 
+              <React.Fragment>
+
+                <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
+                
+                  <Modal.Body>
+                
+                  <img src={file}  height={400}/>
+                  </Modal.Body>
+                 
+                </Modal>
+              </React.Fragment>
             <Col sm={3} className="mb-3">
             
             <div className="App">
-            <h5>Photo Identité  :</h5>
+            <h5>Photo Identité  : ب ت و</h5>
             <input type="file" onChange={upload1}   required/>
-            <img src={file1}  height={80}/>
+            <img src={file1}  height={80} onClick={() => setShowDefault1(true)}/>
           
             {/* {progress1 && <ProgressBar   now={progress1} label={`${progress1}%`} style={{ height: 20}} />} */}
         </div>
@@ -299,13 +328,24 @@ function upload  (e)  {
               {/* <Button variant="primary" type="submit">Enregistrer</Button> */}
             </div><br></br>
             </Col>
+            <React.Fragment>
+
+<Modal as={Modal.Dialog} centered show={showDefault1} onHide={handleClose1}>
+
+  <Modal.Body>
+
+  <img src={file1}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>
             <Col sm={3} className="mb-3">
            
         
             <div className="App">
             <h5> Image مضمون ولادة :</h5>
             <input type="file" onChange={upload2}  required/>
-            <img src={file2}  height={80}/>
+            <img src={file2}  height={80} onClick={() => setShowDefault2(true)}/>
             
             {/* {progress2 && <ProgressBar   now={progress2} label={`${progress2}%`} style={{ height: 20}} />} */}
         </div>
@@ -315,13 +355,34 @@ function upload  (e)  {
             </div><br></br>
         
             </Col>
+            <React.Fragment>
+
+<Modal as={Modal.Dialog} centered show={showDefault2} onHide={handleClose2}>
+
+  <Modal.Body>
+
+  <img src={file2}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>
 <Col  sm={3} className="mb-3">
 
    
-    <h5>Fiche médicale:</h5>
+    <h5>Fiche médicale: استمارة طبية</h5>
     <input type="file"onChange={upload3}   required />
-    <img src={file3}  height={80}/>
+    <img src={file3}  height={80}  onClick={() => setShowDefault3(true)}/>
+    <React.Fragment>
 
+                <Modal as={Modal.Dialog} centered show={showDefault3} onHide={handleClose3}>
+                
+                  <Modal.Body>
+                
+                  <img src={file3}  height={400}/>
+                  </Modal.Body>
+                 
+                </Modal>
+              </React.Fragment>
     {/* {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />} */}
 
 <div className="mt-3" >

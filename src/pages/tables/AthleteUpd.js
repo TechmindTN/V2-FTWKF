@@ -207,19 +207,7 @@ const im=localStorage.getItem('im');
 const mid=localStorage.getItem('mid');
 const handlesubmit = async (e) => {
   e.preventDefault();
-  const formData = new FormData();
-  formData.append("first_name", first_name);
-  formData.append("last_name", last_name);
-  formData.append("cin", cin);
-  formData.append("birthday", birthday);
-  formData.append("sex", sexe);
-  formData.append("category_id", categorie);
-  formData.append("weights", weights);
-  formData.append("nationality", nationality);
-  formData.append("grade_id", grade);
-  formData.append("photo",im1);
-  formData.append("identity_photo",im2);
-  formData.append("medical_photo",im3);
+
 try {
   const token = localStorage.getItem("token");
   const mid=localStorage.getItem('mid');
@@ -235,7 +223,7 @@ try {
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>Athlete modifié</div></div>);
    // window.location.href = "http://localhost:3000/#/tables/Athletes";
-    localStorage.removeItem("at");
+    //localStorage.removeItem("at");
  
 }catch(error) {
   console.log(error)

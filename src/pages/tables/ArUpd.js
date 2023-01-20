@@ -87,7 +87,7 @@ const handlesubmit = async (e) => {
 try {  const token = localStorage.getItem("token");
 const ar= localStorage.getItem('ar')
 const gr= localStorage.getItem('gr')
-    axios.post(ARBITRE_URL,({'arbitrator':{'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${ar} `,'photo':`https://3462-197-14-10-36.eu.ngrok.io${gr} `,'grade':'2'},'profile':{'phone':phone,'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie"},'user':{'password':phone,'username':phone}}),
+    axios.post(ARBITRE_URL,({'arbitrator':{'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${ar} `,'photo':`https://3462-197-14-10-36.eu.ngrok.io${gr} `,'grade':'2'},'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie"},'user':{'password':password,'username':username}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },)
     setSuccess("Arbitre ajouté"); 
@@ -101,7 +101,24 @@ const gr= localStorage.getItem('gr')
           <h5 className="mb-4">Ajouter Arbitre </h5>
          <Form onSubmit={handlesubmit}>
           <div className="text-center"><p>{success}</p></div>
-         
+          <Row>
+              <Col md={4} className="mb-3">
+                <Form.Group id="username">
+                  <Form.Label>username</Form.Label>    
+                  <Form.Control  type="text" id="username" name="username" 
+                     value={username }    onChange={(e) =>setUsername(e.target.value)}                                    />
+                </Form.Group>
+                 
+              </Col>
+        
+              <Col md={4} className="mb-3">
+                <Form.Group id="pwd">
+                  <Form.Label>Mot de passe</Form.Label>
+                  <Form.Control  type="text" id="pwd" name="pwd"  value={password } onChange={(e) =>setPassword(e.target.value)} />
+                </Form.Group>
+              </Col>
+            
+            </Row>
             <Row>
             <Col md={3} className="mb-3">
                 <Form.Group id="cin">
@@ -210,7 +227,7 @@ const gr= localStorage.getItem('gr')
             </div>
           </Form><br/>
           
-          {/* <Row>
+          <Row>
           <Form onSubmit={submit}>
               <Col md={6} className="mb-3">
                 <Form.Group id="cin">
@@ -239,7 +256,7 @@ const gr= localStorage.getItem('gr')
               
             </Form>
 
-            </Row> */}
+            </Row>
         </Card.Body>
       </Card>
     );

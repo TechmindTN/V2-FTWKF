@@ -156,7 +156,7 @@ const submit2 = async (e) => {
           },},
       ).then((value) => {
         const url= value.data.url;
-        localStorage.setItem('im',url) 
+        localStorage.setItem('ph',url) 
       }
         )
   }catch(error) {
@@ -196,18 +196,18 @@ try {
   const token = localStorage.getItem("token");
   const iden=localStorage.getItem('iden');
   const pr=localStorage.getItem('pr');
-  const im=localStorage.getItem('im');
+  const ph=localStorage.getItem('ph');
   const mid=localStorage.getItem('mid');
 
     axios.post(
       ATHLETE_URL,
-      ({'athlete':{'id_degree':degree,'medical_photo':`https://3462-197-14-10-36.eu.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${iden} `,'photo':`https://3462-197-14-10-36.eu.ngrok.io${ph} `},'user':{'username':username,'password':password},'profile':{'first_name':first_name,'last_name':last_name,
+      ({'athlete':{'id_degree':degree,'medical_photo':`https://3462-197-14-10-36.eu.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${iden} `,'photo':`https://3462-197-14-10-36.eu.ngrok.io${ph} `},'user':{'username':phone,'password':phone},'profile':{'first_name':first_name,'last_name':last_name,
       'country':'Tunisie','state':states,'city':city,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
-    'cin':cin,'role':role,'profile_photo':`https://3462-197-14-10-36.eu.ngrok.io${pr} `}
+    'cin':cin,'role':'2','profile_photo':`https://3462-197-14-10-36.eu.ngrok.io${pr} `}
       }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
-    )
+    ) 
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>
     Athlete ajouté avec succès 
@@ -254,7 +254,7 @@ function handleFileSelect3(e) {
         <Card.Body>
           <h5 className="mb-4">Ajouter athlete </h5>
           <div className="text-center"><p>{success}</p></div>
-          <Row>
+          {/* <Row>
           <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Nom utilisateur</Form.Label>
@@ -285,11 +285,11 @@ function handleFileSelect3(e) {
                   </Form.Select>
                 </Form.Group>
           </Col>
-          </Row>
+          </Row> */}
             <Row>
             <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
-                  <Form.Label>CIN</Form.Label>
+                  <Form.Label>CIN ب ت و</Form.Label>
                   <Form.Control   type="text" id="cin" name="cin" 
                   value={cin }  onChange={(e) =>setCin(e.target.value)}
                  
@@ -298,7 +298,7 @@ function handleFileSelect3(e) {
               </Col>
               <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
-                  <Form.Label>Nom</Form.Label>
+                  <Form.Label>Nom اسم</Form.Label>
                   <Form.Control   type="text" id="first_name" name="first_name" placeholder="Nom" 
                      value={first_name }    onChange={(e) =>setFname(e.target.value)} 
                  
@@ -307,7 +307,7 @@ function handleFileSelect3(e) {
               </Col>
               <Col md={4} className="mb-3">
                 <Form.Group id="lastName">
-                  <Form.Label>Prénom</Form.Label>
+                  <Form.Label>Prénom لقب</Form.Label>
                   <Form.Control   type="text" id="last_name" name="last_name" placeholder="Prénom"
                            value={last_name}     onChange={(e) =>setLname(e.target.value)}
                          
@@ -318,7 +318,7 @@ function handleFileSelect3(e) {
             <Row className="align-items-center">
               <Col md={4} className="mb-3">
                 <Form.Group id="birthday"  name="birthday" >
-                  <Form.Label>Date de naissance</Form.Label>
+                  <Form.Label>Date de naissance تاريخ الميلاد</Form.Label>
                   <Datetime 
                   timeFormat={false}
                   onChange={setBirthday}
@@ -337,7 +337,7 @@ function handleFileSelect3(e) {
               </Col>
               <Col md={4} className="mb-3">
                 <Form.Group id="sex">
-                  <Form.Label>Sexe</Form.Label>
+                  <Form.Label>Sexe جنس</Form.Label>
                   <Form.Select id="sex"  name="sex"
                                   autoComplete="off" value={sexe}  onChange={(e) =>setSexe(e.target.value)}
                   >
@@ -350,7 +350,7 @@ function handleFileSelect3(e) {
               <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>Téléphone</Form.Label>
+                    <Form.Label>Téléphone هاتف</Form.Label>
                     <Form.Control   type="text" id="phone" name="phone"
                            value={phone}     onChange={(e) =>setPhone(e.target.value)}
                          
@@ -364,7 +364,7 @@ function handleFileSelect3(e) {
           <Col sm={4} className="mb-3">
           
           <Form.Group id="category">
-                  <Form.Label>Ville</Form.Label>
+                  <Form.Label>Ville مدينة</Form.Label>
                   <Form.Control   type="text" id="ville" name="ville"
                            value={city}     onChange={(e) =>setCity(e.target.value)}
                          
@@ -374,7 +374,7 @@ function handleFileSelect3(e) {
           <Col sm={4} className="mb-3">
           
           <Form.Group id="category">
-                  <Form.Label>Addresse</Form.Label>
+                  <Form.Label>Addresse عنوان</Form.Label>
                   <Form.Control   type="text" id="addresse" name="addresse" 
                            value={addresse}     onChange={(e) =>setAddresse(e.target.value)}
                          
@@ -386,7 +386,7 @@ function handleFileSelect3(e) {
           <Col sm={4} className="mb-3">
             
             <Form.Group id="zip_code">
-                    <Form.Label>Zip_code</Form.Label>
+                    <Form.Label>Zip_code ترقيم البريدي</Form.Label>
                    <Form.Control   type="text" id="zip_code" name="zip_code" 
                            value={zip_code}     onChange={(e) =>setZip(e.target.value)}
                          
@@ -397,7 +397,7 @@ function handleFileSelect3(e) {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>Gouvernerat</Form.Label>
+                    <Form.Label>Gouvernerat ولاية</Form.Label>
                     <Form.Control   type="text" id="last_name" name="last_name"
                            value={states}     onChange={(e) =>setStates(e.target.value)}
                          
@@ -406,7 +406,7 @@ function handleFileSelect3(e) {
             </Col>
             <Col sm={4} className="mb-3">
                 <Form.Group id="weights">
-                  <Form.Label>Poids</Form.Label>
+                  <Form.Label>Poids وزن</Form.Label>
                   <Form.Select id="weight"  name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
                                   autoComplete="off" >
                                     {state3.map((person) => (<>
@@ -422,7 +422,7 @@ function handleFileSelect3(e) {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="grade">
-                    <Form.Label>Grade</Form.Label>
+                    <Form.Label>Grade رتبة</Form.Label>
                     <Form.Select id="grade"  name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
                                   autoComplete="off" >
                                     {state4.map((person) => (<>
@@ -435,7 +435,7 @@ function handleFileSelect3(e) {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>Catégorie</Form.Label>
+                    <Form.Label>Catégorie age العمر</Form.Label>
                     <Form.Select id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
@@ -449,7 +449,7 @@ function handleFileSelect3(e) {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="degree">
-                    <Form.Label>Degré</Form.Label>
+                    <Form.Label>Degré درجة</Form.Label>
                     <Form.Select id="degree"  name="degree"  value={degree}  onChange={(e) =>setDegree(e.target.value)}
                                   autoComplete="off" >
                                     {state2.map((person) => (<>

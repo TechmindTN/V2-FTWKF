@@ -92,7 +92,9 @@ export const Profile = () =>  {
         <Card.Body>
         <Row>
           <Col md={10} className="mb-3">
-          <h5 className="mb-4">Informations Generales </h5></Col><img src={photo} style={{ width: 100, height: 80 }}alt="icons" />
+          <h5 className="mb-4">Informations Generales </h5></Col>
+          
+          {/* <img src={photo} style={{ width: 100, height: 80 }}alt="icons" /> */}
           <Col md={2} className="mb-3">
           <Button
             variant="primary" as={Link} to={Routes.EditeProfile.path} className="mb-4">

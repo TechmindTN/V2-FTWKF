@@ -10,12 +10,13 @@ import { Routes } from "../../routes";
 import axios from "../examples/api/axios";
 const ARBITRE_URL='arbitratorlist_info/';
 const Arbitre = () =>{
+  const token = localStorage.getItem("token");
+
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
 const [showDefaults, setShowDefaults] = useState();  
 const [state,setState]=useState([])
 useEffect(() => {
-  const token = localStorage.getItem("token");
   axios.get(ARBITRE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
   'Access-Control-Allow-Origin':'Accept'} })
   .then(res => {
@@ -94,18 +95,20 @@ Ajouter arbitre
               <td className="border-0 "><img src={person.arbitrator.photo} height={80} width={80}/></td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
-                axios.put(`validateLicence/${person.id}/`)
-                .then(res => {
-                  const persons = res.data;
-                  setState(persons);
-                  console.log(persons);
-              
-              })
+                axios.delete(`arbitrator/${person.arbitrator.id}/`,{ headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'}})
+                .then(response => {
+                  console.log("deleted successfully!")
+                  window.location.reload(false);
+                })
+                .catch(error => {
+                  console.log("Something went wrong", error)
+                })
            
                  
-              )}>Details 
+              )}>Supprimer 
               </Button> &nbsp;
-              <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
+              <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Modifier {person.id}</Button></td>
              
               <React.Fragment>
 

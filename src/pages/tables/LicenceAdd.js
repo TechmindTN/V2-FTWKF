@@ -89,7 +89,7 @@ try {
         'Access-Control-Allow-Origin':'Accept'} },
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
-    <div>Licence added</div></div>);
+    <div>Licence Ajouté</div></div>);
    // window.location.href = "dashboard/tables/Licence";
 }catch(error) {
   console.log(error)
@@ -111,18 +111,18 @@ try {
         </>))} */}
           <Form onSubmit={handlesubmit}>
           <div className="text-center"><p>{success}</p></div>
-          <Row>
+          {/* <Row>
 
           <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Nom</Form.Label>    
-                  <Form.Control  type="text" placeholder="nom" id="nom"  name="nom"
+                  <Form.Control required  type="text" placeholder="nom" id="nom"  name="nom"
            autoComplete="off" value={nom}  onChange={(e) =>setNom(e.target.value)}
                     />
                  
                 </Form.Group>
               </Col>
-          </Row>
+          </Row> */}
             <Row>
             {/* <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
@@ -135,8 +135,8 @@ try {
               </Col> */}
             <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
-                  <Form.Label>Saison</Form.Label>    
-                  <Form.Select id="season"  name="season"  value={season}  onChange={(e) =>setSeason(e.target.value)}
+                  <Form.Label>Saison موسم</Form.Label>    
+                  <Form.Select id="season" required name="season"  value={season}  onChange={(e) =>setSeason(e.target.value)}
                                   autoComplete="off" >
                                     {state.map((person) => (<>
                               <option value={person.id}> 
@@ -147,8 +147,8 @@ try {
               </Col>
               <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
-                  <Form.Label>Dégre</Form.Label>
-                  <Form.Select id="Degree"  name="degree"  value={degree}  onChange={(e) =>setDegree(e.target.value)}
+                  <Form.Label>Dégre درجة</Form.Label>
+                  <Form.Select id="Degree" required  name="degree"  value={degree}  onChange={(e) =>setDegree(e.target.value)}
                                   autoComplete="off" >
                                     {state2.map((person) => (<>
                               <option value={person.id}> 
@@ -158,8 +158,8 @@ try {
               </Col>
               <Col md={4} className="mb-3">
                 <Form.Group id="lastName">
-                  <Form.Label>grade</Form.Label>
-                  <Form.Select id="grade"  name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
+                  <Form.Label>grade رتبة</Form.Label>
+                  <Form.Select id="grade" required name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
                                     {state4.map((person) => (<>
@@ -175,8 +175,8 @@ try {
             
               <Col sm={4} className="mb-3">
                 <Form.Group id="weights">
-                  <Form.Label>weights</Form.Label>
-                  <Form.Select id="weight"  name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
+                  <Form.Label>poid وزن</Form.Label>
+                  <Form.Select id="weight" required name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
                                     {state3.map((person) => (<>
@@ -194,8 +194,8 @@ try {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>category</Form.Label>
-                    <Form.Select id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
+                    <Form.Label>categorie age العمر</Form.Label>
+                    <Form.Select id="categorie" required name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
                                     {state5.map((person) => (<>
@@ -208,8 +208,8 @@ try {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>Club</Form.Label>
-                    <Form.Select id="club"  name="club"  value={club}  onChange={(e) =>setClub(e.target.value)}
+                    <Form.Label>Club النادي</Form.Label>
+                    <Form.Select id="club"  required name="club"  value={club}  onChange={(e) =>setClub(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
                                     {state6.map((person) => (<>
@@ -234,8 +234,8 @@ try {
             <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
-                    <Form.Label>Descipline</Form.Label>
-                    <Form.Select id="Disciplines"  name="Disciplines"  value={Disciplines}  onChange={(e) =>setDiscipline(e.target.value)}
+                    <Form.Label>Descipline الرياضة</Form.Label>
+                    <Form.Select id="Disciplines" required name="Disciplines"  value={Disciplines}  onChange={(e) =>setDiscipline(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
                                     {state7.map((person) => (<>
@@ -250,7 +250,7 @@ try {
             
             <Form.Group id="category">
                     <Form.Label>Profile</Form.Label>
-                    <Form.Select id="role"  name="role"  value={role}  onChange={(e) =>setRole(e.target.value)}
+                    <Form.Select id="role"  name="role" required value={role}  onChange={(e) =>setRole(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
                                     {state2.map((person) => (<>

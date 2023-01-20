@@ -76,7 +76,7 @@ export const Top = () => {
               <Form.Group id="topbarSearch">
                 <InputGroup className="input-group-merge search-bar">
                   <InputGroup.Text><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
-                  <Form.Control type="text" placeholder="Search" />
+                  <Form.Control type="text" placeholder="Rechercher" />
                 </InputGroup>
               </Form.Group>
             </Form>
@@ -115,10 +115,10 @@ export const Top = () => {
               </Dropdown.Toggle>
               <Dropdown.Menu className="user-dropdown dropdown-menu-right mt-2">
                 <Dropdown.Item className="fw-bold" as={Link} to={Routes.Profile.path}>
-                  <FontAwesomeIcon icon={faUserCircle} className="me-2"   /> My Profile
+                  <FontAwesomeIcon icon={faUserCircle} className="me-2"   /> Profile
                 </Dropdown.Item>
                 <Dropdown.Item className="fw-bold" as={Link} to={Routes.EditeProfile.path}>
-                  <FontAwesomeIcon icon={faCog} className="me-2" /> Settings
+                  <FontAwesomeIcon icon={faCog} className="me-2" /> Paramètres
                 </Dropdown.Item>
                 {/* <Dropdown.Item className="fw-bold">
                   <FontAwesomeIcon icon={faEnvelopeOpen} className="me-2" /> Messages
@@ -130,7 +130,7 @@ export const Top = () => {
                 <Dropdown.Divider />
 
                 <Dropdown.Item className="fw-bold" onClickCapture={logout}>
-                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
+                  <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Déconnecter
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

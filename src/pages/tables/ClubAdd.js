@@ -108,7 +108,7 @@ try {
 
     axios.post(
       CLUB_URL,
-      ({'club':{'name':club,'ligue':ligue,'logo':`https://3462-197-14-10-36.eu.ngrok.io${url} `},'user':{'username':username,'password':password},'profile':{'first_name':name,'last_name':Prenom,
+      ({'club':{'name':club,'ligue':ligue,'logo':`https://3462-197-14-10-36.eu.ngrok.io${url} `},'user':{'username':phone,'password':phone},'profile':{'first_name':name,'last_name':Prenom,
       'country':'Tunisie','state':state,'city':ville,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
       'cin':cin,'role':'7'}
       }),
@@ -135,7 +135,7 @@ try {
        
           <Form onSubmit={handlesubmit}>
           <div className="text-center"><p>{success}</p></div>
-          <Row>
+          {/* <Row>
           <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Nom utilisateur</Form.Label>
@@ -153,7 +153,7 @@ try {
                 </Form.Group>
               </Col>
               
-          </Row>
+          </Row> */}
             <Row>
             <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
@@ -170,8 +170,7 @@ try {
                   <Form.Select id="ligue"  name="ligue"  value={ligue}  onChange={(e) =>setLigue(e.target.value)}
                                   autoComplete="off" >
                                     {state2.map((person) => (<>
-                                      <option> 
-        </option> <option value={person.id}> 
+                                      <option value={person.id}> 
         {person.id}</option>    </>   ))}
                   </Form.Select>
                 </Form.Group>

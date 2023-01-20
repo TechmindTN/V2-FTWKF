@@ -5,7 +5,7 @@ import { Link, useHistory  } from "react-router-dom";
 import { Routes } from "../../routes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
-import { Form, Col, Row, Card, Button, InputGroup,ProgressBar } from '@themesberg/react-bootstrap';
+import { Form, Col, Row, Card, Button,Modal  } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
 const PARAMETER_URL='parameters/';
@@ -27,7 +27,14 @@ const [file1, setFile1] = useState();
 const [file2, setFile2] = useState();
 const [file3, setFile3] = useState();
 const[success, setSuccess] = useState (false) ;
-
+const [showDefault, setShowDefault] = useState(false);
+const [showDefault1, setShowDefault1] = useState(false);
+const [showDefault2, setShowDefault2] = useState(false);
+const [showDefault3, setShowDefault3] = useState(false);
+const handleClose = () => setShowDefault(false);
+const handleClose1 = () => setShowDefault1(false);
+const handleClose2 = () => setShowDefault2(false);
+const handleClose3= () => setShowDefault3(false);
 
 const history = useHistory()
 
@@ -273,9 +280,20 @@ function upload  (e)  {
             
     
             <div className="App">
-            <h5>Photo d'identité' :</h5>
+            <h5>Photo d'identité' : صورة شمسية</h5>
             <input type="file" onChange={upload} required  />
-            <img src={file}  height={80}/><br/>
+            <img src={file}  height={80} onClick={() => setShowDefault(true)}/><br/>
+            <React.Fragment>
+
+<Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
+
+  <Modal.Body>
+
+  <img src={file}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>
             {/* {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />} */}
         </div>
     
@@ -288,10 +306,20 @@ function upload  (e)  {
             <Col sm={3} className="mb-3">
             
             <div className="App">
-            <h5>Photo Degré:  :</h5>
+            <h5>Photo Degré:  درجة</h5>
             <input type="file" onChange={upload1}   required/>
-            <img src={file1}  height={80}/>
-          
+            <img src={file1}  height={80} onClick={() => setShowDefault1(true)}/>
+            <React.Fragment>
+
+<Modal as={Modal.Dialog} centered show={showDefault1} onHide={handleClose1}>
+
+  <Modal.Body>
+
+  <img src={file1}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>
             {/* {progress1 && <ProgressBar   now={progress1} label={`${progress1}%`} style={{ height: 20}} />} */}
         </div>
       
@@ -303,10 +331,20 @@ function upload  (e)  {
            
         
             <div className="App">
-            <h5> Photo Grade:</h5>
+            <h5> Photo Grade: رتبة</h5>
             <input type="file" onChange={upload2}  required/>
-            <img src={file2}  height={80}/>
-            
+            <img src={file2}  height={80} onClick={() => setShowDefault2(true)}/>
+            <React.Fragment>
+
+<Modal as={Modal.Dialog} centered show={showDefault2} onHide={handleClose2}>
+
+  <Modal.Body>
+
+  <img src={file2}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>
             {/* {progress2 && <ProgressBar   now={progress2} label={`${progress2}%`} style={{ height: 20}} />} */}
         </div>
        
@@ -320,8 +358,18 @@ function upload  (e)  {
    
     <h5>Photo ملتقى المدربين :</h5>
     <input type="file" onChange={upload3}   required />
-    <img src={file3}  height={80}/>
+    <img src={file3}  height={80} onClick={() => setShowDefault3(true)}/>
+    <React.Fragment>
 
+<Modal as={Modal.Dialog} centered show={showDefault3} onHide={handleClose3}>
+
+  <Modal.Body>
+
+  <img src={file3}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>
     {/* {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />} */}
 
 <div className="mt-3" >

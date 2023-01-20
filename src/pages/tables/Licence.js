@@ -2,10 +2,12 @@
 import React,{useEffect,useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faBellSlash,faToggleOff , faToggleOn} from '@fortawesome/free-solid-svg-icons';
+
 import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Nav, Card, Button, Table,Pagination, Modal } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
-const LICENCE_URL=`licencelist_info/`;
+const LICENCE_URL='licencelist_info/';
 import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
 const Licence = () =>{
@@ -15,23 +17,18 @@ const Licence = () =>{
   const handleClose = () => setShowDefault(false);
   const [showDefaults, setShowDefaults] = useState(); 
   const [showDefaultss, setShowDefaultss] = useState();
-  const [showDefault1, setShowDefault1] = useState();
   const [state,setState]=useState([])
    const [state1,setState1]=useState([]);
     useEffect(() => {
-    axios.get(LICENCE_URL,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
-    'Access-Control-Allow-Origin':'Accept'} })
+      const token = localStorage.getItem("token");
+      axios.post(LICENCE_URL,{ headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+      'Access-Control-Allow-Origin':'Accept'}})
     .then(res => {
     const persons = res.data;
-    console.log(persons.licence)
-    setState1(persons);
-    // if (persons.licence.state==""){};
-    // const roles=persons.map(roles => roles.profile);
-    // const mapData = ([...roles]);
-    // console.log(mapData);
-    
-    
-})},[])
+    console.log(persons)
+    setState1(persons)}
+  
+    )},[])
 
 
   return (
@@ -47,18 +44,14 @@ const Licence = () =>{
           <Row>
           <Col md={8} className="mb-3">
           <h4>Liste des licences</h4>
-         
           </Col>    
           <Col md={4} className="mb-3">
           <Button
             variant="primary" as={Link} to={Routes.LicenceAdd.path} >
             Ajouter Licence
-             
             </Button>
-    
           </Col>
           </Row>
-          
         </div>
       </div>
       <Card border="light" className="table-wrapper table-responsive shadow-sm">
@@ -68,11 +61,11 @@ const Licence = () =>{
             <tr>
               <th className="border-bottom">Saison</th>
               <th className="border-bottom">Licence</th>
-              <th className="border-bottom">Nom</th>
-              <th className="border-bottom">Prenom</th>
+              {/* <th className="border-bottom">Nom</th>
+              <th className="border-bottom">Prenom</th> */}
               <th className="border-bottom">Club</th>
               <th className="border-bottom">Role</th>
-              <th className="border-bottom">addresse</th>
+              {/* <th className="border-bottom">addresse</th> */}
 
               <th className="border-bottom">Weight</th>
               <th className="border-bottom">Grade</th>
@@ -92,33 +85,42 @@ const Licence = () =>{
         <tr >
               <td className="border-0 "  >{person.licence.seasons}</td>
               <td className="border-0 "  >{person.licence.num_licences}</td>
-              <td className="border-0 "  >{person.profile.first_name}</td>
-              <td className="border-0 "  >{person.profile.last_name}</td>
+              {/* <td className="border-0 "  >{person.profile.state}</td> */}
+              {/* <td className="border-0 "  >{person.profile.last_name}</td>  */}
               <td className="border-0 "  >{person.licence.club}</td>
               <td className="border-0 "  >{person.licence.role}</td>
-              <td className="border-0 "  >{person.profile.address}</td>
+              {/* <td className="border-0 "  >{person.profile.address}</td> */}
               <td className="border-0 "  >{person.licence.weight}</td>
               <td className="border-0 "  >{person.licence.grade}</td>
               <td className="border-0 "  >{person.licence.degree}</td>
-              <td className="border-0 "  >{person.licence.state}</td>
+              <td className="border-0 "  >
+              {(() => {
+        switch (person.licence.state) {
+          case "Activee":   return  <FontAwesomeIcon icon={faToggleOn} color={"green"} 
+          size={150} /> ;
+          case "En Attente": return <FontAwesomeIcon icon={faToggleOff} color={"red"}  />;
+          case "Expiree": return <FontAwesomeIcon icon={faToggleOff} color={"gray"}  />;
+          default:        return "--";
+        }
+      })()} 
+              
+              </td>
               <td className="border-0 "><Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
           
-                axios.put(`validateLicence/${person.num_licences}/`)
-                .then(res => {
-                  const num_licences =person.num_licences;
-                 
-                  console.log(num_licences);
-                  setState([...state, num_licences]);
-                  const persons = res.data;
-                
-                  console.log(persons);
-                  window.location.reload(false);
-              }) 
+                axios.put(`validateLicence/${person.licence.num_licences}/`,{ headers : {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'}})
+             .then(response => {
+               console.log("Valide successfully!")
+               window.location.reload(false);
+             })
+             .catch(error => {
+               console.log("Something went wrong", error)
+             })
 
               )}>Valider</Button>
               &nbsp;  &nbsp; <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
           
-          axios.put(`verifyLicence/${person.num_licences}/`)
+          axios.put(`verifyLicence/${person.licence.num_licences}/`)
           .then(res => {
             const num_licences =person.num_licences;
            
@@ -133,7 +135,7 @@ const Licence = () =>{
         )}>Verifier</Button>&nbsp;
         <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
           
-          axios.delete(`licences/${person.num_licences}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+          axios.delete(`licences/${person.licence.num_licences}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
           'Access-Control-Allow-Origin':'Accept'} })
           .then(res => {
             const num_licences =person.num_licences;

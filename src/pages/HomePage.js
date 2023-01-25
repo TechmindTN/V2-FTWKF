@@ -15,6 +15,7 @@ import Athletes from "./tables/Athletes";
 import Comp from "./tables/Comp";
 import CompAdd from "./tables/CompAdd";
 import CompUpd from "./tables/CompUpd";
+import CompCons from "./tables/CompCons";
 
 import EntUpd from "./tables/EntUpd";
 import UpdPhotos from "./tables/updphotos";
@@ -189,6 +190,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Comp.path} component={Comp} />
     <RouteWithSidebar exact path={Routes.CompAdd.path} component={CompAdd} />
     <RouteWithSidebar exact path={Routes.CompUpd.path} component={CompUpd} />
+    <RouteWithSidebar exact path={Routes.CompCons.path} component={CompCons} />
 
     <RouteWithSidebar exact path={Routes.photosent.path} component={photosent} />
     <RouteWithSidebar exact path={Routes.photosarb.path} component={photosarb} />

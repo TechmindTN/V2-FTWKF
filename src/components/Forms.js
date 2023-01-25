@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt,faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Card, Form, Button, InputGroup ,ProgressBar} from '@themesberg/react-bootstrap';
 import axios from "../pages/examples/api/axios";
+import {useHistory  } from "react-router-dom";
 const PROFILE_URL ='profile/';
 export const GeneralInfoForm = () => {
 
@@ -56,7 +57,6 @@ export const GeneralInfoForm = () => {
   const [valideCin , setValidCin] = useState('');
 
   const[errMsg, setErrMsg] = useState ('') ;
-  const[success, setSuccess] = useState ('') ;
   const userRef = useRef();
   const errRef = useRef();
 
@@ -417,6 +417,7 @@ export const GeneralInfoForm = () => {
 };
 export const EditeProfile = () => {
   const Image_url='upload_photo/'
+  const history = useHistory()
 
   const [selectedFile, setSelectedFile] = React.useState(null);
 
@@ -491,11 +492,10 @@ export const EditeProfile = () => {
   const [cin, setCin] = useState('');
   const [valideCin , setValidcin] = useState('');
   const [errMsg, setErrMsg] = useState ('') ;
-  const [success, setSuccess] = useState ('') ;
-  const userRef = useRef();
-  const errRef = useRef();
+
   const [state, setState] = useState();
   const [role, setRole] = useState();
+  const[success, setSuccess] = useState (false) ;
 
   const [id, setId] = useState('');
   const PRO_URL=`pro/${window.localStorage.getItem("id")}/`;
@@ -521,16 +521,6 @@ export const EditeProfile = () => {
       localStorage.setItem('rol',persons.role)
       setZipCode(persons.zip_code)
       setCin(persons.cin)
-    if(persons.role ===1){
-     setRole("arbitre")
-    } else if(persons.role===2){
-     setRole("Athlete")
-         }
-     else if(persons.role===3){
-     setRole("Supporteur")
-               } else{
-                 setRole("Entraineur")
-               }
   
   })},[])
   useEffect(() => {
@@ -555,6 +545,13 @@ export const EditeProfile = () => {
          'X-CSRFTOKEN': 'CSRF_TOKEN','Access-Control-Allow-Origin':'Accept'},
          withCredentials: false
       });
+      setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+    <div>Profile modifié</div></div>);
+      const timer = setTimeout(() => {
+        // console.log('This will run after 1 second!')
+        history.push('/profile')
+      }, 2000);
+      return () => clearTimeout(timer);
     //  window.location.href = "http://localhost:3000/#/profile";
     } catch (error) {
       console.log(error);

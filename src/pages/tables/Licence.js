@@ -97,7 +97,7 @@ const Licence = () =>{
               {(() => {
         switch (person.licence.state) {
           case "Activee":   return  <FontAwesomeIcon icon={faToggleOn} color={"green"} 
-          size={150} /> ;
+          /> ;
           case "En Attente": return <FontAwesomeIcon icon={faToggleOff} color={"red"}  />;
           case "Expiree": return <FontAwesomeIcon icon={faToggleOff} color={"gray"}  />;
           default:        return "--";

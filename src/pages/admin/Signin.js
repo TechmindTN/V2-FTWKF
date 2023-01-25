@@ -163,7 +163,9 @@ const handleSubmit = async (e) =>{
                         <FontAwesomeIcon icon={faPhone} />
                       </InputGroup.Text>
                       <Form.Control  required type="text" 
-                      name="username" id="username" ref={userRef} autoComplete="off" onChange={(e) => setUsername(e.target.value)}
+                      name="username" id="username" ref={userRef} autoComplete="off" onChange={(e) => setUsername(e.target.value)
+    
+                      }
                       value={username}
                       />
                     </InputGroup>

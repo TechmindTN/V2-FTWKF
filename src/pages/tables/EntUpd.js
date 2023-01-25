@@ -9,10 +9,12 @@ import { Link } from 'react-router-dom';
 import { PageTrafficTable, RankingTable } from "../../components/Tables";
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
+import {useHistory  } from "react-router-dom";
 
 
 const PARAMETER_URL='parameters/'
 const EntUpd = () =>{
+  const history = useHistory()
   const [state3,setState3]=useState([]);
   const [state4,setState4]=useState([]);
   const[grade, setGrade] = useState();
@@ -184,7 +186,11 @@ try {
     Entraineur modifié
     </div>
   </div>);
-//
+      const timer = setTimeout(() => {
+        // console.log('This will run after 1 second!')
+        history.push('/tables/Entraineur')
+      }, 2000);
+      return () => clearTimeout(timer);
   //localStorage.removeItem('deg');
 //localStorage.removeItem('ph');
 //localStorage.removeItem('gr');

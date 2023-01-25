@@ -116,7 +116,11 @@ try {
         'Access-Control-Allow-Origin':'Accept'} },
       )
       setSuccess("Club ajouté");
-   
+      const timer = setTimeout(() => {
+        // console.log('This will run after 1 second!')
+        window.location.reload(false);
+      }, 2000);
+      return () => clearTimeout(timer);
 
 }catch(error) {
   console.log(error)

@@ -5,9 +5,12 @@ import {faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Form, Col, Row, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
+import {useHistory  } from "react-router-dom";
+
+
 const PARAMETER_URL='parameters/'
 const Athleteadd = () =>{
-const[datas,setData]=useState('');
+const history = useHistory()
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
 const [first_name, setFname] = useState();
@@ -222,6 +225,11 @@ try {
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>Athlete modifié</div></div>);
+      const timer = setTimeout(() => {
+        // console.log('This will run after 1 second!')
+        history.push('/tables/Athletes')
+      }, 2000);
+      return () => clearTimeout(timer);
    // window.location.href = "http://localhost:3000/#/tables/Athletes";
     //localStorage.removeItem("at");
  

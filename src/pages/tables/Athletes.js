@@ -76,7 +76,6 @@ function handleChange(e) {
         <Table responsive className="table-centered table-nowrap rounded mb-0">
           <thead className="thead-light">
             <tr>
-            <th className="border-0">ID</th>
               <th className="border-0">CIN</th>
               <th className="border-0">Nom</th>
               <th className="border-0">Prenom</th>
@@ -99,11 +98,10 @@ function handleChange(e) {
             </tr>
           </thead>
           <tbody>
-          {state.map(person => (
+          {state.map((person,i) => (
         <><tr key={person.athlete.id}>
-                        <td className="border-0 ">{person.athlete.id}</td>
 
-              <td className="border-0 ">{person.profile.cin}</td>
+              <td className="border-0 " >{person.profile.cin}</td>
               <td className="border-0 ">{person.profile.last_name}</td>
               <td className="border-0 ">{person.profile.first_name}</td>
               <td className="border-0 ">{person.profile.birthday}</td>

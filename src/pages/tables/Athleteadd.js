@@ -213,9 +213,11 @@ try {
     Athlete ajouté avec succès 
    </div>
   </div>);
-
-  
-    // window.location.href = "/tables/Athletes/"
+const timer = setTimeout(() => {
+  // console.log('This will run after 1 second!')
+  window.location.reload(false);
+}, 2000);
+return () => clearTimeout(timer);
 }catch(error) {
   setSuccess(error)
 }
@@ -224,27 +226,7 @@ try {
 }
 
 
-function handleFileSelect(e) {
-  console.log(e.target.files);
-  setFile(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile(e.target.files[0])
-}
-function handleFileSelect1(e) {
-  console.log(e.target.files);
-  setFile1(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile1(e.target.files[0])
-}
-function handleFileSelect2(e) {
-  console.log(e.target.files);
-  setFile2(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile2(e.target.files[0])
-}
-function handleFileSelect3(e) {
-  console.log(e.target.files);
-  setFile3(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile3(e.target.files[0])
-}
-    return (
+ return (
       
    
       <Row>
@@ -290,7 +272,7 @@ function handleFileSelect3(e) {
             <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>CIN ب ت و</Form.Label>
-                  <Form.Control   type="text" id="cin" name="cin" 
+                  <Form.Control required  type="text" id="cin" name="cin" 
                   value={cin }  onChange={(e) =>setCin(e.target.value)}
                  
                   />
@@ -299,7 +281,7 @@ function handleFileSelect3(e) {
               <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Nom اسم</Form.Label>
-                  <Form.Control   type="text" id="first_name" name="first_name" placeholder="Nom" 
+                  <Form.Control  required type="text" id="first_name" name="first_name" placeholder="Nom" 
                      value={first_name }    onChange={(e) =>setFname(e.target.value)} 
                  
                   />
@@ -308,7 +290,7 @@ function handleFileSelect3(e) {
               <Col md={4} className="mb-3">
                 <Form.Group id="lastName">
                   <Form.Label>Prénom لقب</Form.Label>
-                  <Form.Control   type="text" id="last_name" name="last_name" placeholder="Prénom"
+                  <Form.Control required  type="text" id="last_name" name="last_name" placeholder="Prénom"
                            value={last_name}     onChange={(e) =>setLname(e.target.value)}
                          
                   />
@@ -326,7 +308,7 @@ function handleFileSelect3(e) {
                     <InputGroup>
                       <InputGroup.Text><FontAwesomeIcon icon={faCalendarAlt} /></InputGroup.Text>
                       <Form.Control
-                        
+                        required
                         type="date" id="birthday"  name="birthday"
                         placeholder="mm/dd/yyyy" value={birthday? birthday : "--/--/----"}
                         autoComplete="off" onChange={(e) =>setBirthday(e.target.value)}
@@ -338,7 +320,7 @@ function handleFileSelect3(e) {
               <Col md={4} className="mb-3">
                 <Form.Group id="sex">
                   <Form.Label>Sexe جنس</Form.Label>
-                  <Form.Select id="sex"  name="sex"
+                  <Form.Select id="sex"  name="sex" required
                                   autoComplete="off" value={sexe}  onChange={(e) =>setSexe(e.target.value)}
                   >
                     <option value="0"></option>
@@ -351,7 +333,7 @@ function handleFileSelect3(e) {
             
             <Form.Group id="category">
                     <Form.Label>Téléphone هاتف</Form.Label>
-                    <Form.Control   type="text" id="phone" name="phone"
+                    <Form.Control   type="text" id="phone" name="phone" required
                            value={phone}     onChange={(e) =>setPhone(e.target.value)}
                          
                   />
@@ -365,7 +347,7 @@ function handleFileSelect3(e) {
           
           <Form.Group id="category">
                   <Form.Label>Ville مدينة</Form.Label>
-                  <Form.Control   type="text" id="ville" name="ville"
+                  <Form.Control   type="text" id="ville" name="ville" required
                            value={city}     onChange={(e) =>setCity(e.target.value)}
                          
                   />
@@ -375,7 +357,7 @@ function handleFileSelect3(e) {
           
           <Form.Group id="category">
                   <Form.Label>Addresse عنوان</Form.Label>
-                  <Form.Control   type="text" id="addresse" name="addresse" 
+                  <Form.Control   type="text" id="addresse" name="addresse"  required
                            value={addresse}     onChange={(e) =>setAddresse(e.target.value)}
                          
                   />
@@ -387,7 +369,7 @@ function handleFileSelect3(e) {
             
             <Form.Group id="zip_code">
                     <Form.Label>Zip_code ترقيم البريدي</Form.Label>
-                   <Form.Control   type="text" id="zip_code" name="zip_code" 
+                   <Form.Control   type="text" id="zip_code" name="zip_code" required
                            value={zip_code}     onChange={(e) =>setZip(e.target.value)}
                          
                   />
@@ -398,7 +380,7 @@ function handleFileSelect3(e) {
             
             <Form.Group id="category">
                     <Form.Label>Gouvernerat ولاية</Form.Label>
-                    <Form.Control   type="text" id="last_name" name="last_name"
+                    <Form.Control   type="text" id="last_name" name="last_name" required
                            value={states}     onChange={(e) =>setStates(e.target.value)}
                          
                   />
@@ -407,7 +389,7 @@ function handleFileSelect3(e) {
             <Col sm={4} className="mb-3">
                 <Form.Group id="weights">
                   <Form.Label>Poids وزن</Form.Label>
-                  <Form.Select id="weight"  name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
+                  <Form.Select  required id="weight"  name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
                                   autoComplete="off" >
                                     {state3.map((person) => (<>
                                   
@@ -423,7 +405,7 @@ function handleFileSelect3(e) {
             
             <Form.Group id="grade">
                     <Form.Label>Grade رتبة</Form.Label>
-                    <Form.Select id="grade"  name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
+                    <Form.Select id="grade" required name="grade"  value={grade}  onChange={(e) =>setGrade(e.target.value)}
                                   autoComplete="off" >
                                     {state4.map((person) => (<>
                                   
@@ -436,7 +418,7 @@ function handleFileSelect3(e) {
             
             <Form.Group id="category">
                     <Form.Label>Catégorie age العمر</Form.Label>
-                    <Form.Select id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
+                    <Form.Select required id="categorie"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
                                   autoComplete="off" >
                                       <option></option>
                                     {state5.map((person) => (<>
@@ -451,7 +433,7 @@ function handleFileSelect3(e) {
             <Form.Group id="degree">
                     <Form.Label>Degré درجة</Form.Label>
                     <Form.Select id="degree"  name="degree"  value={degree}  onChange={(e) =>setDegree(e.target.value)}
-                                  autoComplete="off" >
+                                required  autoComplete="off" >
                                     {state2.map((person) => (<>
                                   
                               <option value={person.id}> 

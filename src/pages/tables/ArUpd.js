@@ -2,33 +2,26 @@
 import React , {useEffect,useState,useRef} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome , faCalendarAlt, faPaperclip } from "@fortawesome/free-solid-svg-icons";
-import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Form, Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
-import { Routes } from "../../routes";
-import { Link } from 'react-router-dom';
-import { PageTrafficTable, RankingTable } from "../../components/Tables";
+
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
-import moment from "moment-timezone";
-
 const ARBITRE_URL='add_arbitrator/'
 
 const ArAdd = () =>{
-  const[grade, setGrade] = useState();
-  const[cin,setCin]=useState();
-  const[phone,setPhone]=useState();
-  const[first_name, setF_name] = useState (false) ;
-  const[last_name, setL_name] = useState();
-  const[sex, setSex] = useState();
-  const[birthday, setBirthday] = useState();
-  const[password, setPassword] = useState();
-  const[addresse, setAddresse] = useState();
-  const[ville,setVille] = useState();
-  const[gouv,setGouv] = useState();
-  const[code,setCode] = useState();
-
-  const[username, setUsername] = useState();
-  const[success,setSuccess] = useState();
+  const [cin,setCin]=useState();
+  const [phone,setPhone]=useState();
+  const [first_name, setF_name] = useState (false) ;
+  const [last_name, setL_name] = useState();
+  const [sex, setSex] = useState();
+  const [birthday, setBirthday] = useState();
+  const [password, setPassword] = useState();
+  const [addresse, setAddresse] = useState();
+  const [ville,setVille] = useState();
+  const [gouv,setGouv] = useState();
+  const [code,setCode] = useState();
+  const [username, setUsername] = useState();
+  const [success,setSuccess] = useState();
   const [progress1, setProgress1] = useState()
   const [progress, setProgress] = useState()
   const [file, setFile] = useState();

@@ -1,5 +1,6 @@
 
 import React , {useEffect,useState,useRef} from "react";
+import {useHistory  } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
@@ -13,12 +14,7 @@ import 'react-dropzone-uploader/dist/styles.css'
 import { Phone } from "@mui/icons-material";
 const Image_url='upload_photo/'
 const CompUpd = () =>{
-const [selectedFile, setSelectedFile] = React.useState(null);
-const [selectedFile1, setSelectedFile1] = React.useState(null);
-const [selectedFile2, setSelectedFile2] = React.useState(null);
-const [selectedFile3, setSelectedFile3] = React.useState(null);
-
-
+const history = useHistory()
 const [addresse, setAddresse] = useState();
 const [zip_code, setZip] = useState();
 const [ligue, setLigue] = useState();
@@ -27,12 +23,11 @@ const [categorie, setCategorie] = useState();
 const [sport, setSport] = useState();
 const [Max_participants, setMax_participants] = useState();
 const [city, setCity] = useState();
-const[name,setName]=useState();
-const[duration,setDuration]=useState();
-const[season,setSeason]=useState();
-const[arb,setArb]=useState([]);
-
-const[success, setSuccess] = useState (false) ;
+const [name,setName]=useState();
+const [duration,setDuration]=useState();
+const [season,setSeason]=useState();
+const [arb,setArb]=useState([]);
+const [success, setSuccess] = useState (false) ;
 const [state,setState]=useState([]);
 const [states,setStates]=useState([]);
 const [state5,setState5]=useState([]);
@@ -70,20 +65,8 @@ useEffect(() => {
  })  .then(res => {
   const persons = res.data;
   console.log(persons)
-  // setGrade(persons.athlete.grade_id)
-  // setCategorie(persons.athlete.category_id)
-  // setWeights(persons.athlete.weights)
-  // SetNationality("Tunisienne")
-  // setIm1(persons.athlete.photo)
-  // setIm2(persons.athlete.identity_photo)
-  // setIm3(persons.athlete.medical_photo)
-  // setCin(persons.profile.cin)
-  // setFname(persons.profile.first_name)
-  // setLname(persons.profile.last_name)
-  // setBirthday(persons.profile.birthday)
-  // setRole(persons.profile.role)
-   setAddresse(persons.address)
-   setSport(persons.discipline)
+  setAddresse(persons.address)
+  setSport(persons.discipline)
   setCategorie(persons.age)
   setDuration(persons.duration)
   setName(persons.name)
@@ -92,9 +75,6 @@ useEffect(() => {
   setZip(persons.zip_code)
   setMax_attendants(persons.max_attendents)
   setMax_participants(persons.max_participants)
-  // setPhone(persons.profile.phone)
-  // setCode(persons.profile.zip_code)
-  // setGouv(persons.profile.state)  
 })
 },[])
 
@@ -117,8 +97,14 @@ const token=localStorage.getItem("token")
   </div>);
 
   
-    // window.location.href = "/tables/Athletes/"
-}catch(error) {
+const timer = setTimeout(() => {
+  // console.log('This will run after 1 second!')
+  history.push('/tables/Comp')
+}, 2000);
+return () => clearTimeout(timer);
+}
+
+catch(error) {
   setSuccess(error)
 }
 }
@@ -128,7 +114,7 @@ const token=localStorage.getItem("token")
         <Col xs={12} xl={12}>
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
-          <h5 className="mb-4">Ajouter Compétition </h5>
+          <h5 className="mb-4">Modifier Compétition </h5>
           <div className="text-center"><p>{success}</p></div>
          
             <Row>

@@ -13,6 +13,7 @@ export const Routes = {
     Comp:{path: "/tables/Comp"},
     CompAdd:{path: "/tables/CompAdd"},
     CompUpd:{path: "/tables/CompUpd"},
+    CompCons:{path: "/tables/CompCons"},
 
     updphotos:{path: "/tables/updphotos"},
     photosent:{path: "/tables/photosent"},

@@ -27,6 +27,11 @@ try {
         'Access-Control-Allow-Origin':'Accept'} },
     )
     setSuccess("Age ajouté");
+    const timer = setTimeout(() => {
+      // console.log('This will run after 1 second!')
+      window.location.reload(false);
+    }, 2000);
+    return () => clearTimeout(timer);
   //  window.location.href = "dashboard/tables/Supporteur";
 }catch(error) {
   console.log(error)

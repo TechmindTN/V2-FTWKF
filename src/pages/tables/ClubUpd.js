@@ -2,8 +2,8 @@
 import React , {useEffect,useState,useRef} from "react";
 import { Form, Col, Row, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
-const PARAMETER_URL='ligue/'
-const Image_url='upload_photo/'
+import {useHistory  } from "react-router-dom";
+
 
 const ClubUpd = () =>{
 
@@ -11,7 +11,8 @@ const ClubUpd = () =>{
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [inputArray,setInputArray]= useState();
   const [inputFiles,setInputFiles]= useState();
-
+  const PARAMETER_URL='ligue/'
+  const Image_url='upload_photo/'
   function upload  (e)  {
 
     const inputArr = new Array()
@@ -92,6 +93,7 @@ axios.get(CLUB_URL,{
   setIm1(persons.logo)
 }
 )},[])
+const history = useHistory()
 
 const handlesubmit = async (e) => {
   e.preventDefault();
@@ -108,8 +110,12 @@ try {
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>Club modifié</div></div>);
-   // window.location.href = "http://localhost:3000/#/tables/Clubs";
-    localStorage.removeItem("cl");
+  const timer = setTimeout(() => {
+    // console.log('This will run after 1 second!')
+    history.push('/tables/Clubs')
+  }, 2000);
+  return () => clearTimeout(timer); 
+     localStorage.removeItem("cl");
  
 }catch(error) {
   console.log(error)
@@ -157,7 +163,7 @@ function handleFileSelect3(e) {
             
                     <Form.Group id="category">
                     <Form.Label>Logo  </Form.Label><br/>
-                    <input type="file" onChange={upload} required  />
+                    <input type="file" onChange={upload}   />
                     <img src={im1}  height={80}/><br/>
                     </Form.Group>
                

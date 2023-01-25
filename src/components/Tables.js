@@ -490,18 +490,19 @@ export const SportsTable = () => {
   );
 };
 const COMP_URL="competition/";
-export const CompTable = () => {
+export function CompTable() {
 
-  const [state,setState]=useState([])
+  const [state, setState] = useState([]);
   const [showDefault, setShowDefault] = useState(false);
   useEffect(() => {
-      axios.get(COMP_URL)
+    axios.get(COMP_URL)
       .then(res => {
         const persons = res.data;
         setState(persons);
-    
-    })},[])
- 
+
+      });
+  }, []);
+
 
   return (
     <Card border="light" className="shadow-sm">
@@ -517,61 +518,65 @@ export const CompTable = () => {
 
               <th className="border-0" style={{ width: '5%' }}>duration</th>
               <th className="border-0" style={{ width: '5%' }}>Actions</th>
-          {/* <th className="border-0" style={{ width: '50%' }}>Description</th>
-              <th className="border-0" style={{ width: '40%' }}>Extra</th> */}
+              {/* <th className="border-0" style={{ width: '50%' }}>Description</th>
+                <th className="border-0" style={{ width: '40%' }}>Extra</th> */}
             </tr>
           </thead>
           <tbody>
-          {state.map((person) => (
-        <><tr>
-              <td className="border-0 ">{person.id}</td>
-              <td className="border-0 ">{person.name}</td>
-              <td className="border-0 ">{person.discipline}</td>
-              <td className="border-0 ">{person.max_participants}</td>
-              <td className="border-0 ">{person.season}</td>
-              <td className="border-0 ">{person.duration}</td>
-              <td className="border-0 ">
-              <Button variant="primary" className="my-0"  as={Link} to={Routes.CompUpd.path} onClick={() => setShowDefault(
-                localStorage.setItem("comp",person.id)
-             )}>Modifier</Button></td>
-              
-              {/* <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
+            {state.map((person, i) => (
+              <><tr key={i}>
+                <td className="border-0 ">{person.id}</td>
+                <td className="border-0 ">{person.name}</td>
+                <td className="border-0 ">{person.discipline}</td>
+                <td className="border-0 ">{person.max_participants}</td>
+                <td className="border-0 ">{person.season}</td>
+                <td className="border-0 ">{person.duration}</td>
+                <td className="border-0 ">
+                  <Button variant="primary" className="my-0" as={Link} to={Routes.CompUpd.path} onClick={() => setShowDefault(
+                    localStorage.setItem("comp", person.id)
+                  )}>Modifier</Button>
+                  &nbsp; &nbsp;
+                  <Button variant="primary" className="my-0" as={Link} to={Routes.CompCons.path} onClick={() => setShowDefault(
+                    localStorage.setItem("comp", person.id)
+                  )}>Consulter</Button></td>
 
-              <React.Fragment>
-
-                <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
-                  <Modal.Header>
-                    <Modal.Title className="h6"> {person.id}</Modal.Title>
-                    <Button variant="close" aria-label="Close" onClick={handleClose} />
-                  </Modal.Header>
-                  <Modal.Body>
-                 {person.cin}
-                    <p>With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.</p>
-                    <p>The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.</p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                      I Got It
-                    </Button>
-                    <Button variant="link" className="text-gray ms-auto" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </Modal.Footer>
-                </Modal>
-              </React.Fragment> */}
-              {/* </> ))} */}
-            </tr></>))}
+                {/* <td className="border-0 "> <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
       
+                    <React.Fragment>
+      
+                      <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
+                        <Modal.Header>
+                          <Modal.Title className="h6"> {person.id}</Modal.Title>
+                          <Button variant="close" aria-label="Close" onClick={handleClose} />
+                        </Modal.Header>
+                        <Modal.Body>
+                       {person.cin}
+                          <p>With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.</p>
+                          <p>The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.</p>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button variant="secondary" onClick={handleClose}>
+                            I Got It
+                          </Button>
+                          <Button variant="link" className="text-gray ms-auto" onClick={handleClose}>
+                            Close
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                    </React.Fragment> */}
+                {/* </> ))} */}
+              </tr></>))}
+
             {/* {pageRanking.map(r => <TableRow key={`ranking-${r.id}`} {...r} />)} */}
           </tbody>
           {/* <tbody>
-            {commands.map(c => <TableRow key={`command-${c.id}`} {...c} />)}
-          </tbody> */}
+              {commands.map(c => <TableRow key={`command-${c.id}`} {...c} />)}
+            </tbody> */}
         </Table>
       </Card.Body>
     </Card>
   );
-};
+}
 export const AgeTable = () => {
   const [state,setState]=useState([])
     useEffect(() => {

@@ -90,6 +90,11 @@ try {
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>Licence Ajouté</div></div>);
+    const timer = setTimeout(() => {
+      // console.log('This will run after 1 second!')
+      window.location.reload(false);
+    }, 2000);
+    return () => clearTimeout(timer);
    // window.location.href = "dashboard/tables/Licence";
 }catch(error) {
   console.log(error)

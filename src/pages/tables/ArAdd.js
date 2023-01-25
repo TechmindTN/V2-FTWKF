@@ -27,7 +27,6 @@ const ArAdd = () =>{
   const[gouv,setGouv] = useState();
   const[code,setCode] = useState();
 
-  const[username, setUsername] = useState();
   const[success,setSuccess] = useState();
   const [progress1, setProgress1] = useState()
   const [progress, setProgress] = useState()
@@ -91,7 +90,12 @@ const gr= localStorage.getItem('gr')
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },)
     setSuccess("Arbitre ajouté"); 
-    localStorage.removeItem("ar")
+    const timer = setTimeout(() => {
+      // console.log('This will run after 1 second!')
+      window.location.reload(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+    //localStorage.removeItem("ar")
     //window.location.href = "dashboard/tables/Clubs";
 }catch(error) {  console.log(error)}}
 

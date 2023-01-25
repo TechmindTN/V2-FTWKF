@@ -6,7 +6,11 @@ import { Form, Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar,
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
 const PARAMETER_URL='parameters/'
+import {useHistory  } from "react-router-dom";
+
 const LicenceUpd = () =>{
+  const history = useHistory()
+
 const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
@@ -68,10 +72,8 @@ useEffect(() => {
     console.log(persons)
      setGrade(persons.grade)
      setCategorie(persons.categorie)
-    // setWeights(persons.weights)
-    // setId(persons.profile)
+  
      SetNationality("Tunisienne")
-    // localStorage.setItem('p',persons.profile)
        setCin(persons.user.cin)
    setFname(persons.user.first_name)
   setLname(persons.user.last_name)
@@ -86,31 +88,7 @@ setClub(persons.club)
 setSport(persons.discipline)
 })
 },[])
-// useEffect(() => {
-// const id=localStorage.getItem('p')
-// console.log(id)
-// const PROFILE_URL=`pro/${id}/`;
-// axios.get(PROFILE_URL,{
-//   headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
-//   withCredentials: false
-// })
-// .then(res => {
-//   const persons = res.data;
-//   console.log(persons)
-//   setCin(persons.cin)
-//   setFname(persons.first_name)
-//   setLname(persons.last_name)
-//   setBirthday(persons.birthday)
-//   setRole(persons.role)
-//   setAddresse(persons.address)
-//   setVille(persons.city)
-// setPhone(persons.phone)
-// setCode(persons.zip_code)
-// setGouv(persons.state)
 
-// }
-
-// )},[])
 
 const handlesubmit = async (e) => {
   e.preventDefault();
@@ -140,6 +118,11 @@ try {
     )
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>Licence modifié</div></div>);
+          const timer = setTimeout(() => {
+            // console.log('This will run after 1 second!')
+            history.push('/tables/Licence')
+          }, 2000);
+          return () => clearTimeout(timer);
    // window.location.href = "http://localhost:3000/#/tables/Athletes";
   // localStorage.removeItem("at");
  

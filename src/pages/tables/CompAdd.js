@@ -1,6 +1,13 @@
 
 import React , {useEffect,useState,useRef} from "react";
-
+import Select from 'react-select'
+import makeAnimated from 'react-select/animated';
+const ARB_URL="arbitratorlist_info/"
+const options = [
+  { value: '1',  label: '1' },
+  { value: '18', label: '18' }
+]
+const ATH_URL="athletelist_info/";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
 import { Form, Col, Row, Card, Button, InputGroup,ProgressBar } from '@themesberg/react-bootstrap';
@@ -51,15 +58,91 @@ useEffect(() => {
     setState9(seasons);
   
 })},[])
+
+
+
+// set value for default selection
+const [selectedValue, setSelectedValue] = useState([]);
+const [selectedValue1, setSelectedValue1] = useState([]);
+const [selectedValue2, setSelectedValue2] = useState([]);
+const [selectedValue3, setSelectedValue3] = useState([]);
+
+// handle onChange event of the dropdown
+const handleChange = (e) => {
+  setSelectedValue(Array.isArray(e) ? e.map(x => x.value) : []);
+
+}
+const handleChange1 = (e) => {
+  setSelectedValue1(Array.isArray(e) ? e.map(x => x.value) : []);
+
+}
+const token = localStorage.getItem("token");
+
+useEffect(() => {
+  axios.get(ARB_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
+  'Access-Control-Allow-Origin':'Accept'} })
+  .then(async res => {
+    const data = res.data;
+    const arb=data.map(arb => arb.arbitrator.id)
+    const mapData = [...arb];
+    console.log(mapData);
+   
+    let result=[
+
+    ];
+     mapData.forEach((element)=>{
+      result.push({'value':element,'label':element});
+ 
+    });
+    // for(var i=0;i<mapData.length;i++){
+
+    //   console.log(i+' '+mapData[i])
+    //   result.push({'value':mapData[i],'label':mapData[i]});
+    // }
+    //console.log(result)
+    setSelectedValue3(result)
+    console.log(result)
+  
+  })
+
+},[])
+useEffect(() => {
+  axios.get(ATH_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
+  'Access-Control-Allow-Origin':'Accept'} })
+  .then(async res => {
+    const data = res.data;
+    const arb=data.map(arb => arb.athlete.id)
+    const mapData = [...arb];
+    console.log(mapData);
+   
+    let result=[
+
+    ];
+     mapData.forEach((element)=>{
+      result.push({'value':element,'label':element});
+ 
+    });
+    // for(var i=0;i<mapData.length;i++){
+
+    //   console.log(i+' '+mapData[i])
+    //   result.push({'value':mapData[i],'label':mapData[i]});
+    // }
+    //console.log(result)
+    setSelectedValue2(result)
+    console.log(result)
+  
+  })
+
+},[])
 useEffect(() => {
   axios.get(LIGUE_URL,``)
   .then(res => {
     const ligue = res.data;
     setState8(ligue);
-})},[])
-
-
-
+})
+//setSelectedValue2(selectedValue, null, 2)
+//console.log(JSON.stringify(selectedValue, null, 2))
+},[])
 
 const handlesubmit = async (e) => {
   e.preventDefault();
@@ -69,7 +152,12 @@ const token=localStorage.getItem("token")
     axios.post(
       COMP_URL,
       ({'name':name,'duration':duration,'max_participants':Max_participants,'max_attendents':Max_attendants,'country':"Tunisie",'state':city
-      ,'address':addresse,'zip_code':zip_code ,'location':states,'age':categorie,'season':season,'discipline':sport}),
+      ,'address':addresse,'zip_code':zip_code ,'location':states,'age':categorie,'season':season,'discipline':sport, 
+    
+      
+        "arbitrators":selectedValue,"participants":selectedValue1
+    
+    }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     ) 
@@ -80,14 +168,33 @@ const token=localStorage.getItem("token")
   </div>);
 
   
-    // window.location.href = "/tables/Athletes/"
+const timer = setTimeout(() => {
+  // console.log('This will run after 1 second!')
+  window.location.reload(false);
+}, 2000);
+return () => clearTimeout(timer);
 }catch(error) {
   setSuccess(error)
 }
 }
+
+
+
+
+ 
     return (
       <Row>
+          
         <Form onSubmit={handlesubmit}>
+     
+      {/* {selectedValue && <div style={{ marginTop: 20, lineHeight: '25px' }}>
+        <div><b>Selected Value: </b> 
+       {
+
+        console.log(JSON.stringify(selectedValue, null, 2))
+       }</div>
+      </div>} */}
+
         <Col xs={12} xl={12}>
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
@@ -234,7 +341,37 @@ const token=localStorage.getItem("token")
                   />
                   </Form.Group>
             </Col>
-       
+            {/* <Row>
+            <Col sm={4} className="mb-3">
+            <Form.Group id="arbitre">
+            <Form.Label>Liste des arbitre</Form.Label>
+            <Select
+        className="dropdown"
+        placeholder=""
+        value={selectedValue3.filter(obj => selectedValue.includes(obj.value))} // set selected values
+        options={selectedValue3} // set list of the data
+        onChange={handleChange} // assign onChange function
+        isMulti
+        isClearable
+        defaultValue={[selectedValue3[4], selectedValue3[5]]}
+      /></Form.Group>
+      </Col>
+      <Col sm={4} className="mb-3">
+            <Form.Group id="arbitre">
+            <Form.Label>Liste des participants</Form.Label>
+            <Select
+        className="dropdown"
+        placeholder=""
+        value={selectedValue2.filter(obj => selectedValue1.includes(obj.value))} // set selected values
+        options={selectedValue2} // set list of the data
+        onChange={handleChange1} // assign onChange function
+        isMulti
+        isClearable
+        defaultValue={[selectedValue2[4], selectedValue2[5]]}
+      /></Form.Group>
+      </Col>
+      
+      </Row> */}
          
            
           </Row>

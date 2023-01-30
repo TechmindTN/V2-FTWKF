@@ -489,13 +489,14 @@ export const SportsTable = () => {
     </Card>
   );
 };
-const COMP_URL="competition/";
+const COMP_URL="comp_list_info/";
 export function CompTable() {
 
   const [state, setState] = useState([]);
   const [showDefault, setShowDefault] = useState(false);
   useEffect(() => {
-    axios.get(COMP_URL)
+    axios.get(COMP_URL,{ headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+    'Access-Control-Allow-Origin':'Accept'}})
       .then(res => {
         const persons = res.data;
         setState(persons);

@@ -6,7 +6,7 @@ import { Form, Col, Row, Card, Button, Modal} from '@themesberg/react-bootstrap'
 import axios from "../examples/api/axios";
 import 'react-dropzone-uploader/dist/styles.css'
 
-const Athleteadd = () =>{
+const Lic = () =>{
 const Image_url='upload_photo/'
 const [showDefault, setShowDefault] = useState(false);
 const [showDefault1, setShowDefault1] = useState(false);
@@ -28,7 +28,7 @@ const[success, setSuccess] = useState (false) ;
 const history = useHistory()
 const submit = async (e) => {
   e.preventDefault();
-history.push('/tables/Athleteadd')
+history.push('/tables/LicenceAdd')
 
 }
 
@@ -212,7 +212,7 @@ function upload  (e)  {
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
      
-          <h5 className="mb-4">Ajouter  pieces jointes pour athlete </h5>
+          <h5 className="mb-4">Ajouter  pieces jointes pour licence </h5>
 
           
           <div className="text-center"><p>{success}</p></div>
@@ -321,10 +321,9 @@ function upload  (e)  {
                  
                 </Modal>
               </React.Fragment>
-    {/* {progress3 && <ProgressBar   now={progress3} label={`${progress3}%`} style={{ height: 20}} />} */}
+    
 
 <div className="mt-3" >
-      {/* <Button variant="primary" type="submit">Enregistrer</Button> */}
     </div>
 </Col>
           
@@ -338,14 +337,7 @@ function upload  (e)  {
         </Form>
   
       
-      {/* <Col xs={12} xl={4}>
-      <Row>
-            <Col xs={12}>
-              <ProfileCardWidget />
-            </Col>
-            
-          </Row>
-        </Col> */}
+     
         </Row>
          
           
@@ -353,4 +345,4 @@ function upload  (e)  {
     );
 
 };
-export default (Athleteadd);
+export default (Lic);

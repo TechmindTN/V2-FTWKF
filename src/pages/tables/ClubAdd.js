@@ -1,14 +1,9 @@
 
 import React , {useEffect,useState,useRef} from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome , faCalendarAlt, faPaperclip } from "@fortawesome/free-solid-svg-icons";
-import { Breadcrumb } from '@themesberg/react-bootstrap';
+
 import { Form, Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
-import { Routes } from "../../routes";
-import { Link } from 'react-router-dom';
-import { PageTrafficTable, RankingTable } from "../../components/Tables";
+
 import axios from "../examples/api/axios";
-import { NoMeals } from "@mui/icons-material";
 const CLUB_URL='add_club/';
 const LIGUE_URL='ligue/';
 const ClubAdd = () =>{

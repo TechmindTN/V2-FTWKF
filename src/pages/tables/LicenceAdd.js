@@ -81,29 +81,36 @@ const handlesubmit = async (e) => {
   formData.append("role", localStorage.getItem("rol"));
 const user = localStorage.getItem("id");
 try {
-  const token = localStorage.getItem("token");
-    axios.post(
+     const token = localStorage.getItem("token");
+     const iden=localStorage.getItem('iden');
+     const pr=localStorage.getItem('pr');
+     const ph=localStorage.getItem('ph');
+     const mid=localStorage.getItem('mid');
+     axios.post(
       Licence_URL
-      ,({'categorie':categorie,'weight':weights,'club':club,'grade':grade,'degree':degree,'seasons':season,'user':user,'role':role,'Disciplines':Disciplines}),
+      ,({'licence':{'categorie':Number(categorie),'weight':Number(weights),'club':Number(club),'grade':Number(grade),'degree':Number(degree),'seasons':season,'user':Number(user),'role':Number(role),
+      'discipline':Number(Disciplines)}, "photos":{
+        "photo":`https://3462-197-14-10-36.eu.ngrok.io${ph}`,
+   "identity_photo": `https://3462-197-14-10-36.eu.ngrok.io${iden}`,
+   'medical_photo':`https://3462-197-14-10-36.eu.ngrok.io${mid} `
+   }
+}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
-    )
-    setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
-    <div>Licence Ajouté</div></div>);
-    const timer = setTimeout(() => {
+      )
+     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+     <div>Licence Ajouté</div></div>);
+     const timer = setTimeout(() => {
       // console.log('This will run after 1 second!')
-      window.location.reload(false);
-    }, 2000);
-    return () => clearTimeout(timer);
-   // window.location.href = "dashboard/tables/Licence";
-}catch(error) {
-  console.log(error)
+      //window.location.reload(false);
+     }, 2000);
+     return () => clearTimeout(timer);
+      // window.location.href = "dashboard/tables/Licence";
+    }catch(error) 
+    {
+     console.log(error)
+    }
 }
-
-
- 
-}
-
     return (
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
@@ -116,28 +123,8 @@ try {
         </>))} */}
           <Form onSubmit={handlesubmit}>
           <div className="text-center"><p>{success}</p></div>
-          {/* <Row>
-
-          <Col md={4} className="mb-3">
-                <Form.Group id="firstName">
-                  <Form.Label>Nom</Form.Label>    
-                  <Form.Control required  type="text" placeholder="nom" id="nom"  name="nom"
-           autoComplete="off" value={nom}  onChange={(e) =>setNom(e.target.value)}
-                    />
-                 
-                </Form.Group>
-              </Col>
-          </Row> */}
-            <Row>
-            {/* <Col md={4} className="mb-3">
-                <Form.Group id="firstName">
-                  <Form.Label>N Licence</Form.Label>    
-                  <Form.Control  type="text" placeholder="num_licences" id="num_licences"  name="num_licences"
-           autoComplete="off" value={num_licences}  onChange={(e) =>setLicence(e.target.value)}
-                    />
-                 
-                </Form.Group>
-              </Col> */}
+                    <Row>
+            
             <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Saison موسم</Form.Label>    
@@ -183,7 +170,6 @@ try {
                   <Form.Label>poid وزن</Form.Label>
                   <Form.Select id="weight" required name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
                                     {state3.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -202,7 +188,6 @@ try {
                     <Form.Label>categorie age العمر</Form.Label>
                     <Form.Select id="categorie" required name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
                                     {state5.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -216,25 +201,13 @@ try {
                     <Form.Label>Club النادي</Form.Label>
                     <Form.Select id="club"  required name="club"  value={club}  onChange={(e) =>setClub(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
                                     {state6.map((person) => (<>
                                   
                               <option value={person.id}> 
         {person.name}</option>    </>   ))}
                   </Form.Select>
                   </Form.Group>
-                     
-            {/* <Form.Group id="category">
-                    <Form.Label>Ligue</Form.Label>
-                    <Form.Select id="ligue"  name="ligue"  value={ligue}  onChange={(e) =>setLigue(e.target.value)}
-                                  autoComplete="off" >
-                                      <option></option>
-                                    {state6.map((person) => (<>
-                                  
-                              <option value={person.id}> 
-        {person.ligue}</option>    </>   ))}
-                  </Form.Select>
-                  </Form.Group> */}
+       
             </Col>
             <Col sm={4} className="mb-3">
             
@@ -242,7 +215,6 @@ try {
                     <Form.Label>Descipline الرياضة</Form.Label>
                     <Form.Select id="Disciplines" required name="Disciplines"  value={Disciplines}  onChange={(e) =>setDiscipline(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
                                     {state7.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -257,7 +229,6 @@ try {
                     <Form.Label>Profile</Form.Label>
                     <Form.Select id="role"  name="role" required value={role}  onChange={(e) =>setRole(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
                                     {state2.map((person) => (<>
                                   
                               <option value={person.id}> 

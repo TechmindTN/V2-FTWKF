@@ -13,14 +13,14 @@ const Athleteadd = () =>{
 const history = useHistory()
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
-const [first_name, setFname] = useState();
-const [last_name, setLname] = useState();
-const [birthday, setBirthday] = useState();
-const [cin, setCin] = useState();
-const [sexe, setSexe] = useState();
-const [categorie, setCategorie] = useState();
-const [ville, setVille] = useState();
-const[weights,setWeights]=useState();
+const [first_name, setFname] = useState('');
+const [last_name, setLname] = useState('');
+const [birthday, setBirthday] = useState('');
+const [cin, setCin] = useState('');
+const [sexe, setSexe] = useState('');
+const [categorie, setCategorie] = useState('');
+const [ville, setVille] = useState('');
+const[weights,setWeights]=useState('');
 const[nationality,SetNationality]=useState('');
 const[grade,setGrade]=useState('');
 const[success, setSuccess] = useState (false) ;

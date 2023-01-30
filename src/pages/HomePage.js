@@ -16,9 +16,10 @@ import Comp from "./tables/Comp";
 import CompAdd from "./tables/CompAdd";
 import CompUpd from "./tables/CompUpd";
 import CompCons from "./tables/CompCons";
-
+import SuppUpd from "./tables/SuppUpd";
 import EntUpd from "./tables/EntUpd";
 import UpdPhotos from "./tables/updphotos";
+import UpdPhotoslic from "./tables/updphotoslic";
 import photosent from "./tables/photosent";
 import photosarb from "./tables/photosarb";
 import ArUpd from "./tables/ArUpd";
@@ -191,9 +192,11 @@ export default () => (
     <RouteWithSidebar exact path={Routes.CompAdd.path} component={CompAdd} />
     <RouteWithSidebar exact path={Routes.CompUpd.path} component={CompUpd} />
     <RouteWithSidebar exact path={Routes.CompCons.path} component={CompCons} />
+    <RouteWithSidebar exact path={Routes.SuppUpd.path} component={SuppUpd} />
 
     <RouteWithSidebar exact path={Routes.photosent.path} component={photosent} />
     <RouteWithSidebar exact path={Routes.photosarb.path} component={photosarb} />
+    <RouteWithSidebar exact path={Routes.updphotoslic.path} component={UpdPhotoslic} />
 
     <RouteWithSidebar exact path={Routes.EntUpd.path} component={EntUpd} />
     <RouteWithSidebar exact path={Routes.ArUpd.path} component={ArUpd} />

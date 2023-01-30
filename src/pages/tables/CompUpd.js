@@ -15,20 +15,21 @@ import { Phone } from "@mui/icons-material";
 const Image_url='upload_photo/'
 const CompUpd = () =>{
 const history = useHistory()
-const [addresse, setAddresse] = useState();
-const [zip_code, setZip] = useState();
-const [ligue, setLigue] = useState();
-const [Max_attendants, setMax_attendants] = useState();
-const [categorie, setCategorie] = useState();
-const [sport, setSport] = useState();
-const [Max_participants, setMax_participants] = useState();
-const [city, setCity] = useState();
-const [name,setName]=useState();
-const [duration,setDuration]=useState();
+const [addresse, setAddresse] = useState([]);
+const [zip_code, setZip] = useState([]);
+const [ligue, setLigue] = useState([]);
+const [Max_attendants, setMax_attendants] = useState([]);
+const [categorie, setCategorie] = useState([]);
+const [sport, setSport] = useState([]);
+const [Max_participants, setMax_participants] = useState([]);
+const [city, setCity] = useState([]);
+const [name,setName]=useState([]);
+const [duration,setDuration]=useState([]);
 const [season,setSeason]=useState();
 const [arb,setArb]=useState([]);
 const [success, setSuccess] = useState (false) ;
 const [state,setState]=useState([]);
+const [manager,setManager]=useState([]);
 const [states,setStates]=useState([]);
 const [state5,setState5]=useState([]);
 const [state7,setState7]=useState([]);
@@ -60,14 +61,15 @@ const COMP_URL=`comp_info/${comp}/`
 const COMPs_URL=`competition/${comp}/`
 useEffect(() => {
   axios.get(COMP_URL,{
-    headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
+    headers: {'Content-Type': 'application/json','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  
+    'Access-Control-Allow-Methods': 'Accept'},
     withCredentials: false
  })  .then(res => {
   const persons = res.data;
   console.log(persons)
   setAddresse(persons.address)
-  setSport(persons.discipline)
-  setCategorie(persons.age)
+  setSport(Number(persons.discipline))
+  setCategorie(Number(persons.age))
   setDuration(persons.duration)
   setName(persons.name)
   setStates(persons.location)
@@ -75,6 +77,8 @@ useEffect(() => {
   setZip(persons.zip_code)
   setMax_attendants(persons.max_attendents)
   setMax_participants(persons.max_participants)
+  setSeason(Number(persons.season))
+  setManager(persons.manager)
 })
 },[])
 
@@ -86,22 +90,22 @@ const token=localStorage.getItem("token")
     axios.put(
       COMPs_URL,
       ({'name':name,'duration':duration,'max_participants':Max_participants,'max_attendents':Max_attendants,'country':"Tunisie",'state':city
-      ,'address':addresse,'zip_code':zip_code ,'location':states,'age':categorie,'season':season,'discipline':sport,'arbitrators':arb}),
+      ,'city':city,'address':addresse,'zip_code':zip_code ,'location':states,'age':categorie,'season':season,'ligue':ligue,'discipline':sport,'arbitrators':arb}),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
     ) 
     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
     <div>
-    Compétition ajouté avec succès 
+    Compétition modifié avec succès 
    </div>
   </div>);
 
   
-const timer = setTimeout(() => {
-  // console.log('This will run after 1 second!')
-  history.push('/tables/Comp')
-}, 2000);
-return () => clearTimeout(timer);
+// const timer = setTimeout(() => {
+//   // console.log('This will run after 1 second!')
+//   history.push('/tables/Comp')
+// }, 2000);
+// return () => clearTimeout(timer);
 }
 
 catch(error) {
@@ -130,7 +134,7 @@ catch(error) {
             <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Nom Compétition </Form.Label>
-                  <Form.Control   type="text" id="cin" name="cin" required
+                  <Form.Control   type="text" id="cin" name="cin" 
             
             value={name}     onChange={(e) =>setName(e.target.value)}
                   />
@@ -140,9 +144,8 @@ catch(error) {
               <Col md={4} className="mb-3">
                 <Form.Group id="firstName">
                   <Form.Label>Descipline </Form.Label>
-                  <Form.Select required id="sport"  name="sport"  value={sport}  onChange={(e) =>setSport(e.target.value)}
+                  <Form.Select  id="sport"  name="sport"  value={sport}  onChange={(e) =>setSport(e.target.value)}
                                   autoComplete="off" >
-                                      <option>{sport} </option>
                                     {state7.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -153,7 +156,7 @@ catch(error) {
               <Col md={4} className="mb-3">
                 <Form.Group id="lastName">
                   <Form.Label>Lieu</Form.Label>
-                  <Form.Control   required type="text" id="last_name" name="last_name"
+                  <Form.Control   type="text" id="last_name" name="last_name"
                            value={states}     onChange={(e) =>setStates(e.target.value)}
                          
                   />
@@ -165,7 +168,7 @@ catch(error) {
                 <Form.Group id="firstName">
                   <Form.Label>Durée </Form.Label>
                   <Form.Control   type="text" id="cin" name="cin" 
-            required
+            
             value={duration}     onChange={(e) =>setDuration(e.target.value)}
                   />
                 </Form.Group>
@@ -174,8 +177,7 @@ catch(error) {
                 <Form.Group id="Age"  name="Age" >
                   <Form.Label>Age</Form.Label>
                   <Form.Select id="age"  name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
-                             required     autoComplete="off" >
-                                      <option>{categorie}</option>
+                                  autoComplete="off" >
                                     {state5.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -186,7 +188,7 @@ catch(error) {
               <Col md={4} className="mb-3">
                 <Form.Group id="sex">
                   <Form.Label>Max_attendants</Form.Label>
-                  <Form.Control required  type="text" id="Max_attendants" name="Max_attendants" 
+                  <Form.Control   type="text" id="Max_attendants" name="Max_attendants" 
                  value={Max_attendants}  onChange={(e) =>setMax_attendants(e.target.value)}
                   />
                 </Form.Group>
@@ -199,7 +201,7 @@ catch(error) {
             
             <Form.Group id="category">
                     <Form.Label>Maximum participants</Form.Label>
-                    <Form.Control required  type="text" id="Max_participants" name="Max_participants"
+                    <Form.Control   type="text" id="Max_participants" name="Max_participants"
                            value={Max_participants}     onChange={(e) =>setMax_participants(e.target.value)}
                          
                   />
@@ -209,7 +211,7 @@ catch(error) {
           
           <Form.Group id="category">
                   <Form.Label>Ville</Form.Label>
-                  <Form.Control   required type="text" id="ville" name="ville"
+                  <Form.Control    type="text" id="ville" name="ville"
                            value={city}     onChange={(e) =>setCity(e.target.value)}
                          
                   />
@@ -220,8 +222,7 @@ catch(error) {
           <Form.Group id="category">
                   <Form.Label>Ligue</Form.Label>
                   <Form.Select  id="ligue"  name="ligue"  value={ligue}  onChange={(e) =>setLigue(e.target.value)}
-                               required   autoComplete="off" >
-                                      <option>{ligue}</option>
+                                  autoComplete="off" >
                                     {state8.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -237,7 +238,7 @@ catch(error) {
             <Form.Group id="zip_code">
                     <Form.Label>Saison</Form.Label>
                     <Form.Select id="saison"  name="saison"  value={season}  onChange={(e) =>setSeason(e.target.value)}
-                               required   autoComplete="off" >
+                                  autoComplete="off" >
                                       
                                     {state9.map((person) => (<>
                                   
@@ -251,7 +252,7 @@ catch(error) {
           <Form.Group id="addresse">
                   <Form.Label>Addresse</Form.Label>
                   <Form.Control   type="text" id="addresse" name="addresse" 
-                        required   value={addresse}     onChange={(e) =>setAddresse(e.target.value)}
+                           value={addresse}     onChange={(e) =>setAddresse(e.target.value)}
                          
                   />
                 </Form.Group>
@@ -261,7 +262,7 @@ catch(error) {
             <Form.Group id="zip_code">
                     <Form.Label>Zip_code</Form.Label>
                    <Form.Control   type="text" id="zip_code" name="zip_code" 
-                          required value={zip_code}     onChange={(e) =>setZip(e.target.value)}
+                           value={zip_code}     onChange={(e) =>setZip(e.target.value)}
                          
                   />
                   </Form.Group>

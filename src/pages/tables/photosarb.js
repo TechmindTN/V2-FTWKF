@@ -1,16 +1,8 @@
 
-import React , {useEffect,useState,useRef} from "react";
-
-import { Link, useHistory  } from "react-router-dom";
-import { Routes } from "../../routes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
-import { Form, Col, Row, Card, Button, InputGroup,ProgressBar } from '@themesberg/react-bootstrap';
+import React , {useEffect,useState} from "react";
+import {  useHistory  } from "react-router-dom";
+import { Form, Col, Row, Card, Button,  Modal} from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
-import Datetime from "react-datetime";
-const PARAMETER_URL='parameters/';
-const LIGUE_URL='ligue/';
-const ATHLETE_URL='add_athlete/';
 import 'react-dropzone-uploader/dist/styles.css'
 const Image_url='upload_photo/'
 const Athleteadd = () =>{
@@ -18,8 +10,10 @@ const [selectedFile, setSelectedFile] = React.useState(null);
 const [selectedFile1, setSelectedFile1] = React.useState(null);
 const [progress, setProgress] = useState()
 const [progress1, setProgress1] = useState()
-const [progress2, setProgress2] = useState()
-const [progress3, setProgress3] = useState()
+const [showDefault, setShowDefault] = useState(false);
+const [showDefault1, setShowDefault1] = useState(false);
+const handleClose = () => setShowDefault(false);
+const handleClose1 = () => setShowDefault1(false);
 const [file, setFile] = useState();
 const [file1, setFile1] = useState();
 const[success, setSuccess] = useState (false) ;
@@ -52,7 +46,6 @@ function upload  (e)  {
   
   setInputArray({inputArray: inputArr})
   setInputFiles({inputFiles:e.target.files})
-  
   } 
   function upload1  (e)  {
 
@@ -168,9 +161,9 @@ function upload  (e)  {
             
     
             <div className="App">
-            <h5>Photo d'identité' :</h5>
+            <h5>Photo d'identité :</h5>
             <input type="file" onChange={upload} required  />
-            <img src={file}  height={80}/><br/>
+            <img src={file}  height={80} onClick={() => setShowDefault(true)}/><br/>
             {/* {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />} */}
         </div>
     
@@ -183,9 +176,9 @@ function upload  (e)  {
             <Col sm={3} className="mb-3">
             
             <div className="App">
-            <h5>Grade Arbitrage :  :</h5>
+            <h5>Grade Arbitrage :  </h5>
             <input type="file" onChange={upload1}   required/>
-            <img src={file1}  height={80}/>
+            <img src={file1}  height={80} onClick={() => setShowDefault1(true)}/>
           
             {/* {progress1 && <ProgressBar   now={progress1} label={`${progress1}%`} style={{ height: 20}} />} */}
         </div>
@@ -203,6 +196,29 @@ function upload  (e)  {
         </Card.Body>
       </Card></Col>
       
+
+      <React.Fragment>
+
+<Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
+
+  <Modal.Body>
+
+  <img src={file}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>    
+<React.Fragment>
+
+<Modal as={Modal.Dialog} centered show={showDefault1} onHide={handleClose1}>
+
+  <Modal.Body>
+
+  <img src={file1}  height={400}/>
+  </Modal.Body>
+ 
+</Modal>
+</React.Fragment>
         </Form>
   
       

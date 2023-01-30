@@ -14,6 +14,8 @@ export const Routes = {
     CompAdd:{path: "/tables/CompAdd"},
     CompUpd:{path: "/tables/CompUpd"},
     CompCons:{path: "/tables/CompCons"},
+    SuppUpd:{path: "/tables/SuppUpd"},
+    updphotoslic:{path: "/tables/updphotoslic"},
 
     updphotos:{path: "/tables/updphotos"},
     photosent:{path: "/tables/photosent"},

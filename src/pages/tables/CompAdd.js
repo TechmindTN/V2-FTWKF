@@ -152,10 +152,8 @@ const token=localStorage.getItem("token")
     axios.post(
       COMP_URL,
       ({'name':name,'duration':duration,'max_participants':Max_participants,'max_attendents':Max_attendants,'country':"Tunisie",'state':city
-      ,'address':addresse,'zip_code':zip_code ,'location':states,'age':categorie,'season':season,'discipline':sport, 
-    
-      
-        "arbitrators":selectedValue,"participants":selectedValue1
+        ,'address':addresse,'zip_code':zip_code ,'location':states,'age':categorie,'season':season,'discipline':sport, 'city':city,
+        "arbitrators":selectedValue,"participants":selectedValue1,"manager": localStorage.getItem('id'),'ligue':ligue
     
     }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,

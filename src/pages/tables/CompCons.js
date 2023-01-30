@@ -1,19 +1,13 @@
 
-import React , {useEffect,useState,useRef} from "react";
+import React , {useEffect,useState} from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
-import { Form, Col, Row, Card, Button, InputGroup,ProgressBar } from '@themesberg/react-bootstrap';
+import { Form, Col, Row, Card, Button} from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
-import Datetime from "react-datetime";
 const PARAMETER_URL='parameters/';
 const LIGUE_URL='ligue/';
 import Select from 'react-select'
-
 import 'react-dropzone-uploader/dist/styles.css'
 const CompCons = () =>{
-
-
 const [addresse, setAddresse] = useState();
 const [zip_code, setZip] = useState();
 const [ligue, setLigue] = useState();
@@ -22,12 +16,12 @@ const [categorie, setCategorie] = useState();
 const [sport, setSport] = useState();
 const [Max_participants, setMax_participants] = useState();
 const [city, setCity] = useState();
-const[name,setName]=useState();
-const[duration,setDuration]=useState();
-const[season,setSeason]=useState();
-const[arb,setArb]=useState([]);
-
-const[success, setSuccess] = useState (false) ;
+const [name,setName]=useState();
+const [duration,setDuration]=useState();
+const [season,setSeason]=useState();
+const [arb,setArb]=useState([]);
+const [lic,setLic]=useState([]);
+const [success, setSuccess] = useState (false) ;
 const [state,setState]=useState([]);
 const [states,setStates]=useState([]);
 const [state5,setState5]=useState([]);
@@ -81,6 +75,7 @@ useEffect(() => {
   'Access-Control-Allow-Origin':'Accept'} })
   .then(async res => {
     const data = res.data;
+    console.log(data)
     const arb=data.map(arb => arb.arbitrator.id)
     const mapData = [...arb];
     console.log(mapData);
@@ -145,11 +140,15 @@ useEffect(() => {
   setDuration(persons.duration)
   setName(persons.name)
   setStates(persons.location)
-  setCity(persons.city)
+  setCity(persons.state)
   setZip(persons.zip_code)
   setMax_attendants(persons.max_attendents)
   setMax_participants(persons.max_participants)
-  setArb(persons.arbitrators)
+  setArb(persons.arbitrators.arbitrator)
+  setLic(persons.participants)
+  setSeason(persons.season)
+  setLigue(persons.ligue)
+
 })
 },[])
 
@@ -171,8 +170,8 @@ const token=localStorage.getItem("token")
   // const timer = setTimeout(() => {
   //   // console.log('This will run after 1 second!')
   //   window.location.reload(false);
-  // }, 2000);
-  // return () => clearTimeout(timer);
+  // }, 3000);
+  return () => clearTimeout(timer);
   
 }catch(error) {
   setSuccess(error)
@@ -321,15 +320,28 @@ const token=localStorage.getItem("token")
             </Col>
             <Row>
 
-            <Col  sm={4} className="mb-3">
-              Liste des arbitres
-         {arb}
+         
+              <Col  sm={12} className="mb-3">
+              Liste des licences <br/>
+              {lic.map((person) => (<>
+              
+              {person}<br/>
+              
+              </>))}
               </Col>
-              <Col  sm={4} className="mb-3">
-              Liste des licences
-         {arb}
-              </Col>
-            </Row>
+            </Row> <Row>
+
+<Col  sm={12} className="mb-3">
+  Liste des arbitres <br/>
+  {/* {arb.map((person) => (<>
+  
+  {person}<br/>
+  
+  </>))} */}
+{/* {arb} */}
+  </Col>
+ 
+</Row>
      
            
           </Row>

@@ -47,7 +47,7 @@ const Licence = () =>{
           </Col>    
           <Col md={4} className="mb-3">
           <Button
-            variant="primary" as={Link} to={Routes.LicenceAdd.path} >
+            variant="primary" as={Link} to={Routes.updphotoslic.path} >
             Ajouter Licence
             </Button>
           </Col>
@@ -61,11 +61,12 @@ const Licence = () =>{
             <tr>
               <th className="border-bottom">Saison</th>
               <th className="border-bottom">Licence</th>
-              {/* <th className="border-bottom">Nom</th>
-              <th className="border-bottom">Prenom</th> */}
+              <th className="border-bottom">CIN</th>
+               <th className="border-bottom">Nom</th> 
+              <th className="border-bottom">Prenom</th> 
               <th className="border-bottom">Club</th>
               <th className="border-bottom">Role</th>
-              {/* <th className="border-bottom">addresse</th> */}
+              <th className="border-bottom">addresse</th>
 
               <th className="border-bottom">Weight</th>
               <th className="border-bottom">Grade</th>
@@ -78,18 +79,17 @@ const Licence = () =>{
           <tbody>
       
           {state1.map(person => (
-       
         
         <>
-       
         <tr >
               <td className="border-0 "  >{person.licence.seasons}</td>
               <td className="border-0 "  >{person.licence.num_licences}</td>
-              {/* <td className="border-0 "  >{person.profile.state}</td> */}
-              {/* <td className="border-0 "  >{person.profile.last_name}</td>  */}
+              <td className="border-0 "  >{person.profile.cin}</td>
+              <td className="border-0 "  >{person.profile.first_name}</td>
+              <td className="border-0 "  >{person.profile.last_name}</td> 
               <td className="border-0 "  >{person.licence.club}</td>
               <td className="border-0 "  >{person.licence.role}</td>
-              {/* <td className="border-0 "  >{person.profile.address}</td> */}
+              <td className="border-0 "  >{person.profile.address}</td>
               <td className="border-0 "  >{person.licence.weight}</td>
               <td className="border-0 "  >{person.licence.grade}</td>
               <td className="border-0 "  >{person.licence.degree}</td>

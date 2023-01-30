@@ -32,14 +32,14 @@ const [state4,setState4]=useState([]);
 const [state5,setState5]=useState([]);
 const [state6,setState6]=useState([]);
 const [state7,setState7]=useState([]);
-const [Id,setId]=useState([]);
-const [addresse,setAddresse]=useState([]);
-const [Role,setRole]=useState([]);
-const [phone,setPhone]=useState([]);
-const [code,setCode]=useState([]);
-const [gouv,setGouv]=useState([]);
-const [club,setClub]=useState([]);
-const [sport,setSport]=useState([]);
+const [addresse,setAddresse]=useState();
+const [Role,setRole]=useState();
+const [phone,setPhone]=useState();
+const [code,setCode]=useState();
+const [gouv,setGouv]=useState();
+const [club,setClub]=useState();
+const [sport,setSport]=useState();
+const [user,setUser]=useState()
 
 useEffect(() => {
   axios.get(PARAMETER_URL,``)
@@ -72,45 +72,35 @@ useEffect(() => {
     console.log(persons)
      setGrade(persons.grade)
      setCategorie(persons.categorie)
-  
+     setWeights(persons.weight)
      SetNationality("Tunisienne")
-       setCin(persons.user.cin)
-   setFname(persons.user.first_name)
-  setLname(persons.user.last_name)
-  setBirthday(persons.user.birthday)
-   setRole(persons.role)
-     setAddresse(persons.user.address)
-   setVille(persons.user.city)
- setPhone(persons.user.phone)
- setCode(persons.user.zip_code)
- setGouv(persons.user.state)
-setClub(persons.club)
-setSport(persons.discipline)
+     setCin(persons.profile.cin)
+     setFname(persons.profile.first_name)
+     setLname(persons.profile.last_name)
+     setBirthday(persons.profile.birthday)
+     setRole(persons.role)
+     setAddresse(persons.profile.address)
+     setVille(persons.profile.city)
+     setPhone(persons.profile.phone)
+     setCode(persons.profile.zip_code)
+     setGouv(persons.profile.state)
+     setClub(persons.club)
+     setSport(persons.discipline)
+     setUser(persons.user)
+     setSexe(persons.profile.sexe)
 })
 },[])
-
-
 const handlesubmit = async (e) => {
   e.preventDefault();
-  const token = localStorage.getItem("token");
-  const formData = new FormData();
-  formData.append("first_name", first_name);
-  formData.append("last_name", last_name);
-  formData.append("cin", cin);
-  formData.append("birthday", birthday);
-  formData.append("sex", sexe);
-  formData.append("category_id", categorie);
-  formData.append("weights", weights);
-  formData.append("nationality", nationality);
-  formData.append("grade_id", grade);
+ 
 try {
   const lic=localStorage.getItem("lic");
   const LICENCEs=`licences/${lic}/`
   const token = localStorage.getItem("token");
     axios.put(
       LICENCEs,
-      ({'grade':grade,'num_licences':lic,'categorie':categorie,'club':club,'discipline':sport,'weight':weights,
-      'user':{'first_name':first_name,'last_name':last_name,
+      ({'num_licences':lic,'grade':grade,'categorie':categorie,'club':club,'discipline':sport,'weight':weights,
+      'user':{'first_name':first_name,'last_name':last_name,'user':user,'sexe':sexe,
          'country':'Tunisie','state':gouv,'address':addresse,'zip_code':code,'phone':phone,'birthday':birthday,
        'cin':cin}
     }), { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
@@ -226,7 +216,7 @@ try {
                   <Form.Label>Poids</Form.Label>
                   <Form.Select id="weight"  name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
                                   autoComplete="off" >
-                                      <option></option>
+                                      
                                     {state3.map((person) => (<>
                                   
                               <option value={person.id}> 

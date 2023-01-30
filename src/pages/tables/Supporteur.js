@@ -7,14 +7,15 @@ import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagin
 import { Routes } from "../../routes";
 import { Link } from 'react-router-dom';
 import axios from "../examples/api/axios";
+
 const SUP_URL='supporter/';
 
 const Supporteur = () =>{
-const[datas,setData]=useState('');
+  const token = localStorage.getItem("token");
+
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
 const [showDefaults, setShowDefaults] = useState();
-const[id,setId]=useState([])
 const [state,setState]=useState([])
 useEffect(() => {
   axios.get(SUP_URL)
@@ -78,21 +79,27 @@ Ajouter Supporteur
         <><tr>
               <td className="border-0 ">{person.id}</td>
               <td className="border-0 ">{person.name}</td>
-              <td className="border-0 ">{person.profile}</td>
+              <td className="border-0 ">{person.club}</td>
               <td className="border-0 "> 
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
-                axios.put(`validateLicence/${person.id}/`)
-                .then(res => {
-                  const persons = res.data;
-                  setState(persons);
-                  console.log(persons);
-              
-              })
+                axios.delete(`supporter/${person.id}/`,{ headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'}})
+                .then(response => {
+                  console.log("deleted successfully!")
+                  window.location.reload(false);
+                })
+                .catch(error => {
+                  console.log("Something went wrong", error)
+                })
            
                  
-              )}>Details 
+              )}>Supprimer 
               </Button> &nbsp;
-              <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button></td>
+              <Button variant="primary" className="my-0"  as={Link} to={Routes.SuppUpd.path} onClick={() => setShowDefault(
+                  localStorage.setItem('supp',person.id)    
+            
+
+              )}>Modifier</Button></td>
              
               <React.Fragment>
 

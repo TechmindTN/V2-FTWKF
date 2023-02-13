@@ -9,8 +9,9 @@ import { Routes } from "../../routes";
 import logo from "../../assets/img/logo-ftwkf.png";
 import BgImage from "../../assets/img/illustrations/signin.svg";
 import axios from "./api/axios";
-import Role from "../examples/Role"
-import HomePage from "../HomePage";
+import {useHistory  } from "react-router-dom";
+
+import Signin from "../HomePage";
 const USER_REGEX = /^[0-9]{3,10}$/;
 const PWD_REGEX = /^[0-9]{3,10}$/;
 const REGISTER_URL='register/';
@@ -21,7 +22,7 @@ const errRef = useRef();
 const [username, setUsername] = useState('');
 const [valideName , setValidName] = useState('');
 const [userFocus , setUserFocus] = useState('');
-
+const history = useHistory();
 const [password, setPassword] = useState('');
 const [validePassword , setValidPassword] = useState('');
 const [passwordFaocus , setPasswordFocus] = useState('');
@@ -74,7 +75,7 @@ useEffect(() => {
       return;
     }
     
-    try{
+    
       axios.post(REGISTER_URL,({'username':username,'password':password}),
       {mode:'cors'},
        {
@@ -92,17 +93,28 @@ useEffect(() => {
     localStorage.setItem('id',id)
     setRol();
     setSuccess(true);
+    const timer = setTimeout(() => {
+      // console.log('This will run after 1 second!')
+      history.push('/examples/sign-in')
+    }, 2000);
+    return () => clearTimeout(timer);
       // storing input rol
-    })
-    } catch(err){
-      if(err?.response){
+    }).catch((e)=>{
+      console.log(e.status)
+      if(e?.response?.status=="500"){
         setErrMsg('no Server response')
-        } else if(err?.response?.status ===409) {
-          setErrMsg('username taken');
-       }  else{   setErrMsg('registration failed');
-       } 
-       errRef.current.focus();
-    }
+       } else if(e?.response?.status=="400") {
+        setErrMsg("هذا الأسم مستخدم الرجاء إدخال أسم جديد");
+        } else if (e?.response?.status == "401"){
+          setErrMsg('unautherized');
+       }else if (e?.response?.status == "404"){
+        setErrMsg("unautherized");
+      } else{ setErrMsg('Erreur');
+      } 
+      // errRef.current.focus();
+      // console.log("ay hgkaya")
+     });
+    
 
 
   }
@@ -110,22 +122,23 @@ useEffect(() => {
 
   return (
     <>{success ? (
-      <Role />
+      <Signin/>
        ) : (
     <main>
       <section className="d-flex align-items-center my-5 mt-lg-4 mb-lg-5">
         <Container>
           <p className="text-center">
-            <Card.Link as={Link} to={Routes.DashboardOverview.path} className="text-gray-700">
+            <Card.Link as={Link} to={Routes.Presentation.path} className="text-gray-700">
               <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Retour à la page d'acceuil
             </Card.Link>
           </p>
-          <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+  
 
           <Row className="justify-content-center form-bg-image" style={{ backgroundImage: `url(${BgImage})` }}>
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="mb-4 mb-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
               <div className="text-center text-md-center mb-4 mt-md-0">
+              <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
               <Image src={logo}className="navbar-brand-light"  />
 
                 </div>

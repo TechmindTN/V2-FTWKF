@@ -20,22 +20,44 @@ const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
 const [showDefaults, setShowDefaults] = useState();
-
 const [state,setState]=useState([])
 const token = localStorage.getItem("token");
-useEffect(() => {
-  axios.get(ATHLETE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
-  'Access-Control-Allow-Origin':'Accept'} })
-  .then(res => {
-    const persons = res.data;
-    setState(persons);
 
-})},[])
-const [file, setFile] = useState();
-function handleChange(e) {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
+const [lang, setLang] = useState([]);
+ 
+const handleChange = e => {
+  const { value, checked } = e.target;
+  if (checked) {
+    // push selected value in list
+    setLang(prev => [...prev, value]);
+
+  } else {
+    // remove unchecked value from the list
+    setLang(prev => prev.filter(x => x !== value));
+
+  }
+
 }
+
+   useEffect(() => {
+    axios.post(ATHLETE_URL,
+       {
+      headers: {
+        "Content-type": "application/json",
+        "Authorization": `Token ${token}`
+      }
+    })
+    .then(res => {
+      const persons = res.data;
+      setState(persons);
+  
+  })},[])
+
+const [file, setFile] = useState();
+// function handleChange(e) {
+//     console.log(e.target.files);
+//     setFile(URL.createObjectURL(e.target.files[0]));
+// }
 
 
   return (
@@ -76,7 +98,8 @@ function handleChange(e) {
         <Table responsive className="table-centered table-nowrap rounded mb-0">
           <thead className="thead-light">
             <tr>
-              <th className="border-0">CIN</th>
+              <th className="border-0">//</th>
+              <th className="border-0">Licences</th>
               <th className="border-0">Nom</th>
               <th className="border-0">Prenom</th>
               <th className="border-0">Date Naissance</th>
@@ -98,10 +121,10 @@ function handleChange(e) {
             </tr>
           </thead>
           <tbody>
-          {state.map((person,i) => (
+          {state.map((person) => (
         <><tr key={person.athlete.id}>
-
-              <td className="border-0 " >{person.profile.cin}</td>
+<td className="border-0 " > <input   value={person.athlete.id} type="checkbox" onChange={handleChange}/></td>
+              <td className="border-0 "><div >{person.profile.licences}</div></td>
               <td className="border-0 ">{person.profile.last_name}</td>
               <td className="border-0 ">{person.profile.first_name}</td>
               <td className="border-0 ">{person.profile.birthday}</td>
@@ -116,25 +139,17 @@ function handleChange(e) {
               <td className="border-0 "><img height={80} width={80} src={person.athlete.medical_photo}    /></td>
 
               <td className="border-0 "> 
-              <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
-                 
-              //   axios.delete(`athlete/${person.athlete.id}/`, { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
-              //   'Access-Control-Allow-Origin':'Accept'} })
-              //   .then(res => {
-              //     const num_licences =person.athlete.id;
-                 
-              //     console.log(num_licences);
-              //     setState([...state, num_licences]);
-              //     const persons = res.data;
+            
+              <Button variant="primary" className="my-0"  as={Link} to={Routes.LicenceAthlete.path} onClick={() => setShowDefault(
+                localStorage.setItem('at',person.athlete.id),
+                localStorage.setItem('ph',person.athlete.photo),
+                localStorage.setItem('iden',person.athlete.identity_photo),
+                localStorage.setItem('mid',person.athlete.medical_photo),
+                localStorage.setItem('role',person.profile.role),
                 
-              //     console.log(persons);
-              //     history.push('/tables/ArrAdd')
-
-              // })    
-              
-  
-  axios
-    .delete(`athlete/${person.athlete.id}/`, { headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+             )}>Licence</Button>  &nbsp;
+              <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
+             axios.delete(`athlete/${person.athlete.id}/`, { headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
        'Access-Control-Allow-Origin':'Accept'}})
     .then(response => {
       console.log("deleted successfully!")
@@ -148,8 +163,12 @@ function handleChange(e) {
               <Button variant="primary" className="my-0"  as={Link} to={Routes.AthleteUpd.path} onClick={() => setShowDefault(
                 localStorage.setItem('at',person.athlete.id)
                 
-             )}>Modifier</Button></td>
-             
+             )}>Modifier</Button> <br/>
+              <div>
+           
+</div>
+             </td>
+            
               <React.Fragment>
 
                 <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
@@ -176,6 +195,7 @@ function handleChange(e) {
             </tr></>))}
           </tbody>
         </Table>
+        <div>{localStorage.setItem("checked",lang)}</div>
       </Card.Body>
     </Card>
 

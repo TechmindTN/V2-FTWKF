@@ -55,7 +55,7 @@ const ClubUpd = () =>{
       .then(function (response) {
         const url= response.data.url;
         localStorage.setItem('url',url) 
-        setIm1(`https://3462-197-14-10-36.eu.ngrok.io${url} `)
+        setIm1(`https://0588-197-14-10-36.eu.ngrok.io${url} `)
       })
       .catch(function (error) {
         console.log(error);

@@ -27,10 +27,9 @@ const [password , setPassword] = useState('');
 const [id, setId] = useState('');
 
 const[errMsg, setErrMsg] = useState ('') ;
-const[success, setSuccess] = useState (false) ;
 const [isShown, setIsSHown] = useState(false);
-const [isLoggedin, setIsLoggedin] = useState(false);
-
+const isLoading = useRef(false);
+const isSuccess = useRef(false);
 const togglePassword = () => {
    ((isShown) => !isShown);
 };
@@ -50,13 +49,15 @@ const handleSubmit = async (e) =>{
        withCredentials: false
     }
  ).then((value) => {
- console.log(value?.status)
+ //console.log(value?.status)
+ isLoading.current = true;
+ localStorage.setItem("isLoading",isLoading.current)
+ console.log(isLoading.current);
   if(value?.status=="200"){
     setUsername('');
     setPassword('');
-    setSuccess(true);
     
-    console.log(success);
+    isSuccess.current=true;
     const token=value.data['token'];
     const id=value.data.user_data['id'];
     const username=value.data.user_data['username'];
@@ -89,7 +90,7 @@ const handleSubmit = async (e) =>{
  
   return (
     <> 
-    {success ? (
+    {isLoading.current ? (
         <section className="d-flex align-items-center my-58 mt-lg-4 mb-lg-5">
         <Container>
          

@@ -1,32 +1,104 @@
 
-import React , {useEffect,useState} from "react";
+import React , {useEffect,useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Card, Button, Table,Modal } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Routes } from "../../routes";
 
 import axios from "../examples/api/axios";
 const ARBITRE_URL='arbitratorlist_info/';
 const Arbitre = () =>{
-  const token = localStorage.getItem("token");
-
+const location = useLocation();
+useEffect(() => {
+window.localStorage.setItem("loc",location.state);
+const loc=localStorage.getItem("loc");
+console.log(loc) 
+  }, []);
+const ok = localStorage.getItem("ok");
+const token = localStorage.getItem("token");
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
 const [showDefaults, setShowDefaults] = useState();  
-const [state,setState]=useState([])
+const [state,setState]=useState([]);
+const [lang, setLang] = useState([]);
+const [liste,setListe] = useState([]);
+const handleChange = e => {
+  const { value, checked } = e.target;
+  if (checked) {
+    // push selected value in list
+    setLang(prev => [...prev, value]);
+
+  } else {
+    // remove unchecked value from the list
+    setLang(prev => prev.filter(x => x !== value));
+
+  }
+
+}
 useEffect(() => {
-  axios.get(ARBITRE_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
-  'Access-Control-Allow-Origin':'Accept'} })
+  axios.post(ARBITRE_URL,  {
+    // "grade":2
+    
+  },{
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": `Token ${token}`
+    }
+  })
   .then(res => {
     const persons = res.data;
     setState(persons);
     console.log(persons)
 
 })},[])
+const [success, setSuccess] = useState (false) ;
 
+const comp=localStorage.getItem("comp");
+const COMPs_URL=`competition/${comp}/`;
+localStorage.setItem("checked",lang);
+const role=localStorage.getItem("role");
+const show = useRef(false);
 
+  if (role==1)
+  {
+    show.current = true;
+    console.log( show.current );
+  }
+  else
+  {
+    show.current = false;
+    console.log( show.current );
+  }
+const handlesubmit = async (e) => {
+  e.preventDefault();
+try {
+const token=localStorage.getItem("token")
+
+    axios.put(
+      COMPs_URL,
+      ({  "arbitrators":lang}),
+       { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+        'Access-Control-Allow-Origin':'Accept'} }) .then(
+
+          localStorage.removeItem('ok')
+        )
+    setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+    <div>
+    Liste des arbitres et des athletes  ajouté avec succès 
+   </div>
+  </div>);
+  // const timer = setTimeout(() => {
+  //   // console.log('This will run after 1 second!')
+  //   window.location.reload(false);
+  // }, 3000);
+  return () => clearTimeout(timer);
+ 
+}catch(error) {
+  setSuccess(error)
+}
+}
   return (
     <>
       <div className="d-xl-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -41,10 +113,17 @@ useEffect(() => {
           <h4>Liste des arbitres</h4>
           </Col>    
           <Col md={4} className="mb-3">
+          
           <Button
-            variant="primary" as={Link} to={Routes.photosarb.path} >
+            variant="primary" as={Link} to={Routes.photosarb.path}>
 Ajouter arbitre             
             </Button>
+          </Col>          <Col md={4} className="mb-3">
+          {ok ? (
+          <Button
+            variant="primary" onClick={handlesubmit}>
+Ajouter a compétition          
+            </Button>):(<p></p>)}
           </Col>
           </Row>
           <div >
@@ -57,6 +136,7 @@ Ajouter arbitre
         <Table responsive className="table-centered table-nowrap rounded mb-0">
           <thead className="thead-light">
             <tr>
+              <th className="border-0">//</th>
               <th className="border-0">Licence</th>
               <th className="border-0">CIN</th>
               <th className="border-0">Nom</th>
@@ -79,8 +159,9 @@ Ajouter arbitre
             </tr>
           </thead>
           <tbody>
-          {state.map((person) => (
+          {state.map((person, item) => (
         <><tr>
+              <td className="border-0 "> <input  value={person.arbitrator.id} type="checkbox" onChange={handleChange} /></td>
               <td className="border-0 ">{person.profile.id}</td>
               <td className="border-0 ">{person.profile.cin}</td>
               <td className="border-0 ">{person.profile.last_name}</td>
@@ -93,8 +174,19 @@ Ajouter arbitre
               <td className="border-0 ">{person.arbitrator.grade}</td>
               <td className="border-0 "><img src={person.arbitrator.identity_photo}  height={80} width={80}/></td>
               <td className="border-0 "><img src={person.arbitrator.photo} height={80} width={80}/></td>
+            
               <td className="border-0 "> 
-              <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
+              {show.current && <>
+              <Button variant="primary" className="my-0"  as={Link} to={Routes.LicenceAthlete.path} onClick={() => setShowDefault(
+                localStorage.setItem('at',person.arbitrator.id),
+                localStorage.setItem('ph',person.arbitrator.photo),
+                localStorage.setItem('iden',person.arbitrator.identity_photo),
+                localStorage.setItem('mid',person.arbitrator.medical_photo),
+                localStorage.setItem('role',"1"),
+                
+             )}>Licence</Button> &nbsp;
+              
+              <Button variant="primary" className="my-0" onClick={() => setShowDefaults(
                 axios.delete(`arbitrator/${person.arbitrator.id}/`,{ headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
                 'Access-Control-Allow-Origin':'Accept'}})
                 .then(response => {
@@ -107,8 +199,9 @@ Ajouter arbitre
            
                  
               )}>Supprimer 
-              </Button> &nbsp;
-              <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Modifier {person.id}</Button></td>
+              </Button>&nbsp;
+              <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Modifier {person.id}
+              </Button></> }  </td>  
              
               <React.Fragment>
 
@@ -135,6 +228,7 @@ Ajouter arbitre
               {/* </> ))} */}
             </tr></>))}
           </tbody>
+          {/* <div>{localStorage.setItem("checked",lang)}</div> */}
         </Table>
       </Card.Body>
     </Card>

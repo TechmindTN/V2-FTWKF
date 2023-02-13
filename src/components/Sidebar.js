@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
@@ -12,8 +12,20 @@ import logo from "../assets/img/logo-ftwkf.png";
 import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
 export const Sidebar = () => {
-  const [username, setRol] = useState('');
+const [username, setRol] = useState('');
+const role =localStorage.getItem("role");
+const shows = useRef(false);
 
+if (role==1)
+  {
+    shows.current = true;
+    console.log( shows.current );
+  }
+  else
+  {
+    shows.current = false;
+    console.log( shows.current );
+  }
   useEffect(() => {
     setRol(localStorage.getItem("username"));
   }, []);
@@ -116,11 +128,11 @@ export const Sidebar = () => {
               <CollapsableNavItem  title="Licences" icon={faTable}>
                 <NavItem title="Liste des licences" link={Routes.Licence.path} />
               </CollapsableNavItem>
-            
+              {shows.current &&  <>
               <CollapsableNavItem  title="Clubs" icon={faTable}>
                 <NavItem title="Liste des clubs" link={Routes.Clubs.path} />
                 <NavItem title="Liste des ligue" link={Routes.Ligue.path} />
-              </CollapsableNavItem>
+              </CollapsableNavItem></>}
               <CollapsableNavItem  title="Entraineur" icon={faTable}>
                 <NavItem title="Liste des entraineurs" link={Routes.Entraineur.path} />
               </CollapsableNavItem>
@@ -130,15 +142,17 @@ export const Sidebar = () => {
               <CollapsableNavItem  title="Supporteur" icon={faTable}>
                 <NavItem title="Liste des supporteurs" link={Routes.Supporteur.path} />
               </CollapsableNavItem>
+              {shows.current &&  <>
               <CollapsableNavItem  title="Categories" icon={faTable}>
                 <NavItem title="Age" link={Routes.Age.path}/>
                 <NavItem title="Poids" link={Routes.Poids.path}/>
               </CollapsableNavItem>
-
+            
               <NavItem title="Liste de saisons" icon={faTable} link={Routes.Saison.path} />
               <NavItem title="Liste des disciplines" icon={faTable} link={Routes.Sports.path} />
               <NavItem title="Liste des compétitions" icon={faTable} link={Routes.Comp.path} />
-
+              </> 
+              }
               {/* <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
                 <NavItem title="Sign In" link={Routes.Signin.path} />
                 <NavItem title="Sign Up" link={Routes.Signup.path} />
@@ -180,6 +194,10 @@ export const Sidebar = () => {
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
               </CollapsableNavItem> */}
+               <NavItem title="Pagination" link={Routes.Pagination.path} />
+               <NavItem title="Tables" link={Routes.Tables.path} />
+               <NavItem title="Tabs" link={Routes.Tabs.path} />
+
             </Nav>
           </div>
         </SimpleBar>

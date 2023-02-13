@@ -1,20 +1,10 @@
 
 import React , {useEffect,useState,useRef} from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome , faCalendarAlt, faPaperclip } from "@fortawesome/free-solid-svg-icons";
-import { Breadcrumb } from '@themesberg/react-bootstrap';
-import { Form, Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
-import { Routes } from "../../routes";
-import { Link } from 'react-router-dom';
-import { PageTrafficTable, RankingTable } from "../../components/Tables";
+import { Form, Col, Row, Card, Button} from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
-import Datetime from "react-datetime";
-
 const Licence_URL='add_licence/'
 const PARAMETER_URL='parameters/'
-const role_url='role/'
 const Licenceadd = () =>{
-
   const [state,setState]=useState([]);
   const [state2,setState2]=useState([]);
   const [state3,setState3]=useState([]);
@@ -22,19 +12,16 @@ const Licenceadd = () =>{
   const [state5,setState5]=useState([]);
   const [state6,setState6]=useState([]);
   const [state7,setState7]=useState([]);
-
-
-  const[ligue, setLigue] = useState();
-
-  const[degree, setDegree] = useState();
-  const[weights,setWeights]=useState();
-  const[grade,setGrade]=useState('');
-  const[success, setSuccess] = useState (false) ;
-  const[categorie, setCategorie] = useState();
-  const[season, setSeason] = useState();
-  const[club, setClub] = useState();
-  const[Disciplines, setDiscipline] = useState();
-  const[role, setRole] = useState();
+  const [state8,setState8]=useState([]);
+  const [degree, setDegree] = useState();
+  const [weights,setWeights]=useState();
+  const [grade,setGrade]=useState('');
+  const [success, setSuccess] = useState (false) ;
+  const [categorie, setCategorie] = useState();
+  const [season, setSeason] = useState();
+  const [club, setClub] = useState();
+  const [Disciplines, setDiscipline] = useState();
+  const [role, setRole] = useState();
 
   useEffect(() => {
     axios.get(PARAMETER_URL,``)
@@ -46,6 +33,7 @@ const Licenceadd = () =>{
       const Weights=res.data.Weights;
       const Degrees=res.data.Degrees;
       const Disciplines=res.data.Disciplines;
+      const Roles=res.data.Roles;
       setState2(Degrees);
       setState3(Weights);
       setState4(Grades);
@@ -53,63 +41,153 @@ const Licenceadd = () =>{
       setState5(Categories);
       setState6(Clubs);
       setState7(Disciplines);
+      setState8(Roles);
+
   })},[])
-  useEffect(() => {
-    axios.get(role_url,``)
-    .then(res => {
-      const role = res.data;
-      console.log(role);
-      setState2(role);
-  })},[])
-const[datas,setData]=useState('');
+
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
-
 const handlesubmit = async (e) => {
   e.preventDefault();
-  const token = localStorage.getItem("token");
-  const formData = new FormData();
-  formData.append("categorie", Number(categorie));
-  formData.append("weight", Number( weights));
-  //formData.append("discipline", discipline);
-  formData.append("club", club);  
-  formData.append("grade", Number(grade));
-  formData.append("degree", Number(degree));
-  formData.append("seasons",  Number(season));
-  formData.append("user", localStorage.getItem("id"));
-  formData.append("role", localStorage.getItem("rol"));
+
 const user = localStorage.getItem("id");
-try {
+
      const token = localStorage.getItem("token");
      const iden=localStorage.getItem('iden');
      const pr=localStorage.getItem('pr');
      const ph=localStorage.getItem('ph');
      const mid=localStorage.getItem('mid');
+     const rolee=localStorage.getItem('role');
+     const at=localStorage.getItem("at");
+     const licc=localStorage.getItem('licc');
      axios.post(
       Licence_URL
-      ,({'licence':{'categorie':Number(categorie),'weight':Number(weights),'club':Number(club),'grade':Number(grade),'degree':Number(degree),'seasons':season,'user':Number(user),'role':Number(role),
-      'discipline':Number(Disciplines)}, "photos":{
-        "photo":`https://0588-197-14-10-36.eu.ngrok.io${ph}`,
-   "identity_photo": `https://0588-197-14-10-36.eu.ngrok.io${iden}`,
-   'medical_photo':`https://0588-197-14-10-36.eu.ngrok.io${mid} `
-   }
-}),
+      ,({"licence":{"categorie":Number(categorie),"weight":Number(weights),"club":Number(club),"grade":Number(grade),"degree":Number(degree),"seasons":Number(season),"user":Number(user),"role":Number(rolee),
+       "discipline":Number(Disciplines)}, "photos":{
+    "photo":`https://0588-197-14-10-36.eu.ngrok.io${ph}`,    "identity_photo": `https://0588-197-14-10-36.eu.ngrok.io${iden}`,
+    "medical_photo":`https://0588-197-14-10-36.eu.ngrok.io${mid} `
+     }
+   }),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },
       ).then(res=>
-        console.log(res.data.licence.num_licences));
-     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
-     <div>Licence Ajouté</div></div>);
-     const timer = setTimeout(() => {
-      // console.log('This will run after 1 second!')
-      //window.location.reload(false);
-     }, 2000);
+      
+        localStorage.setItem("licc",res.data.licence.num_licences),
+        )
+     
+      if(rolee=="2"){
+
+      const timer = setTimeout(() => {
+      
+
+          axios.put(
+            `edit_athlete_profile/${at}/`,
+            ({'athlete':{},'profile':{'licences':localStorage.getItem('licc')}
+            }),
+             { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+              'Access-Control-Allow-Origin':'Accept'} },
+          )
+          setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+          <div>Licence Ajouté</div></div>);
+            
+         
+              history.push('/tables/Athletes')
+            
+         
+            return () => clearTimeout(timer);
+         // window.location.href = "http://localhost:3000/#/tables/Athletes";
+          //localStorage.removeItem("at");
+       
+      
+
+     }, 3000);
      return () => clearTimeout(timer);
-      // window.location.href = "dashboard/tables/Licence";
-    }catch(error) 
-    {
-     console.log(error)
+    } else if(rolee=="1"){
+
+      const timer = setTimeout(() => {
+    
+  
+            axios.put(
+              `edit_arbitrator_profile/${at}/`,
+              ({'arbitrator':{},'profile':{'licences':localStorage.getItem('licc')}
+              }),
+               { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'} },
+            )
+            setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+            <div>Licence Ajouté</div></div>);
+              const timer = setTimeout(() => {
+                
+          
+                history.push('/tables/Athletes')
+              
+              }, 1000);
+              return () => clearTimeout(timer);
+           // window.location.href = "http://localhost:3000/#/tables/Athletes";
+            //localStorage.removeItem("at");
+       
+  
+       }, 1000);
+       return () => clearTimeout(timer);
     }
+    else if(rolee=="4"){
+
+      const timer = setTimeout(() => {
+    
+  
+            axios.put(
+              `edit_coach_profile/${at}/`,
+              ({'coach':{},'profile':{'licences':localStorage.getItem('licc')}
+              }),
+               { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'} },
+            )
+            setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+            <div>Licence Ajouté</div></div>);
+              const timer = setTimeout(() => {
+                
+               
+                history.push('/tables/Athletes')
+              
+              }, 1000);
+              return () => clearTimeout(timer);
+           // window.location.href = "http://localhost:3000/#/tables/Athletes";
+            //localStorage.removeItem("at");
+         
+       
+       },1000);
+       return () => clearTimeout(timer);
+    }
+      // window.location.href = "dashboard/tables/Licence";
+    
+    
+    // try {
+    //   const at=localStorage.getItem("at");
+
+    //   const token = localStorage.getItem("token");
+    //   const licc=localStorage.getItem('licc');
+    //   const ATHLETES_URL=`edit_athlete_profile/${at}/`
+    //     axios.put(
+    //       ATHLETES_URL,
+    //       ({'athlete':{},'profile':{'licences':licc}
+    //       }),
+    //        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+    //         'Access-Control-Allow-Origin':'Accept'} },
+    //     )
+    //     setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+    //     <div>Athlete modifié</div></div>);
+    //       const timer = setTimeout(() => {
+    //         // console.log('This will run after 1 second!')
+    //         //history.push('/tables/Athletes')
+          
+    //       }, 2000);
+    //       return () => clearTimeout(timer);
+    //    // window.location.href = "http://localhost:3000/#/tables/Athletes";
+    //     //localStorage.removeItem("at");
+     
+    // }catch(error) {
+    //   console.log(error)
+    // }
 }
     return (
       <Card border="light" className="bg-white shadow-sm mb-4">
@@ -129,8 +207,8 @@ try {
                 <Form.Group id="firstName">
                   <Form.Label>Saison موسم</Form.Label>    
                   <Form.Select id="season" required name="season"  value={season}  onChange={(e) =>setSeason(e.target.value)}
-                                  autoComplete="off" >
-                                    <option></option>
+                                  autoComplete="off" >                                    <option></option>
+
                                     {state.map((person) => (<>
                               <option value={person.id}> 
         {person.Seasons}</option>    </>   ))}
@@ -142,8 +220,8 @@ try {
                 <Form.Group id="firstName">
                   <Form.Label>Dégre درجة</Form.Label>
                   <Form.Select id="Degree" required  name="degree"  value={degree}  onChange={(e) =>setDegree(e.target.value)}
-                                  autoComplete="off" >
-                                    <option></option>
+                                  autoComplete="off" >                                    <option></option>
+
                                     {state2.map((person) => (<>
                               <option value={person.id}> 
         {person.Degree}</option>    </>   ))}
@@ -171,8 +249,8 @@ try {
                 <Form.Group id="weights">
                   <Form.Label>poid وزن</Form.Label>
                   <Form.Select id="weight" required name="weight"  value={weights}  onChange={(e) =>setWeights(e.target.value)}
-                                  autoComplete="off" >
-                                    <option></option>
+                                  autoComplete="off" >                                    <option></option>
+
                                     {state3.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -190,8 +268,8 @@ try {
             <Form.Group id="category">
                     <Form.Label>categorie age العمر</Form.Label>
                     <Form.Select id="categorie" required name="categorie"  value={categorie}  onChange={(e) =>setCategorie(e.target.value)}
-                                  autoComplete="off" >
-                                    <option></option>
+                                  autoComplete="off" >                                    <option></option>
+
                                     {state5.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -204,8 +282,8 @@ try {
             <Form.Group id="category">
                     <Form.Label>Club النادي</Form.Label>
                     <Form.Select id="club"  required name="club"  value={club}  onChange={(e) =>setClub(e.target.value)}
-                                  autoComplete="off" >
-                                    <option></option>
+                                  autoComplete="off" >                                    <option></option>
+
                                     {state6.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -219,7 +297,8 @@ try {
             <Form.Group id="category">
                     <Form.Label>Descipline الرياضة</Form.Label>
                     <Form.Select id="Disciplines" required name="Disciplines"  value={Disciplines}  onChange={(e) =>setDiscipline(e.target.value)}
-                                  autoComplete="off" ><option></option>
+                                  autoComplete="off" >                                    <option></option>
+
                                     {state7.map((person) => (<>
                                   
                               <option value={person.id}> 
@@ -228,20 +307,20 @@ try {
                    
                   </Form.Group>
             </Col>
-            <Col sm={4} className="mb-3">
+            {/* <Col sm={4} className="mb-3">
             
             <Form.Group id="category">
                     <Form.Label>Profile</Form.Label>
                     <Form.Select id="role"  name="role" required value={role}  onChange={(e) =>setRole(e.target.value)}
-                                  autoComplete="off" >
-                                    <option></option>
-                                    {state2.map((person) => (<>
+                                  autoComplete="off" >                                    <option></option>
+
+                                    {state8.map((person) => (<>
                                   
                               <option value={person.id}> 
         {person.roles}</option>    </>   ))}
                   </Form.Select>
                   </Form.Group>
-            </Col>
+            </Col> */}
           </Row>
           <div className="mt-3">
               <Button variant="primary" type="submit">Ajouter</Button>

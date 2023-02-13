@@ -156,8 +156,8 @@ try {
   const ph=localStorage.getItem('ph');
 
   axios.post(
-    ENT_URL,({'profile':{'phone':phone,'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday},'coach':{'grade':grade,'photo':`https://3462-197-14-10-36.eu.ngrok.io${ph} `,'degree':Degrees,
-      'grade_photo':`https://3462-197-14-10-36.eu.ngrok.io${gr} `,'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${ent} `,'degree_photo':`https://3462-197-14-10-36.eu.ngrok.io${deg} `},'user':{'username':phone,'password':phone}}),
+    ENT_URL,({'profile':{'phone':phone,'cin':cin,'first_name':first_name,'last_name':last_name,'birthday':birthday,'role':4},'coach':{'grade':grade,'photo':`https://0588-197-14-10-36.eu.ngrok.io${ph} `,'degree':Degrees,
+      'grade_photo':`https://0588-197-14-10-36.eu.ngrok.io${gr} `,'identity_photo':`https://0588-197-14-10-36.eu.ngrok.io${ent} `,'degree_photo':`https://0588-197-14-10-36.eu.ngrok.io${deg} `},'user':{'username':phone,'password':phone}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} }
     ).then((value) =>{

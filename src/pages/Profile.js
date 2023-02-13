@@ -1,19 +1,24 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faBoxOpen, faCartArrowDown, faChartPie, faChevronDown, faClipboard, faCommentDots, faFileAlt, faPlus, faRocket, faStore } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Card, Form, Button, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
 import { Routes } from "../routes";
-import { Link } from 'react-router-dom';
-import Datetime from "react-datetime";
-import { faCalendarAlt,faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import { Link, useLocation } from 'react-router-dom';
+
 import axios from "./examples/api/axios";
-import { ChoosePhotoWidget, ProfileCardWidget } from "../components/Widgets";
+import { ProfileCardWidget } from "../components/Widgets";
 
 
-export const Profile = () =>  {
+export default function Profile ()  {
+  const location = useLocation();
+
+  //console.log(location.state)  // for location state
+  //console.log(location)  // for query strings;
   const [id,  setId]=useState('')
   useEffect(() => {
     setId(window.localStorage.getItem("id"));
+    sessionStorage.setItem("loc",location.state);
+    let loc=sessionStorage.getItem("loc");
   }, []);
   const [first_name, setFname] = useState();
   const [photo,setPhoto] = useState();
@@ -92,7 +97,7 @@ export const Profile = () =>  {
         <Card.Body>
         <Row>
           <Col md={10} className="mb-3">
-          <h5 className="mb-4">Informations Generales </h5></Col>
+          <h5 className="mb-4">Informations Generales </h5></Col> 
           
           {/* <img src={photo} style={{ width: 100, height: 80 }}alt="icons" /> */}
           <Col md={2} className="mb-3">
@@ -122,7 +127,7 @@ export const Profile = () =>  {
             <Row className="align-items-center">
             <Col md={6} className="mb-3">
                 <Form.Group id="lastName">
-                  <Form.Label>Prenom : <br/> {last_name }</Form.Label>
+                  <Form.Label>Prenom : <br/> {last_name }</Form.Label> 
                 </Form.Group>
               </Col>
               <Col md={6} className="mb-3">
@@ -210,4 +215,3 @@ export const Profile = () =>  {
 </>
   );
 };
-export default(Profile)

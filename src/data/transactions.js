@@ -1,6 +1,7 @@
 
 import moment from "moment-timezone";
 
+
 export default [
     {
         "invoiceNumber": 300500,
@@ -83,3 +84,4 @@ export default [
         "dueDate": moment().subtract(6, "days").add(1, "month").format("DD MMM YYYY")
     }
 ]
+   

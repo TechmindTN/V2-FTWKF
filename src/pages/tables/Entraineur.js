@@ -1,5 +1,5 @@
 
-import React , {useEffect,useState} from "react";
+import React , {useEffect,useState, useRef} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from '@themesberg/react-bootstrap';
@@ -22,7 +22,7 @@ const [showDefaults, setShowDefaults] = useState();
 const [state,setState]=useState([])
 useEffect(() => {
   axios.get(ENT_URL,
-  { headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+  { headers: {'Content-Type': 'application/data','Authorization':  `TOKEN ${token}`,
     'Access-Control-Allow-Origin':'Accept'} })
   .then(res => {
     const persons = res.data;
@@ -31,7 +31,19 @@ useEffect(() => {
 
 })},[])
 
+const show = useRef(false);
+const role=localStorage.getItem("role");
 
+  if (role==1)
+  {
+    show.current = true;
+    console.log( show.current );
+  }
+  else
+  {
+    show.current = false;
+    console.log( show.current );
+  }
 
 
 
@@ -102,7 +114,9 @@ Ajouter entraineur
               <td className="border-0 "><img  src={person.coach.identity_photo} width={100} /></td>
               <td className="border-0 "><img  src={person.coach.degree_photo}  width={100} /></td>
               <td className="border-0 "><img  src={person.coach.grade_photo} width={100} /></td>
+              {show.current && <>
               <td className="border-0 "> 
+
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
                 
               //   axios.delete(`coach/${person.coach.id}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
@@ -133,7 +147,7 @@ Ajouter entraineur
                 
              )}>Modifier</Button>
               {/* <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details {person.id}</Button> */}
-              </td>
+              </td> </>}
              
               <React.Fragment>
 

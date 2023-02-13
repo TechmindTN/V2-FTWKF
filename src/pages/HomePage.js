@@ -54,10 +54,13 @@ import ClubAdd from "./tables/ClubAdd";
 import Sports from "./tables/Sports";
 import Licence from "./tables/Licence";
 import LicenceAdd from"./tables/LicenceAdd"
+import LicenceAthlete from"./tables/LicenceAthlete"
 import Signin from "./examples/Signin";
 import Signinadmin from "./admin/Signin";
 import Signup from "./examples/Signup";
 import Role from "./examples/Role";
+import Choose from "./examples/Choose";
+
 import Age from "./tables/age";
 import Poids from "./tables/Poids";
 
@@ -99,7 +102,7 @@ import Tabs from "./components/Tabs";
 import Tooltips from "./components/Tooltips";
 import Toasts from "./components/Toasts";
 import { UploadFile } from '@mui/icons-material';
-
+const role = localStorage.getItem("role")
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   
   
@@ -133,15 +136,15 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
     setShowSettings(!showSettings);
     localStorage.setItem('settingsVisible', !showSettings);
   }
-  const [isLoggedin, setIsLoggedin] = useState();
-  return (
+  const isLoading = localStorage.getItem("isLoading");
+    return (
 
 <>
-{/* {!isLoggedin ? (
+{!isLoading ? (
           <> 
                <Signin />
            </>
-          ) : ( */}
+          ) : (
          
 <>
     <Route {...rest} render={props => (
@@ -156,11 +159,11 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
       </>
     )}
     /> </>
-    {/* )
+     )
   
-    } */}
+     }
     
-    //</>
+    </>
   );
 };
 
@@ -169,16 +172,19 @@ export default () => (
     <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
     <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
     <RouteWithLoader exact path={Routes.Signinadmin.path} component={Signinadmin} />
-   <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
-   <RouteWithLoader exact path={Routes.Role.path} component={Role} />
+ 
 
     <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
     <RouteWithLoader exact path={Routes.ResetPassword.path} component={ResetPassword} />
     <RouteWithLoader exact path={Routes.Lock.path} component={Lock} />
     <RouteWithLoader exact path={Routes.NotFound.path} component={NotFoundPage} />
     <RouteWithLoader exact path={Routes.ServerError.path} component={ServerError} />
+    <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
 
     {/* pages */}
+   <RouteWithSidebar exact path={Routes.Role.path} component={Role} />
+   <RouteWithSidebar exact path={Routes.Choose.path} component={Choose} />
+
     <RouteWithSidebar exact path={Routes.DashboardOverview.path} component={DashboardOverview} />
     <RouteWithSidebar exact path={Routes.Upgrade.path} component={Upgrade} />
     <RouteWithSidebar exact path={Routes.Transactions.path} component={Transactions} />
@@ -234,6 +240,8 @@ export default () => (
 
     <RouteWithSidebar exact path={Routes.Licence.path} component={Licence} />
     <RouteWithSidebar exact path={Routes.LicenceAdd.path} component={LicenceAdd} />
+    <RouteWithSidebar exact path={Routes.LicenceAthlete.path} component={LicenceAthlete} />
+
     {/* components */}
     <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />
     <RouteWithSidebar exact path={Routes.Alerts.path} component={Alerts} />

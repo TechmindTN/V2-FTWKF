@@ -50,12 +50,13 @@ const handleSubmit = async (e) =>{
        withCredentials: false
     }
  ).then((value) => {
- console.log(value?.status)
+  setIsLoggedin(true);
+  console.log(isLoggedin);
   if(value?.status=="200"){
     setUsername('');
     setPassword('');
     setSuccess(true);
-    console.log(value.data)
+    //console.log(value.data)
     const token=value.data['token'];
     const id=value.data.user_data['id'];
     const username=value.data.user_data['username'];

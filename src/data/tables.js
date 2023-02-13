@@ -1,16 +1,65 @@
 
 import { faGoogle, faTwitter, faYahoo, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faGlobeEurope, } from '@fortawesome/free-solid-svg-icons';
-import { useState,useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import USAFlag from '../assets/img/flags/united-states-of-america.svg';
 import CanadaFlag from '../assets/img/flags/canada.svg';
 import GermanyFlag from '../assets/img/flags/germany.svg';
 import FranceFlag from '../assets/img/flags/france.svg';
 import JapanFlag from '../assets/img/flags/japan.svg';
 import ItalyFlag from '../assets/img/flags/italy.svg';
-import axios from "../pages/examples/api/axios"
-const ATHLETE_URL="athlete/"
+import axios from "../pages/examples/api/axios";
+const LICENCE_URL='licencelist_info/';
+const token = localStorage.getItem("token");
+const state=[];
+axios.post(LICENCE_URL,{userid:1},{ headers : {'Content-Type': 'application/json','Authorization':  `TOKEN ${token}`,
+'Access-Control-Allow-Origin':'Accept'}})
+.then(res => {
+const persons = res.data;
+//console.log(persons)
 
+const arb=persons.map(arb => arb)
+const mapData = [...arb];
+const result={
+columns: [
+  {
+    label: 'num_licences',
+    field: 'num_licences',
+    sort: 'asc',
+    width: 150
+  }, {
+    label: 'club',
+    field: 'club',
+    sort: 'asc',
+    width: 150
+  },{
+    label: 'Nom',
+    field: 'Nom',
+    sort: 'asc',
+    width: 150
+  },{
+    label: 'Prenom',
+    field: 'last_name',
+    sort: 'asc',
+    width: 150
+  }
+  
+],rows: []
+};
+mapData.forEach((element)=>{
+result.rows.push({'num_licences':element.licence.num_licences,'club':element.licence.club,'Nom':element.profile.first_name,'last_name':element.profile.last_name});
+
+
+});
+result.rows.forEach((element)=>{
+    state.push(element);
+
+})
+console.log(state)
+}
+
+
+)
 //   axios.get(ATHLETE_URL)
 //   .then(res => {
 //     const persons = res.data;
@@ -18,6 +67,7 @@ const ATHLETE_URL="athlete/"
 //     console.log(persons)
 
 // })
+
 
 const pageVisits = [
     { id: 1, views: 4.525, returnValue: 255, bounceRate: 42.55, pageName: "/demo/admin/index.html" },
@@ -56,5 +106,6 @@ export {
     pageTraffic,
     pageRanking,
     invoiceItems,
+    state
     
 };

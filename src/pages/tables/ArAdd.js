@@ -86,13 +86,13 @@ const handlesubmit = async (e) => {
 try {  const token = localStorage.getItem("token");
 const ar= localStorage.getItem('ar')
 const gr= localStorage.getItem('gr')
-    axios.post(ARBITRE_URL,({'arbitrator':{'identity_photo':`https://3462-197-14-10-36.eu.ngrok.io${ar} `,'photo':`https://3462-197-14-10-36.eu.ngrok.io${gr} `,'grade':'2'},'profile':{'phone':phone,'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie"},'user':{'password':phone,'username':phone}}),
+    axios.post(ARBITRE_URL,({'arbitrator':{'identity_photo':`https://0588-197-14-10-36.eu.ngrok.io${ar} `,'photo':`https://0588-197-14-10-36.eu.ngrok.io${gr} `,'grade':'2'},'profile':{'phone':phone,'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie",'role':1},'user':{'password':phone,'username':phone}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },)
     setSuccess("Arbitre ajouté"); 
     const timer = setTimeout(() => {
       // console.log('This will run after 1 second!')
-      window.location.reload(false);
+    //  window.location.reload(false);
     }, 2000);
     return () => clearTimeout(timer);
     //localStorage.removeItem("ar")

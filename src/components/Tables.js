@@ -6,7 +6,7 @@ import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, Pagination, Button
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
-import { pageVisits, pageTraffic, pageRanking } from "../data/tables";
+import { pageVisits, pageTraffic, pageRanking,state } from "../data/tables";
 import transactions from "../data/transactions";
 import commands from "../data/commands";
 import axios from "../pages/examples/api/axios";
@@ -90,19 +90,19 @@ export const PageTrafficTable = () => {
   const [showDefault, setShowDefault] = useState(false);
   const handleClose = () => setShowDefault(false);
   const TableRow = (props) => {
-    const { id, source, sourceIcon, sourceIconColor, sourceType, category, rank, trafficShare, change } = props;
+    const { num_licences, club,  first_name, Nom, rank, trafficShare, change } = props;
    
     return (
       
       <tr >
         <td className="border-0 ">
-          <Card.Link href="#" className="text-primary ">{id ? id : "--"}</Card.Link>
+          <Card.Link href="#" className="text-primary ">{num_licences ? num_licences : "--"}</Card.Link>
         </td>
         <td className="border-0 ">
-          {source ? source : "--"}
+          {club ? club : "--"}
         </td>
-        <td className="border-0 ">{sourceType ? sourceType : "--"}</td>
-        <td className="border-0 ">{category ? category : "--"}</td>
+        <td className="border-0 ">{first_name ? first_name : "--"}</td>
+        <td className="border-0 ">{Nom ? Nom : "--"}</td>
         <td className="border-0 ">{rank ? rank : "--"}</td>
         <td className="border-0 ">{trafficShare ? trafficShare : "--"}
           {/* <Row className="d-flex align-items-center">
@@ -167,7 +167,7 @@ export const PageTrafficTable = () => {
             </tr>
           </thead>
           <tbody>
-            {pageTraffic.map(pt => <TableRow key={`page-traffic-${pt.id}`} {...pt} />)}
+            {state.map(pt => <TableRow key={`page-traffic-${pt.id}`} {...pt} />)}
             
           </tbody>
         </Table>
@@ -499,7 +499,34 @@ export function CompTable() {
     'Access-Control-Allow-Origin':'Accept'}})
       .then(res => {
         const persons = res.data;
+        console.log(persons);
         setState(persons);
+        const arb=persons.map(arb => arb.participants)
+        const mapData = [...arb];
+       // console.log(mapData);
+        let result=[
+
+        ];
+        mapData.forEach((element)=>{
+          result.push({'value':element});
+     
+        });
+        console.log(result)
+        const arb2=result.map(arb => arb.value)
+        const mapData2 = [...arb2];
+        console.log(mapData2)
+        const reformattedArray = mapData2[0].map(({ athlete }) => ({ [athlete.id]: athlete}));
+
+        console.log(reformattedArray);
+      //   const athlete = mapData2.map(item => {
+      //     const container = {};
+      
+      //     container[item.athlete] = item.athlete;
+        
+      //     return item.athlete;
+      // })
+      
+      // console.log(athlete);
 
       });
   }, []);

@@ -81,7 +81,7 @@ const EntUpd = () =>{
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress4(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
           localStorage.setItem('ph',url)
-          setFile4(`https://3462-197-14-10-36.eu.ngrok.io${url} `);
+          setFile4(`https://0588-197-14-10-36.eu.ngrok.io${url} `);
         }
           )    }catch(error) {      console.log(error)    }  }
           
@@ -99,7 +99,7 @@ const EntUpd = () =>{
            formData2,
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress3(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-                setFile3(`https://3462-197-14-10-36.eu.ngrok.io${url} `);
+                setFile3(`https://0588-197-14-10-36.eu.ngrok.io${url} `);
         }
           )    }catch(error) {      console.log(error)    }  }
   const submit2 = async (e) => {
@@ -116,7 +116,7 @@ const EntUpd = () =>{
            formData2,
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress2(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-                setFile2(`https://3462-197-14-10-36.eu.ngrok.io${url} `);
+                setFile2(`https://0588-197-14-10-36.eu.ngrok.io${url} `);
         }
           )    }catch(error) {      console.log(error)    }  }
   const submit1 = async (e) => {
@@ -133,7 +133,7 @@ const EntUpd = () =>{
            formData2,
            { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
               setProgress1(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-                setFile1(`https://3462-197-14-10-36.eu.ngrok.io${url} `);          ;        }          )        // window.location.href = "/tables/Athletes/"
+                setFile1(`https://0588-197-14-10-36.eu.ngrok.io${url} `);          ;        }          )        // window.location.href = "/tables/Athletes/"
     }catch(error) {      console.log(error)    }  }
   useEffect(() => {
     axios.get(PARAMETER_URL,``)

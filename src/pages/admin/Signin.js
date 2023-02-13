@@ -50,12 +50,15 @@ const handleSubmit = async (e) =>{
        withCredentials: false
     }
  ).then((value) => {
- console.log(value?.status)
+ //console.log(value?.status)
+ setIsLoggedin(true);
+ console.log(isLoggedin);
   if(value?.status=="200"){
+   
     setUsername('');
     setPassword('');
     setSuccess(true);
-    console.log(value.data)
+    //console.log(value.data)
     const token=value.data['token'];
     const id=value.data.user_data['id'];
     const username=value.data.user_data['username'];
@@ -65,12 +68,12 @@ const handleSubmit = async (e) =>{
   }
   
  }).catch((e)=>{
-  console.log(e.response.status)
-  console.log(e.status)
+  //console.log(e.response.status)
+  //console.log(e.status)
   if(e?.response?.status=="500"){
     setErrMsg('no Server response')
    } else if(e?.response?.status=="400") {
-    console.log("ffff")
+    //console.log("ffff")
     setErrMsg('username ou password incorrecte');
     } else if (e?.response?.status == "401"){
       setErrMsg('unautherized');
@@ -79,7 +82,7 @@ const handleSubmit = async (e) =>{
   } else{ setErrMsg('Erreur');
   } 
   errRef.current.focus();
-  console.log("ay hkaya")
+ // console.log("ay hkaya")
  });
  
    

@@ -1,13 +1,22 @@
 
-import React , {useEffect,useState} from "react";
-
-import { Form, Col, Row, Card, Button} from '@themesberg/react-bootstrap';
+import React , {useEffect,useState, useRef} from "react";
+import { Link , useHistory} from 'react-router-dom';
+import { Routes } from "../../routes";
+import { Form, Col, Row, Card, Button, Table} from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 const PARAMETER_URL='parameters/';
 const LIGUE_URL='ligue/';
 import Select from 'react-select'
 import 'react-dropzone-uploader/dist/styles.css'
 const CompCons = () =>{
+  const ok = useRef(false);
+  const history=useHistory();
+  const openprofile =()=>{
+    ok.current = true;
+    localStorage.setItem("ok",ok.current)
+    console.log(ok.current);
+    history.push({pathname:'/tables/arbitre', state: comp, search: `?competition=${comp}` })
+  }
 const [addresse, setAddresse] = useState();
 const [zip_code, setZip] = useState();
 const [ligue, setLigue] = useState();
@@ -20,6 +29,7 @@ const [name,setName]=useState();
 const [duration,setDuration]=useState();
 const [season,setSeason]=useState();
 const [arb,setArb]=useState([]);
+const [arbs,setArbs]=useState([]);
 const [lic,setLic]=useState([]);
 const [success, setSuccess] = useState (false) ;
 const [state,setState]=useState([]);
@@ -71,7 +81,7 @@ const handleChange1 = (e) => {
 const token = localStorage.getItem("token");
 
 useEffect(() => {
-  axios.get(ARB_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
+  axios.post(ARB_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
   'Access-Control-Allow-Origin':'Accept'} })
   .then(async res => {
     const data = res.data;
@@ -100,7 +110,7 @@ useEffect(() => {
 
 },[])
 useEffect(() => {
-  axios.get(ATH_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
+  axios.post(ATH_URL, { headers: {'Content-Type': 'multipart/form-data','Authorization':`TOKEN ${token}`,
   'Access-Control-Allow-Origin':'Accept'} })
   .then(async res => {
     const data = res.data;
@@ -121,7 +131,7 @@ useEffect(() => {
     //   result.push({'value':mapData[i],'label':mapData[i]});
     // }
     //console.log(result)
-    setSelectedValue2(result)
+    setSelectedValue2(result)  
     //console.log(result)
   
   })
@@ -129,11 +139,11 @@ useEffect(() => {
 },[])
 useEffect(() => {
   axios.get(COMP_URL,{
-    headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
+    headers: {'Content-Type': 'application/json','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
     withCredentials: false
- })  .then(res => {
+ })  .then( async res => {
   const persons = res.data;
-  console.log(persons)
+  //console.log(persons.arbitrators)
   setAddresse(persons.address)
   setSport(persons.discipline)
   setCategorie(persons.age)
@@ -144,7 +154,11 @@ useEffect(() => {
   setZip(persons.zip_code)
   setMax_attendants(persons.max_attendents)
   setMax_participants(persons.max_participants)
-  setArb(persons.arbitrators.arbitrator)
+  setArb(persons.arbitrators)
+  //console.log(arb)
+const arbb=arb.map(arb => arb)
+  console.log(arbb)
+setArbs(arbb)
   setLic(persons.participants)
   setSeason(persons.season)
   setLigue(persons.ligue)
@@ -178,15 +192,13 @@ const token=localStorage.getItem("token")
 }
 }
 
-
-
     return (
       <Row>
         <Form onSubmit={handlesubmit}>
         <Col xs={12} xl={12}>
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
-          <h5 className="mb-4">Consulter Compétition </h5>
+          <h5 className="mb-4">Consulter Compétition </h5> <Button onClick={() => {openprofile()}}>bbb</Button>
           <div className="text-center"><p>{success}</p></div>
           <Row>
             <Col sm={4} className="mb-3">
@@ -223,6 +235,12 @@ const token=localStorage.getItem("token")
               <Button variant="primary" type="submit">Ajouter liste au  Compétition </Button>
             </div><br/>
       </Col>
+       <Col sm={4} className="mb-3">
+
+<div className="mt-3">
+        <Button variant="primary" type="submit"  onClick={() => {openprofile()}} as={Link} to={Routes.Arbitre.path} >Ajouter Arbitre </Button>
+      </div><br/>
+</Col>
       
       </Row>
 
@@ -322,23 +340,65 @@ const token=localStorage.getItem("token")
 
          
               <Col  sm={12} className="mb-3">
-              Liste des licences <br/>
-              {lic.map((person) => (<>
+              <h4>Liste des participants</h4> <br/><Table hover className="user-table align-items-center">
+  <thead>
+             
+  
+            <tr>
+              <th className="border-0 ">ID</th>
+              <th className="border-0 ">Club</th>
+              <th className="border-0 ">Sport</th>
+     
               
-              {person}<br/>
               
+            </tr>
+            {lic.map((person) => (<>
+            <tr >
+              <td className="border-0 "  >{person.athlete.id}</td>
+              <td className="border-0 "  >{person.athlete.club}</td>
+              <td className="border-0 "  >{person.athlete.discipline}</td> 
+              
+              </tr>
               </>))}
+          </thead><tbody></tbody></Table>
+
+
+
+
+
+
+  
               </Col>
             </Row> <Row>
 
 <Col  sm={12} className="mb-3">
-  Liste des arbitres <br/>
-  {/* {arb.map((person) => (<>
+<h4> Liste des arbitres</h4>  <br/>
+  <Table hover className="user-table align-items-center">
+  <thead>
+            <tr>
+              <th className="border-0">ID</th>
+              <th className="border-0">Photo</th>
+              <th className="border-0">Grade</th>
+     
+              
+              
+            </tr>
+{arb.map((person) => (<>
   
-  {person}<br/>
-  
-  </>))} */}
-{/* {arb} */}
+            <tr >
+              <td className="border-0 "  >{person.arbitrator.id}</td>
+              <td className="border-0 "  ><img src={person.arbitrator.identity_photo}/></td>
+              <td className="border-0 "  >{person.arbitrator.grade}</td></tr>
+              </>))}
+          </thead><tbody></tbody></Table>
+
+
+
+
+
+
+
+
   </Col>
  
 </Row>

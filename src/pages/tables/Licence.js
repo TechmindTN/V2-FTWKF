@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
 const Licence = () =>{
   const token = localStorage.getItem("token");
-
+const role=localStorage.getItem("role");
   const [showDefault, setShowDefault] = useState();
   const handleClose = () => setShowDefault(false);
   const [showDefaults, setShowDefaults] = useState(); 
@@ -21,7 +21,7 @@ const Licence = () =>{
    const [state1,setState1]=useState([]);
     useEffect(() => {
       const token = localStorage.getItem("token");
-      axios.post(LICENCE_URL,{ headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
+      axios.post(LICENCE_URL,{userid:localStorage.getItem("id")},{ headers : {'Content-Type': 'application/json','Authorization':  `TOKEN ${token}`,
       'Access-Control-Allow-Origin':'Accept'}})
     .then(res => {
     const persons = res.data;
@@ -47,7 +47,7 @@ const Licence = () =>{
           </Col>    
           <Col md={4} className="mb-3">
           <Button
-            variant="primary" as={Link} to={Routes.updphotoslic.path} >
+            variant="primary" as={Link} to={Routes.Role.path} >
             Ajouter Licence
             </Button>
           </Col>
@@ -56,7 +56,7 @@ const Licence = () =>{
       </div>
       <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="pt-0">
-        <Table hover className="user-table align-items-center">
+        <Table  className="user-table align-items-center" responsive>
           <thead>
             <tr>
               <th className="border-bottom">Saison</th>
@@ -105,6 +105,7 @@ const Licence = () =>{
       })()} 
               
               </td>
+              {role==1&&
               <td className="border-0 "><Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
           
                 axios.put(`validateLicence/${person.licence.num_licences}/`,{ headers : {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
@@ -152,7 +153,7 @@ const Licence = () =>{
         <Button variant="primary" className="my-0"  as={Link} to={Routes.LicenceUpd.path} onClick={() => 
         setShowDefault(localStorage.setItem('lic',person.licence.num_licences))}>Modifier</Button>
     
-              </td> 
+              </td> }
               {/* <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details</Button></td> */}
               
               

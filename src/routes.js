@@ -51,12 +51,16 @@ export const Routes = {
     Sports:{path: "/tables/Sports"},
     Licence:{path: "/tables/Licence"},
     LicenceAdd:{path: "/tables/LicenceAdd"},
+    LicenceAthlete:{path: "/tables/LicenceAthlete"},
+
     Billing: { path: "/examples/billing" },
     Invoice: { path: "/examples/invoice" },
     Signin: { path: "/examples/sign-in" },
     Signinadmin: { path: "/admin/sign-in" },
     Signup: { path: "/examples/sign-up" },
     Role: { path: "/examples/Role" },
+    Choose: { path: "/examples/Choose" },
+
     ForgotPassword: { path: "/examples/forgot-password" },
     ResetPassword: { path: "/examples/reset-password" },
     Lock: { path: "/examples/lock" },

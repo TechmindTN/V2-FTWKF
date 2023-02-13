@@ -39,7 +39,7 @@ const [code,setCode]=useState([]);
 const [im1,setIm1]=useState([]);
 const [im2,setIm2]=useState([]);
 const [im3,setIm3]=useState([]);
-const [im4,setIm4]=useState([]);
+const [Disciplines,setDisciplines]=useState("");
 
 const [gouv,setGouv]=useState([]);
 const [selectedFile, setSelectedFile] = React.useState(null);
@@ -87,7 +87,7 @@ const submit3 = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('mid',url) 
-        setIm3(`https://3462-197-14-10-36.eu.ngrok.io${url} `)
+        setIm3(`https://0588-197-14-10-36.eu.ngrok.io${url} `)
 
       }
         )
@@ -117,7 +117,7 @@ const submit2 = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('iden',url) 
-        setIm2(`https://3462-197-14-10-36.eu.ngrok.io${url} `)
+        setIm2(`https://0588-197-14-10-36.eu.ngrok.io${url} `)
       }
         )
        
@@ -148,7 +148,7 @@ const submit = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('pr',url) 
-        setIm1(`https://3462-197-14-10-36.eu.ngrok.io${url} `)
+        setIm1(`https://0588-197-14-10-36.eu.ngrok.io${url} `)
       },
      
         )
@@ -202,6 +202,7 @@ useEffect(() => {
     setPhone(persons.profile.phone)
     setCode(persons.profile.zip_code)
     setGouv(persons.profile.state)  
+    setDisciplines(persons.athlete.discipline)
 })
 },[])
 const iden=localStorage.getItem('iden');
@@ -217,7 +218,7 @@ try {
   const ATHLETES_URL=`edit_athlete_profile/${at}/`
     axios.put(
       ATHLETES_URL,
-      ({'athlete':{'medical_photo':im3,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':im2,'photo':im1},'profile':{'first_name':first_name,'last_name':last_name,
+      ({'athlete':{'discipline':Disciplines,'medical_photo':im3,'grade_id':grade,'sex':sexe,'weights':weights,'categorie_id':categorie,'identity_photo':im2,'photo':im1},'profile':{'first_name':first_name,'last_name':last_name,
       'country':'Tunisie','address':addresse,'phone':phone,'birthday':birthday,'cin':cin,'profile_photo':im1}
       }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
@@ -227,7 +228,7 @@ try {
     <div>Athlete modifié</div></div>);
       const timer = setTimeout(() => {
         // console.log('This will run after 1 second!')
-        history.push('/tables/Athletes')
+        //history.push('/tables/Athletes')
       }, 2000);
       return () => clearTimeout(timer);
    // window.location.href = "http://localhost:3000/#/tables/Athletes";
@@ -380,8 +381,24 @@ try {
         {person.categorie_age}</option>    </>   ))}
                   </Form.Select>
                   </Form.Group>
+            </Col>     <Col sm={3} className="mb-3">
+            
+            <Form.Group id="category">
+                    <Form.Label>Disciplines</Form.Label>
+                    <Form.Select id="categorie"  name="categorie"  value={Disciplines}  onChange={(e) =>setDisciplines(e.target.value)}
+                                  autoComplete="off" >
+                                      <option></option>
+                                    {state7.map((person) => (<>
+                                  
+                              <option value={person.id}> 
+        {person.name}</option>    </>   ))}
+                  </Form.Select>
+                  </Form.Group>
             </Col>
-            <Col sm={3} className="mb-3">
+       
+          </Row>
+          <Row>
+          <Col sm={3} className="mb-3">
             
             <Form.Group id="category">
                     <Form.Label>Ville</Form.Label>
@@ -390,8 +407,6 @@ try {
                     />
                   </Form.Group>
             </Col>
-          </Row>
-          <Row>
           <Col sm={3} className="mb-3">
             
             <Form.Group id="category">

@@ -10,12 +10,7 @@ import { Link, useHistory  } from "react-router-dom";
 import axios from "../examples/api/axios";
 const ATHLETE_URL='athletelist_info/';
 const Athletes = () =>{
-const history = useHistory()
-
-  // localStorage.removeItem('iden');
-  // localStorage.removeItem('pr');
-  // localStorage.removeItem('im');
-  // localStorage.removeItem('mid');
+const history = useHistory();
 const[datas,setData]=useState('');
 const [showDefault, setShowDefault] = useState(false);
 const handleClose = () => setShowDefault(false);
@@ -53,11 +48,7 @@ const handleChange = e => {
   
   })},[])
 
-const [file, setFile] = useState();
-// function handleChange(e) {
-//     console.log(e.target.files);
-//     setFile(URL.createObjectURL(e.target.files[0]));
-// }
+
 
 
   return (

@@ -87,7 +87,7 @@ const submit3 = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('mid',url) 
-        setIm3(`https://0588-197-14-10-36.eu.ngrok.io${url} `)
+        setIm3(`https://41c5-197-14-10-36.eu.ngrok.io${url} `)
 
       }
         )
@@ -117,7 +117,7 @@ const submit2 = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('iden',url) 
-        setIm2(`https://0588-197-14-10-36.eu.ngrok.io${url} `)
+        setIm2(`https://41c5-197-14-10-36.eu.ngrok.io${url} `)
       }
         )
        
@@ -148,7 +148,7 @@ const submit = async (e) => {
       ).then((value) => {
         const url= value.data.url;
         localStorage.setItem('pr',url) 
-        setIm1(`https://0588-197-14-10-36.eu.ngrok.io${url} `)
+        setIm1(`https://41c5-197-14-10-36.eu.ngrok.io${url} `)
       },
      
         )

@@ -15,13 +15,12 @@ const Licenceadd = () =>{
   const [state8,setState8]=useState([]);
   const [degree, setDegree] = useState();
   const [weights,setWeights]=useState();
-  const [grade,setGrade]=useState('');
+  const [grade,setGrade]=useState();
   const [success, setSuccess] = useState (false) ;
   const [categorie, setCategorie] = useState();
   const [season, setSeason] = useState();
   const [club, setClub] = useState();
   const [Disciplines, setDiscipline] = useState();
-  const [role, setRole] = useState();
 
   useEffect(() => {
     axios.get(PARAMETER_URL,``)
@@ -32,7 +31,7 @@ const Licenceadd = () =>{
       const Grades=res.data.Grades;
       const Weights=res.data.Weights;
       const Degrees=res.data.Degrees;
-      const Disciplines=res.data.Disciplines;
+      const Discipline=res.data.Disciplines;
       const Roles=res.data.Roles;
       setState2(Degrees);
       setState3(Weights);
@@ -40,7 +39,7 @@ const Licenceadd = () =>{
       setState(seasons);
       setState5(Categories);
       setState6(Clubs);
-      setState7(Disciplines);
+      setState7(Discipline);
       setState8(Roles);
 
   })},[])
@@ -51,30 +50,54 @@ const handlesubmit = async (e) => {
   e.preventDefault();
 
 const user = localStorage.getItem("id");
-
+const formData = new FormData();
+  formData.append("categorie", Number(categorie));
+  formData.append("weight", Number( weights));
+  //formData.append("discipline", discipline);
+  formData.append("club", club);  
+  formData.append("grade", Number(grade));
+  formData.append("degree", Number(degree));
+  formData.append("seasons",  Number(season));
+  formData.append("user", localStorage.getItem("id"));
+  formData.append("role", localStorage.getItem("rol"));
      const token = localStorage.getItem("token");
      const iden=localStorage.getItem('iden');
      const pr=localStorage.getItem('pr');
      const ph=localStorage.getItem('ph');
      const mid=localStorage.getItem('mid');
-     const rolee=localStorage.getItem('role');
+     const rolee=localStorage.getItem('rolee');
      const at=localStorage.getItem("at");
      const licc=localStorage.getItem('licc');
-     axios.post(
+    try{ axios.post(
+
+    //   "licence":{"num_licences":"AT-0000000002",
+    // "activated": false, "user": 124, "role": 1, "seasons": 2,"club":2,"discipline":1},
+    // "photos":{
+    // "photo": "aaaaaa",
+    // "identity_photo": "bbbbbb",
+    // "medical_photo": "cccccc"
+    // }
+
+
       Licence_URL
-      ,({"licence":{"categorie":Number(categorie),"weight":Number(weights),"club":Number(club),"grade":Number(grade),"degree":Number(degree),"seasons":Number(season),"user":Number(user),"role":Number(rolee),
-       "discipline":Number(Disciplines)}, "photos":{
-    "photo":`https://0588-197-14-10-36.eu.ngrok.io${ph}`,    "identity_photo": `https://0588-197-14-10-36.eu.ngrok.io${iden}`,
-    "medical_photo":`https://0588-197-14-10-36.eu.ngrok.io${mid} `
-     }
-   }),
-       { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
-        'Access-Control-Allow-Origin':'Accept'} },
+      ,{"licence":{"categorie":parseInt(categorie),"weight":parseInt(weights),"club":parseInt(club),"grade":parseInt(grade),"degree":parseInt(degree),"seasons":parseInt(season),"user":parseInt(user),"role":parseInt(rolee),
+      "discipline":parseInt(Disciplines),"discipline_id":1},"photos":{
+         "photo": "aaaaaa",
+         "identity_photo": "bbbbbb",
+         "medical_photo": "cccccc"
+         }
+   }
+   ,
+   { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+   'Access-Control-Allow-Origin':'Accept'} },
       ).then(res=>
       
         localStorage.setItem("licc",res.data.licence.num_licences),
         )
-     
+      }catch(error) 
+      {
+       console.log(error)
+      }
       if(rolee=="2"){
 
       const timer = setTimeout(() => {
@@ -294,7 +317,7 @@ const user = localStorage.getItem("id");
             </Col>
             <Col sm={4} className="mb-3">
             
-            <Form.Group id="category">
+            <Form.Group id="Disciplines">
                     <Form.Label>Descipline الرياضة</Form.Label>
                     <Form.Select id="Disciplines" required name="Disciplines"  value={Disciplines}  onChange={(e) =>setDiscipline(e.target.value)}
                                   autoComplete="off" >                                    <option></option>

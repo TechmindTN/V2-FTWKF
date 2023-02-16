@@ -103,7 +103,7 @@ try {
 
     axios.post(
       CLUB_URL,
-      ({'club':{'name':club,'ligue':ligue,'logo':`https://0588-197-14-10-36.eu.ngrok.io${url} `},'user':{'username':phone,'password':phone},'profile':{'first_name':name,'last_name':Prenom,
+      ({'club':{'name':club,'ligue':ligue,'logo':`https://41c5-197-14-10-36.eu.ngrok.io${url} `},'user':{'username':phone,'password':phone},'profile':{'first_name':name,'last_name':Prenom,
       'country':'Tunisie','state':state,'city':ville,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
       'cin':cin,'role':'7'}
       }),

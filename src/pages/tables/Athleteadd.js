@@ -93,9 +93,9 @@ const handlesubmit = async (e) => {
   const mid=localStorage.getItem('mid');
     axios.post(
       ATHLETE_URL,
-      ({'athlete':{'club':club,'discipline':discipline,'id_degree':degree,'medical_photo':`https://0588-197-14-10-36.eu.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'category_id':categorie,'identity_photo':`https://0588-197-14-10-36.eu.ngrok.io${iden} `,'photo':`https://0588-197-14-10-36.eu.ngrok.io${ph} `},'user':{'username':phone,'password':phone},'profile':{'sexe':sexe,'first_name':first_name,'last_name':last_name,
+      ({'athlete':{'club':club,'discipline':discipline,'id_degree':degree,'medical_photo':`https://41c5-197-14-10-36.eu.ngrok.io${mid} `,'grade_id':grade,'sex':sexe,'weights':weights,'category_id':categorie,'identity_photo':`https://41c5-197-14-10-36.eu.ngrok.io${iden} `,'photo':`https://41c5-197-14-10-36.eu.ngrok.io${ph} `},'user':{'username':phone,'password':phone},'profile':{'sexe':sexe,'first_name':first_name,'last_name':last_name,
       'country':'Tunisie','state':states,'city':city,'address':addresse,'zip_code':zip_code,'phone':phone,'birthday':birthday,
-    'cin':cin,'role':'2','profile_photo':`https://0588-197-14-10-36.eu.ngrok.io${pr} `}
+    'cin':cin,'role':'2','profile_photo':`https://41c5-197-14-10-36.eu.ngrok.io${pr} `}
       }),
        { headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },

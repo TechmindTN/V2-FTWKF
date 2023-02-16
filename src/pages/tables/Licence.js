@@ -1,8 +1,9 @@
 
 import React,{useEffect,useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEdit, faHome, faRecycle, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBellSlash,faToggleOff , faToggleOn} from '@fortawesome/free-solid-svg-icons';
+import {TransactionsTable, PageTrafficTable } from "../../components/Tables";
 
 import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Nav, Card, Button, Table,Pagination, Modal } from '@themesberg/react-bootstrap';
@@ -10,9 +11,10 @@ import axios from "../examples/api/axios";
 const LICENCE_URL='licencelist_info/';
 import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
+import { Refresh } from "@mui/icons-material";
 const Licence = () =>{
   const token = localStorage.getItem("token");
-const role=localStorage.getItem("role");
+const role=localStorage.getItem("id");
   const [showDefault, setShowDefault] = useState();
   const handleClose = () => setShowDefault(false);
   const [showDefaults, setShowDefaults] = useState(); 
@@ -20,8 +22,9 @@ const role=localStorage.getItem("role");
   const [state,setState]=useState([])
    const [state1,setState1]=useState([]);
     useEffect(() => {
+      const club=localStorage.getItem("club")
       const token = localStorage.getItem("token");
-      axios.post(LICENCE_URL,{userid:localStorage.getItem("id")},{ headers : {'Content-Type': 'application/json','Authorization':  `TOKEN ${token}`,
+      axios.post(LICENCE_URL,{userid:localStorage.getItem("id"),club:localStorage.getItem("club")},{ headers : {'Content-Type': 'application/json','Authorization':  `TOKEN ${token}`,
       'Access-Control-Allow-Origin':'Accept'}})
     .then(res => {
     const persons = res.data;
@@ -95,21 +98,51 @@ const role=localStorage.getItem("role");
               <td className="border-0 "  >{person.licence.degree}</td>
               <td className="border-0 "  >
               {(() => {
-        switch (person.licence.state) {
-          case "Activee":   return  <FontAwesomeIcon icon={faToggleOn} color={"green"} 
-          /> ;
+          switch (person.licence.state) {
+          case "Activee"   : return  <FontAwesomeIcon icon={faToggleOn} color={"green"} /> ;
           case "En Attente": return <FontAwesomeIcon icon={faToggleOff} color={"red"}  />;
-          case "Expiree": return <FontAwesomeIcon icon={faToggleOff} color={"gray"}  />;
-          default:        return "--";
+          case "Expiree"   : return <FontAwesomeIcon icon={faToggleOff} color={"gray"}  />;
+          default          : return "--";
         }
       })()} 
               
               </td>
-              {role==1&&
-              <td className="border-0 "><Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
+              {role==1 &&
+              <td className="border-0 ">
+                {/* <Button variant="primary"  onClick={(e) => setShowDefaults(
           
                 axios.put(`validateLicence/${person.licence.num_licences}/`,{ headers : {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
                 'Access-Control-Allow-Origin':'Accept'}})
+             .then(response => {
+               console.log("Valide successfully!")
+               //window.location.reload(false);
+             })
+             .catch(error => {
+               console.log("Something went wrong", error)
+             })
+
+              )}></Button> */}
+              
+              {person.licence.state=="En Attente" &&<Button   variant="primary" onClick={(e) => setShowDefaults(
+          
+                axios.put(`validateLicence/${person.licence.num_licences}/`,{ headers : {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+                'Access-Control-Allow-Origin':'Accept'}})
+             .then(response => {
+               console.log("Valide successfully!")
+               //window.location.reload(false);
+             })
+             .catch(error => {
+               console.log("Something went wrong", error)
+             })
+
+              )}>
+              <FontAwesomeIcon icon={faCheck} color={"white"}  /></Button>}
+              &nbsp; 
+               {/* <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
+          
+         axios.put(`verifyLicence/${person.licence.num_licences}/`,{ headers : {'Content-Type':
+          'Application/json','Authorization':  `TOKEN ${token}`,
+                }})
              .then(response => {
                console.log("Valide successfully!")
                window.location.reload(false);
@@ -118,23 +151,8 @@ const role=localStorage.getItem("role");
                console.log("Something went wrong", error)
              })
 
-              )}>Valider</Button>
-              &nbsp;  &nbsp; <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
-          
-          axios.put(`verifyLicence/${person.licence.num_licences}/`)
-          .then(res => {
-            const num_licences =person.num_licences;
-           
-            console.log(num_licences);
-            setState([...state, num_licences]);
-            const persons = res.data;
-          
-            console.log(persons);
-            window.location.reload(false);
-        }) 
-
-        )}>Verifier</Button>&nbsp;
-        <Button variant="primary" className="my-0" onClick={(e) => setShowDefaultss(
+        )}>Verifier</Button>&nbsp; */}
+        <Button onClick={(e) => setShowDefaultss(
           
           axios.delete(`licences/${person.licence.num_licences}/`,{ headers: {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
           'Access-Control-Allow-Origin':'Accept'} })
@@ -149,9 +167,13 @@ const role=localStorage.getItem("role");
             window.location.reload(true);
         }) 
 
-        )}>Supprimer</Button>&nbsp; 
+        )}> <FontAwesomeIcon icon={faTrashAlt} color={"white"}  /></Button>&nbsp; 
         <Button variant="primary" className="my-0"  as={Link} to={Routes.LicenceUpd.path} onClick={() => 
-        setShowDefault(localStorage.setItem('lic',person.licence.num_licences))}>Modifier</Button>
+        setShowDefault(localStorage.setItem('lic',person.licence.num_licences))}><FontAwesomeIcon icon={faEdit} color={"white"}  /></Button>&nbsp;
+        
+        {person.licence.state=="Activee" &&
+        <Button variant="primary" className="my-0"  as={Link} to={Routes.LicenceRenouv.path} onClick={() => 
+        setShowDefault(localStorage.setItem('lic',person.licence.num_licences))}><FontAwesomeIcon icon={faRecycle} color={"white"}  /></Button> }
     
               </td> }
               {/* <Button variant="primary" className="my-0" onClick={() => setShowDefault(true)}>Details</Button></td> */}
@@ -159,7 +181,8 @@ const role=localStorage.getItem("role");
               
 
 <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}  onClickonSubmit={() => setShowDefaults(
-     axios.get(`licence_info/${person.num_licences}/`)
+     axios.get(`licence_info/${person.num_licences}/`,{ headers: {'Content-Type': 'Application/json','Authorization':  `TOKEN ${token}`,
+     'Access-Control-Allow-Origin':'Accept'} })
      .then(res => {
        const num_licences =person.num_licences;
        localStorage.setItem('lic',num_licences)
@@ -238,14 +261,14 @@ const role=localStorage.getItem("role");
               </Pagination.Next>
             </Pagination>
           </Nav>
-          <small className="fw-bold">
-            {/* Showing <b>{totalTransactions}</b> out of <b>25</b> entries */}
-          </small>
+          {/* <small className="fw-bold">
+            Showing <b>{totalTransactions}</b> out of <b>25</b> entries 
+          </small> */}
         </Card.Footer>
       </Card.Body>
     </Card>
       
-
+{/* <TransactionsTable /> */}
        {/* <PageTrafficTable /> */}
     </>
   );

@@ -29,7 +29,7 @@ const Role = (props) =>{
   })},[])
 
     useEffect(() => {
-      window.localStorage.setItem("role", role);
+      window.localStorage.setItem("rolee", role);
       console.log(role)
     }, [role]);
 

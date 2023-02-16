@@ -26,6 +26,7 @@ export const Routes = {
 
     AthleteUpd:{path: "/tables/AthleteUpd"},
     LicenceUpd:{path: "/tables/LicenceUpd"},
+    LicenceRenouv:{path: "/tables/LicenceRenouv"},
     ClubUpd:{path: "/tables/ClubUpd"},
 
     SuppAdd:{path: "/tables/SuppAdd"},

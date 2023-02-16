@@ -34,6 +34,7 @@ import AgeAdd from "./tables/AgeAdd";
 import LigueAdd from "./tables/LigueAdd";
 import AthleteUpd from "./tables/AthleteUpd";
 import LicenceUpd from "./tables/LicenceUpd";
+import LicenceRenouv from "./tables/LicenceRenouv";
 
 import ArAdd from "./tables/ArAdd";
 
@@ -175,7 +176,7 @@ export default () => (
  
 
     <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
-    <RouteWithLoader exact path={Routes.ResetPassword.path} component={ResetPassword} />
+    <RouteWithSidebar exact path={Routes.ResetPassword.path} component={ResetPassword} />
     <RouteWithLoader exact path={Routes.Lock.path} component={Lock} />
     <RouteWithLoader exact path={Routes.NotFound.path} component={NotFoundPage} />
     <RouteWithLoader exact path={Routes.ServerError.path} component={ServerError} />
@@ -209,6 +210,7 @@ export default () => (
 
     <RouteWithSidebar exact path={Routes.AthleteUpd.path} component={AthleteUpd} />
     <RouteWithSidebar exact path={Routes.LicenceUpd.path} component={LicenceUpd} />
+    <RouteWithSidebar exact path={Routes.LicenceRenouv.path} component={LicenceRenouv} />
     <RouteWithSidebar exact path={Routes.ClubUpd.path} component={ClubUpd} />
 
     <RouteWithSidebar exact path={Routes.SuppAdd.path} component={SuppAdd} />

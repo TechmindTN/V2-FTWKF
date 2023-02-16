@@ -10,7 +10,6 @@ import {useHistory  } from "react-router-dom";
 const PROFILE_URL ='profile/';
 export const GeneralInfoForm = () => {
 
-  const [file, setFile] = useState()
 
  
   const [fname, setFname] = useState();
@@ -87,11 +86,7 @@ export const GeneralInfoForm = () => {
     formData.append("first_name", fname);
     formData.append("last_name", lname);
     formData.append("cin", cin);
-    const headers = { 
-      'Authorization':  `TOKEN ${token}`,
-      'Content-Type':'multipart/form-data',
-      'Access-Control-Allow-Origin':'Accept'
-  };
+
   try {
     const token = localStorage.getItem("token");
 
@@ -112,7 +107,6 @@ export const GeneralInfoForm = () => {
   // const renderListOfUserNames = (names) => {
   //   return names.map(name => <li>{name}</li>)
   // }
-
 
 
   
@@ -418,45 +412,6 @@ export const GeneralInfoForm = () => {
 export const EditeProfile = () => {
   const Image_url='upload_photo/'
   const history = useHistory()
-
-  const [selectedFile, setSelectedFile] = React.useState(null);
-
-  const [progress, setProgress] = useState()
-  
-  const [file, setFile] = useState();
-  
-  function handleFileSelect(e) {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
-    setSelectedFile(e.target.files[0])
-  }
-  const submit = async (e) => {
-    e.preventDefault();
-    try {
-      const token = localStorage.getItem("token");
-      const formData2 = new FormData();
-    
-      formData2.append("url",selectedFile);
-      formData2.append("path","image/profile/");
-      formData2.append("user",localStorage.getItem('id'));
-      formData2.append("season",'2');
-        axios.post(
-          Image_url,
-           formData2,
-           { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
-            'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
-              //Set the progress value to show the progress bar
-              setProgress(Math.round((100 * data.loaded) / data.total))
-            },},
-        ).then((value) => {
-          const url= value.data.url;
-          localStorage.setItem('pr',url) 
-        }
-          )
-    }catch(error) {
-      console.log(error)
-    }
-  }
   const [fname, setFname] = useState();
   const [lname, setLname] = useState('');
   const [birthday, setBirthday] = useState("");
@@ -465,38 +420,15 @@ export const EditeProfile = () => {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');   
   const [city, setCity] = useState('');
-  const [valideVille , setValidVille] = useState('');
   const [club, setClub] = useState('');
-  const [valideClub , setValidClub] = useState('');
- 
   const [sport, setSport] = useState('');
-  const [valideSport , setValidSport] = useState('');
-
   const [ligue, setLigue] = useState('');
-  const [valideLigue , setValidLigue] = useState('');
-
-  
   const [age, setAge] = useState('');
-  const [valideAge , setValidAge] = useState('');
-
-  const [identite, setIdentite] = useState('');
-  const [valideIdentite , setValididentite] = useState('');
- 
-  const [medical, setMedical] = useState('');
-  const [valideMedical , setValidmedical] = useState('');
-
   const [country, setCountry] = useState('');
-  const [valideCountry , setValidcountry] = useState('');
   const [zip_code, setZipCode] = useState('');
-  const [valideZip , setValidzip] = useState('');
   const [cin, setCin] = useState('');
-  const [valideCin , setValidcin] = useState('');
-  const [errMsg, setErrMsg] = useState ('') ;
-
   const [state, setState] = useState();
   const [role, setRole] = useState();
-  const[success, setSuccess] = useState (false) ;
-
   const [id, setId] = useState('');
   const PRO_URL=`pro/${window.localStorage.getItem("id")}/`;
   useEffect(() => {
@@ -523,63 +455,96 @@ export const EditeProfile = () => {
       setCin(persons.cin)
   
   })},[])
-  useEffect(() => {
-    setId(window.localStorage.getItem("id"));
-  
-  }, []);
-  useEffect(() => {
-    setErrMsg('');
-  },[city,country,phone])
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
-    const pr=localStorage.getItem('pr');
-  
-    try {
+
+
+  const [im1,setIm1]=useState([]);
+
+  const [file, setFile] = useState();
+  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [inputArray,setInputArray]= useState();
+  const [inputFiles,setInputFiles]= useState();
+
+  function upload  (e)  {
+
+    const inputArr = new Array()
+    
+    Array.from(e.target.files).forEach((piece)=>{
+    
+    inputArr.push(piece.name)
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+    setSelectedFile(e.target.files[0])
+    
+    }) 
+    
+    setInputArray({inputArray: inputArr})
+    setInputFiles({inputFiles:e.target.files})
+    
+    } 
+    function uploadHandler  () {
+
+      const fd = new FormData();
+      
+      if(inputFiles!=null)
+      {
+        for ( var element of inputFiles.inputFiles) {
+          console.log(element)
+          fd.append('file',element)
+          fd.append("url",element);
+          fd.append("path","image/profile");
+          fd.append("user",localStorage.getItem('id'));
+          fd.append("season",'2');
+        }
+      }
       const token = localStorage.getItem("token");
-      const id=localStorage.getItem("idP");
-      const response = axios.put(`profile/${window.localStorage.getItem("idP")}/`,({'profile_photo':`https://0588-197-14-10-36.eu.ngrok.io${pr} `,'address':address,'birthday':birthday,'first_name':fname,'last_name':lname,
-      'phone':phone,'zip_code':zip_code,'city':city
-    }), {
-         headers: {'Authorization':`TOKEN ${token}`,  'content-type': 'Application/json',
-         'X-CSRFTOKEN': 'CSRF_TOKEN','Access-Control-Allow-Origin':'Accept'},
-         withCredentials: false
+  
+      axios.post(Image_url, fd, { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,
+      'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
+        //Set the progress value to show the progress bar
+      //  setProgress(Math.round((100 * data.loaded) / data.total))
+      },})
+      .then(function (response) {
+        const url= response.data.url;
+        localStorage.setItem('url',url) 
+        setIm1(`https://41c5-197-14-10-36.eu.ngrok.io${url} `)
+      })
+      .catch(function (error) {
+        console.log(error);
       });
-      setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
-    <div>Profile modifié</div></div>);
-      const timer = setTimeout(() => {
-        // console.log('This will run after 1 second!')
-        history.push('/profile')
-      }, 2000);
-      return () => clearTimeout(timer);
-    //  window.location.href = "http://localhost:3000/#/profile";
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-   const handleSubmits = async(event) => {
-     event.preventDefault()
-     const token = localStorage.getItem("token");
-
-     const formData = new FormData();
-     formData.append("profile_photo", "image/".selectedFile);
-   
-     try {
-       const response = await axios({
-         method: "put",
-         url: "profile/54/",
-         data: formData,
-         headers: { 'Authorization':`TOKEN ${token}`,"Content-Type": "multipart/form-data" },
-       });
-       console.log("rrrr")
-     } catch(error) {
-       console.log(error)
-     }
-   }
+      }
+      useEffect(() => {
+        uploadHandler(inputFiles); 
+     }, [inputFiles]);
  
+     const handleSubmit = async (e) => {
+      e.preventDefault();
+      const token = localStorage.getItem("token");
+      const pr=localStorage.getItem('pr');
+    
+      try {
+        const token = localStorage.getItem("token");
+        const id=localStorage.getItem("idP");
+        const response = axios.put(`profile/${window.localStorage.getItem("idP")}/`,({'profile_photo':im1,'address':address,'birthday':birthday,'first_name':fname,'last_name':lname,
+        'phone':phone,'zip_code':zip_code,'city':city
+      }), {
+           headers: {'Authorization':`TOKEN ${token}`,  'content-type': 'Application/json',
+           'X-CSRFTOKEN': 'CSRF_TOKEN','Access-Control-Allow-Origin':'Accept'},
+           withCredentials: false
+        });
+        setSuccess(<div className="alert alert-success d-flex align-items-center" role="alert">
+      <div>Profile modifié</div></div>);
+        const timer = setTimeout(() => {
+          // console.log('This will run after 1 second!')
+          history.push('/profile')
+        }, 2000);
+        return () => clearTimeout(timer);
+      //  window.location.href = "http://localhost:3000/#/profile";
+      } catch (error) {
+        console.log(error);
+      }
+    };
   
-  
+
   return (
     <Card border="light" className="bg-white shadow-sm mb-4">
       <Card.Body>
@@ -709,24 +674,7 @@ export const EditeProfile = () => {
                 
                 >
                   <option value="0">State</option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="DC">District Of Columbia</option>
-                  <option value="FL">Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                
+                                  
                 </Form.Select>
               </Form.Group>
             </Col>
@@ -745,11 +693,7 @@ export const EditeProfile = () => {
                 <Form.Select name="club" id="club"    
                   value={club} autoComplete="off"
                   onChange={(e) =>setClub(e.target.value)}>
-      <option value="0" >Choisir votre club </option>
-      <option value="1">Athlete</option>
-      <option value="2">Entraineur</option>
-      <option value="3">Président de club</option>
-      <option value="4">Arbitre</option>
+  
     </Form.Select>
                
               </Form.Group>
@@ -784,25 +728,19 @@ export const EditeProfile = () => {
                 />
               </Form.Group>
             </Col>
-
+            <Col sm={6}>
+            <div className="App">
+            <input type="file" onChange={upload} required  />
+            <img src={im1}  height={80}/><br/>
+        </div>
+        </Col>
           </Row>
           <div className="mt-3">
             <Button variant="primary" type="submit">Enregistrer</Button>
           </div>
         </Form>
-        <Form onSubmit={submit}>
-      <Col sm={4}>
-            <div className="App">
-            <h5>Ajouter  photo de profile :</h5>
-            <input type="file" onChange={handleFileSelect}   />
-            <img src={file}  height={80}/><br/>
-            {progress && <ProgressBar   now={progress} label={`${progress}%`} style={{ height: 20}} />}
-        </div>
-        </Col>
-        <div className="mt-3" >
-              <Button variant="primary" type="submit">Enregistrer</Button>
-            </div> <br/></Form> 
-        
+    
+      
       
       </Card.Body>
     </Card>

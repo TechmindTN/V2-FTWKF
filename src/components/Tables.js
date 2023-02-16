@@ -8,10 +8,8 @@ import { Link } from 'react-router-dom';
 import { Routes } from "../routes";
 import { pageVisits, pageTraffic, pageRanking,state } from "../data/tables";
 import transactions from "../data/transactions";
-import commands from "../data/commands";
+
 import axios from "../pages/examples/api/axios";
-import logo from "../assets/img/logo-ftwkf.png";
-import { ContentCutOutlined } from "@mui/icons-material";
 
 const CLUB_URL='club/'
 const SPORT_URL='discipline/';
@@ -87,6 +85,8 @@ export const PageVisitsTable = () => {
 
 
 export const PageTrafficTable = () => {
+  const totalTraffic = state.length;
+
   const [showDefault, setShowDefault] = useState(false);
   const handleClose = () => setShowDefault(false);
   const TableRow = (props) => {

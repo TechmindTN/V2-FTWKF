@@ -80,7 +80,7 @@ const handlesubmit = async (e) => {
 try {  const token = localStorage.getItem("token");
 const ar= localStorage.getItem('ar')
 const gr= localStorage.getItem('gr')
-    axios.post(ARBITRE_URL,({'arbitrator':{'identity_photo':`https://0588-197-14-10-36.eu.ngrok.io${ar} `,'photo':`https://0588-197-14-10-36.eu.ngrok.io${gr} `,'grade':'2'},'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie"},'user':{'password':password,'username':username}}),
+    axios.post(ARBITRE_URL,({'arbitrator':{'identity_photo':`https://41c5-197-14-10-36.eu.ngrok.io${ar} `,'photo':`https://41c5-197-14-10-36.eu.ngrok.io${gr} `,'grade':'2'},'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie"},'user':{'password':password,'username':username}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },)
     setSuccess("Arbitre ajouté"); 

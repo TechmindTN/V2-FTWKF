@@ -82,16 +82,15 @@ const user = localStorage.getItem("id");
 try {
      const token = localStorage.getItem("token");
      const iden=localStorage.getItem('iden');
-     const pr=localStorage.getItem('pr');
      const ph=localStorage.getItem('ph');
      const mid=localStorage.getItem('mid');
      axios.post(
       Licence_URL
       ,({'licence':{'categorie':Number(categorie),'weight':Number(weights),'club':Number(club),'grade':Number(grade),'degree':Number(degree),'seasons':season,'user':Number(user),'role':Number(role),
       'discipline':Number(Disciplines)}, "photos":{
-        "photo":`https://0588-197-14-10-36.eu.ngrok.io${ph}`,
-   "identity_photo": `https://0588-197-14-10-36.eu.ngrok.io${iden}`,
-   'medical_photo':`https://0588-197-14-10-36.eu.ngrok.io${mid} `
+        "photo":`https://41c5-197-14-10-36.eu.ngrok.io${ph}`,
+   "identity_photo": `https://41c5-197-14-10-36.eu.ngrok.io${iden}`,
+   'medical_photo':`https://41c5-197-14-10-36.eu.ngrok.io${mid} `
    }
 }),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,

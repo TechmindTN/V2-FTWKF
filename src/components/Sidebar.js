@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faChartPie, faCog, faSignOutAlt, faTable, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {faChartPie, faCog, faSignOutAlt, faTable, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Routes } from "../routes";
@@ -13,10 +13,10 @@ import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
 
 export const Sidebar = () => {
 const [username, setRol] = useState('');
-const role =localStorage.getItem("role");
+const id =localStorage.getItem("id");
 const shows = useRef(false);
 
-if (role==1)
+if (id==1)
   {
     shows.current = true;
     console.log( shows.current );
@@ -119,7 +119,8 @@ if (role==1)
     
               <NavItem title="Acceuil" link={Routes.DashboardOverview.path} icon={faChartPie} />
               {/* <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} /> */}
-              <NavItem title="Profile" icon={faCog} link={Routes.Profile.path} />
+              <NavItem title="Profile" icon={faUser} link={Routes.Profile.path} />
+              <NavItem title="Changer mot de passe" icon={faCog} link={Routes.ResetPassword.path} />
               <CollapsableNavItem  title="Athletes" icon={faTable}>
                 <NavItem title="Liste des athletes" link={Routes.Athletes.path} />
               </CollapsableNavItem>

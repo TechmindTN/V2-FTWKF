@@ -2,23 +2,21 @@
 import React , {useEffect,useState,useRef} from "react";
 import { Link } from 'react-router-dom';
 import { Routes } from "../../routes";
-
 import ProfileCover from "../../assets/img/profile-cover.jpg";
-
 import { Form, Col, Row, Card, Button} from '@themesberg/react-bootstrap';
 import axios from "./api/axios";
 const Licenceadd = () =>{
   const ATHLETE_URL='athletelist_info/';
   const [showDefault, setShowDefault] = useState(false);
   const [state,setState] = useState([]); 
-  const [succ,setSucc] = useState(   );
+  const [succ,setSucc] = useState();
   const [Athlete, setAthlete] = useState();
 
   const token = localStorage.getItem("token");
-  const role=localStorage.getItem("role")
+  const role=localStorage.getItem("rolee")
 
   useEffect(() => {
-      const role=localStorage.getItem("role")
+      const role=localStorage.getItem("rolee")
       if(role=="1"){
         axios.post('arbitratorlist_info/', {
           headers: {
@@ -106,6 +104,7 @@ const Licenceadd = () =>{
              )}>Licence</Button></Col>
                 </Row>
               <Form >
+          
                 <Row>
                 <Col md={6} className="mb-3">
                     <Form.Group id="emal">
@@ -733,6 +732,8 @@ else if(role=="4")
         <br></br>
       {succ}
 
+
+ 
           </Row>
           {/* <Row>
           <div className="mt-3">

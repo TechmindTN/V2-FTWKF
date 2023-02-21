@@ -64,7 +64,7 @@ const lic=localStorage.getItem("lic");
 const LICENCE_URL=`licence_info/${lic}/`
 useEffect(() => {
   axios.get(LICENCE_URL,{
-    headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
+    headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
     withCredentials: false
  })
   .then(res => {
@@ -96,13 +96,24 @@ const handlesubmit = async (e) => {
 try {
   const lic=localStorage.getItem("lic");
   const token = localStorage.getItem("token");
-    axios.put(
-     "https://41c5-197-14-10-36.eu.ngrok.io/api/renew_licence/AT-0000000036/"
-,{
-        headers: {'Content-Type': 'application/x-www-form-urlencoded','Authorization':`TOKEN ${window.localStorage.getItem("token")}`},
-     }
+//     axios.put(
+//      "/renew_licence/AT-0000000036/"
+// ,{
+//         headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${window.localStorage.getItem("token")}`},
+//         withCredentials: true  }
     
-    )
+//     )
+    const config = {
+      method: 'put',
+      url: `/renew_licence/${lic}/`,
+      headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'TOKEN ' + token
+      },
+          data : {},
+  };
+  const { data } = await axios(config);
+  // console.log(data)
    
 }catch(error) {
   console.log(error)
@@ -116,7 +127,7 @@ try {
     return (
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
-          <h5 className="mb-4">Modifier Licence </h5>
+          <h5 className="mb-4">Renouvellement Licence </h5>
        
           <Form onSubmit={handlesubmit}>
           <div className="text-center"><p>{success}</p></div>

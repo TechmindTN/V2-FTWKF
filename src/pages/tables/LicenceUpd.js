@@ -110,7 +110,7 @@ try {
     <div>Licence modifié</div></div>);
           const timer = setTimeout(() => {
             // console.log('This will run after 1 second!')
-            history.push('/tables/Licence')
+       //     history.push('/tables/Licence')
           }, 2000);
           return () => clearTimeout(timer);
    // window.location.href = "http://localhost:3000/#/tables/Athletes";

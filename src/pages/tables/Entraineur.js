@@ -32,7 +32,7 @@ useEffect(() => {
 })},[])
 
 const show = useRef(false);
-const role=localStorage.getItem("role");
+const role=localStorage.getItem("id");
 
   if (role==1)
   {

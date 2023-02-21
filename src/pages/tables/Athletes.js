@@ -1,7 +1,7 @@
 
 import React , {useEffect,useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faTrashAlt,faEdit,faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from '@themesberg/react-bootstrap';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
 import { Routes } from "../../routes";
@@ -60,19 +60,7 @@ const handleChange = e => {
             <Breadcrumb.Item>Tables</Breadcrumb.Item>
             <Breadcrumb.Item active>Athletes</Breadcrumb.Item>
           </Breadcrumb>
-          <Row>
-          <Col md={8} className="mb-3">
-          <h4>Liste des athletes</h4>
-          </Col>    
-      
-          <Col md={4} className="mb-3">
-          <Button
-            variant="primary" as={Link} to={Routes.updphotos.path} >
-            Ajouter athlete 
-             
-            </Button>
-          </Col>
-          </Row>
+        
           <div >
 
     </div>
@@ -84,6 +72,19 @@ const handleChange = e => {
           {<pre>{JSON.stringify(user)}</pre>} */}
        </div>
       </div>
+      <Row>
+          <Col md={2} className="mb-3">
+          <h4>Liste des athletes</h4>
+          </Col>    
+      
+          <Col md={2} className="mb-3">
+          <Button
+            variant="primary" as={Link} to={Routes.updphotos.path} >
+           <FontAwesomeIcon icon={faPlus} color={"white"}  />  athlete 
+             
+            </Button>
+          </Col>
+          </Row>
       <Card border="light" className="shadow-sm mb-4">
       <Card.Body className="pb-0">
         <Table responsive className="table-centered table-nowrap rounded mb-0">
@@ -138,7 +139,7 @@ const handleChange = e => {
                 localStorage.setItem('mid',person.athlete.medical_photo),
                 localStorage.setItem('role',person.profile.role),
                 
-             )}>Licence</Button>  &nbsp;
+             )}><FontAwesomeIcon icon={faCheck} color={"white"}  /></Button>  &nbsp;
               <Button variant="primary" className="my-0" onClick={(e) => setShowDefaults(
              axios.delete(`athlete/${person.athlete.id}/`, { headers : {'Content-Type': 'multipart/form-data','Authorization':  `TOKEN ${token}`,
        'Access-Control-Allow-Origin':'Accept'}})
@@ -149,12 +150,12 @@ const handleChange = e => {
     .catch(error => {
       console.log("Something went wrong", error)
     })
-              )}>Supprimer 
+              )}><FontAwesomeIcon icon={faTrashAlt} color={"white"}  />
               </Button> &nbsp;
               <Button variant="primary" className="my-0"  as={Link} to={Routes.AthleteUpd.path} onClick={() => setShowDefault(
                 localStorage.setItem('at',person.athlete.id)
                 
-             )}>Modifier</Button> <br/>
+             )}><FontAwesomeIcon icon={faEdit} color={"white"}  /></Button> <br/>
               <div>
            
 </div>

@@ -53,6 +53,7 @@ const handleSubmit = async (e) =>{
  isLoading.current = true;
  localStorage.setItem("isLoading",isLoading.current)
  console.log(isLoading.current);
+ 
   if(value?.status=="200"){
     setUsername('');
     setPassword('');
@@ -64,6 +65,7 @@ const handleSubmit = async (e) =>{
     localStorage.setItem('token',token)
     localStorage.setItem('id',id)
     localStorage.setItem('username',username);
+    localStorage.setItem('club', value.data.club['id']);
   }
  }).catch((e)=>{
   console.log(e.response.status)

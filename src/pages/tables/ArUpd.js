@@ -1,123 +1,90 @@
 
 import React , {useEffect,useState,useRef} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome , faCalendarAlt, faPaperclip } from "@fortawesome/free-solid-svg-icons";
-import { Form, Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup, Modal,InputGroup } from '@themesberg/react-bootstrap';
-
+import {  faCalendarAlt} from "@fortawesome/free-solid-svg-icons";
+import { Form, Col, Row,Card,Button,InputGroup } from '@themesberg/react-bootstrap';
 import axios from "../examples/api/axios";
 import Datetime from "react-datetime";
-const ARBITRE_URL='add_arbitrator/'
+const at=localStorage.getItem("at")
+const ARBITRE_URL=`edit_arbitrator_profile/${at}/`
 
-const ArAdd = () =>{
-  const [cin,setCin]=useState();
-  const [phone,setPhone]=useState();
-  const [first_name, setF_name] = useState (false) ;
-  const [last_name, setL_name] = useState();
-  const [sex, setSex] = useState();
-  const [birthday, setBirthday] = useState();
-  const [password, setPassword] = useState();
-  const [addresse, setAddresse] = useState();
-  const [ville,setVille] = useState();
-  const [gouv,setGouv] = useState();
-  const [code,setCode] = useState();
-  const [username, setUsername] = useState();
-  const [success,setSuccess] = useState();
-  const [progress1, setProgress1] = useState()
-  const [progress, setProgress] = useState()
-  const [file, setFile] = useState();
-  const [file1, setFile1] = useState();
-  const [selectedFile, setSelectedFile] = React.useState(null);
-  const [selectedFile1, setSelectedFile1] = React.useState(null);
-  function handleFileSelect1(e) {
-    console.log(e.target.files);
-    setFile1(URL.createObjectURL(e.target.files[0]));
-    setSelectedFile1(e.target.files[0])
-}
-function handleFileSelect(e) {
-  console.log(e.target.files);
-  setFile(URL.createObjectURL(e.target.files[0]));
-  setSelectedFile(e.target.files[0])
-}
-const Image_url='upload_photo/'
-const submit = async (e) => {
+const ArUpd = () =>{
+  const[grade, setGrade] = useState();
+  const[cin,setCin] = useState();
+  const[phone,setPhone]=useState();
+  const[first_name, setF_name] = useState () ;
+  const[last_name, setL_name] = useState();
+  const[sex, setSex] = useState();
+  const[birthday, setBirthday] = useState();
+  const[add, setAddresse] = useState([]);
+  const[ville,setVille] = useState();
+  const[gouv,setGouv] = useState();
+  const[code,setCode] = useState();
+  const[success,setSuccess] = useState();
+  const[state2,setState2] = useState([]);
+  const[state4,setState4] = useState([]);
+  const handlesubmit = async (e) => {
   e.preventDefault();
-  try {
-    const token = localStorage.getItem("token");
-    const formData2 = new FormData();
-    formData2.append("url",selectedFile);
-    formData2.append("path","image/arbitrator/identity");
-    formData2.append("user",localStorage.getItem('id'));
-    formData2.append("season",'2');
-      axios.post(
-        Image_url,
-         formData2,
-         { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
-            setProgress(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-        localStorage.setItem('ar',url)
-      }
-        )    }catch(error) {      console.log(error)    }  }
-
-        const submit1 = async (e) => {
-          e.preventDefault();
-          try {
-            const token = localStorage.getItem("token");
-            const formData2 = new FormData();
-            formData2.append("url",selectedFile1);
-            formData2.append("path","image/arbitrator/grade");
-            formData2.append("user",localStorage.getItem('id'));
-            formData2.append("season",'2');
-              axios.post(
-                Image_url,
-                 formData2,
-                 { headers: {"Content-Type": "multipart/form-data" ,'Authorization':  `TOKEN ${token}`,'Access-Control-Allow-Origin':'Accept'}  ,onUploadProgress: data => {
-                    setProgress1(Math.round((100 * data.loaded) / data.total))},},).then((value) => {const url= value.data.url;
-                localStorage.setItem('ph',url)
-              }
-                )    }catch(error) {console.log(error)    }  }
-const handlesubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 try {  const token = localStorage.getItem("token");
 const ar= localStorage.getItem('ar')
 const gr= localStorage.getItem('gr')
-    axios.post(ARBITRE_URL,({'arbitrator':{'identity_photo':`https://41c5-197-14-10-36.eu.ngrok.io${ar} `,'photo':`https://41c5-197-14-10-36.eu.ngrok.io${gr} `,'grade':'2'},'profile':{'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie"},'user':{'password':password,'username':username}}),
+    axios.put(ARBITRE_URL,({'arbitrator':{'grade':grade},'profile':{'city':ville,'address':add,'sexe':sex,'phone':phone,'cin':cin,'first_name':first_name,'last_name':last_name,'sex':sex,'birthday':birthday,'country':"Tunisie",'role':1,'zip_code':code}}),
        { headers: {'Content-Type': 'application/json','Authorization':`TOKEN ${token}`,
         'Access-Control-Allow-Origin':'Accept'} },)
     setSuccess("Arbitre ajouté"); 
-    localStorage.removeItem("ar")
+    const timer = setTimeout(() => {
+      // console.log('This will run after 1 second!')
+    //  window.location.reload(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+    //localStorage.removeItem("ar")
     //window.location.href = "dashboard/tables/Clubs";
-}catch(error) {  console.log(error)}}
-
+  }catch(error) {  console.log(error)}}
+  const at=localStorage.getItem("at");
+  const ARB_URL=`arbitrator_info/${at}/`
+  useEffect(() => {
+  axios.get(ARB_URL,{
+    headers: {'Content-Type': 'application/json','Authorization':` TOKEN ${window.localStorage.getItem("token")}`,  'Access-Control-Allow-Methods': 'Accept'},
+    withCredentials: false
+ })
+  .then(res => {
+    const persons = res.data;
+    console.log(persons)
+    setCin(persons.profile.cin)
+    setF_name(persons.profile.first_name)
+    setGrade(persons.arbitrator.grade)
+    setL_name(persons.profile.last_name)
+    setBirthday(persons.profile.birthday)
+    setAddresse(persons.profile.address)
+    setVille(persons.profile.city)
+    setPhone(persons.profile.phone)
+    setCode(persons.profile.zip_code)
+    setGouv(persons.profile.state)  
+})
+  },[])
+  const PARAMETER_URL='parameters/'
+useEffect(() => {
+  axios.get(PARAMETER_URL,``)
+  .then(res => {
+    const Grades=res.data.Grades;
+    const Degrees=res.data.Degrees;
+    setState2(Degrees);
+    setState4(Grades);
+})},[])
     return (
       <Card border="light" className="bg-white shadow-sm mb-4">
         <Card.Body>
-          <h5 className="mb-4">Ajouter Arbitre </h5>
+          <h5 className="mb-4">Modifier Arbitre </h5>
          <Form onSubmit={handlesubmit}>
           <div className="text-center"><p>{success}</p></div>
-          <Row>
-              <Col md={4} className="mb-3">
-                <Form.Group id="username">
-                  <Form.Label>username</Form.Label>    
-                  <Form.Control  type="text" id="username" name="username" 
-                     value={username }    onChange={(e) =>setUsername(e.target.value)}                                    />
-                </Form.Group>
-                 
-              </Col>
-        
-              <Col md={4} className="mb-3">
-                <Form.Group id="pwd">
-                  <Form.Label>Mot de passe</Form.Label>
-                  <Form.Control  type="text" id="pwd" name="pwd"  value={password } onChange={(e) =>setPassword(e.target.value)} />
-                </Form.Group>
-              </Col>
-            
-            </Row>
+         
             <Row>
             <Col md={3} className="mb-3">
                 <Form.Group id="cin">
                   <Form.Label>CIN</Form.Label>    
-                  <Form.Control  type="text" id="cin" name="cin" placeholder="cin" 
-                     value={cin }    onChange={(e) =>setCin(e.target.value)}                                    />
+                  <Form.Control  type="text" id="cin" name="cin" 
+                     value={cin}    onChange={(e) =>setCin(e.target.value)}                                    />
                 </Form.Group>
                  
               </Col>
@@ -126,31 +93,31 @@ const gr= localStorage.getItem('gr')
               <Col md={3} className="mb-3">
                 <Form.Group id="lastName">
                   <Form.Label>Nom</Form.Label>
-                  <Form.Control  type="text" id="prenom" name="prenom" placeholder="Nom" value={first_name } onChange={(e) =>setF_name(e.target.value)} />
+                  <Form.Control  type="text" id="prenom" name="prenom"  value={first_name} onChange={(e) =>setF_name(e.target.value)} />
                 </Form.Group>
               </Col>
               <Col md={3} className="mb-3">
                 <Form.Group id="lastName">
                   <Form.Label>Prénom</Form.Label>
-                  <Form.Control  type="text" id="prenom" name="prenom" placeholder="prenom" 
-                     value={last_name }    onChange={(e) =>setL_name(e.target.value)}      />
+                  <Form.Control  type="text" id="prenom" name="prenom"
+                     value={last_name}    onChange={(e) =>setL_name(e.target.value)}      />
                 </Form.Group>
               </Col>
               <Col md={3} className="mb-3">
-                <Form.Group id="cin">
-                  <Form.Label>addresse</Form.Label>    
-                  <Form.Control  type="text" id="addresse" name="addresse"  
-                     value={addresse }    onChange={(e) =>setAddresse(e.target.value)}                                    />
+                <Form.Group id="lastName">
+                  <Form.Label>Addresse</Form.Label>
+                  <Form.Control  type="text" id="prenom" name="prenom"
+                     value={add}    onChange={(e) =>setAddresse(e.target.value)}      />
                 </Form.Group>
-                 
               </Col>
+                 
             </Row>
             <Row className="align-items-center">
          <Col md={3} className="mb-3">
                 <Form.Group id="sex">
                   <Form.Label>sex</Form.Label>
                   <Form.Select id="sex"  name="sex"autoComplete="off" value={sex}  onChange={(e) =>setSex(e.target.value)}       >
-                    <option value="0">--</option>
+                    <option value="0"></option>
                     <option value="Femme">Femme</option>
                     <option value="Homme">Homme</option>
                   </Form.Select>
@@ -180,7 +147,7 @@ const gr= localStorage.getItem('gr')
               <Form.Group  >
                 <Form.Label>Numéro de téléphone</Form.Label>
                 <Form.Control  type="text" id="phone" name="phone"
-                     value={phone }    onChange={(e) =>setPhone(e.target.value)}      />
+                     value={phone}    onChange={(e) =>setPhone(e.target.value)}      />
               </Form.Group>
              
             </Col>
@@ -188,7 +155,7 @@ const gr= localStorage.getItem('gr')
               <Form.Group  >
                 <Form.Label>ville</Form.Label>
                 <Form.Control  type="text" id="phone" name="phone"
-                     value={ville }    onChange={(e) =>setVille(e.target.value)}      />
+                     value={ville}    onChange={(e) =>setVille(e.target.value)}      />
               </Form.Group>
              
             </Col>
@@ -202,7 +169,7 @@ const gr= localStorage.getItem('gr')
               <Form.Group  >
                 <Form.Label>gouvernerat</Form.Label>
                 <Form.Control  type="text" id="phone" name="phone"
-                     value={gouv }    onChange={(e) =>setGouv(e.target.value)}      />
+                     value={gouv}    onChange={(e) =>setGouv(e.target.value)}      />
               </Form.Group>
              
             </Col>
@@ -210,7 +177,20 @@ const gr= localStorage.getItem('gr')
               <Form.Group  >
                 <Form.Label>code postal </Form.Label>
                 <Form.Control  type="text" id="phone" name="phone"
-                     value={code }    onChange={(e) =>setCode(e.target.value)}      />
+                     value={code}    onChange={(e) =>setCode(e.target.value)}      />
+              </Form.Group>
+             
+            </Col>  
+            <Col md={3} className="mb-3">
+              <Form.Group  >
+                <Form.Label>Grade </Form.Label>
+          
+                      <Form.Select id="grade"  name="grade"autoComplete="off" value={grade}  onChange={(e) =>setGrade(e.target.value)}       >
+                      {state4.map((person) => (<>
+                                  
+                                  <option value={person.id}> 
+            {person.Grade}</option>    </>   ))}
+                  </Form.Select>
               </Form.Group>
              
             </Col>
@@ -220,7 +200,7 @@ const gr= localStorage.getItem('gr')
             </div>
           </Form><br/>
           
-          <Row>
+          {/* <Row>
           <Form onSubmit={submit}>
               <Col md={6} className="mb-3">
                 <Form.Group id="cin">
@@ -249,10 +229,10 @@ const gr= localStorage.getItem('gr')
               
             </Form>
 
-            </Row>
+            </Row> */}
         </Card.Body>
       </Card>
     );
 
 };
-export default (ArAdd);
+export default (ArUpd);

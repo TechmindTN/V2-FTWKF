@@ -60,6 +60,7 @@ export const Routes = {
     Signinadmin: { path: "/admin/sign-in" },
     Signup: { path: "/examples/sign-up" },
     Role: { path: "/examples/Role" },
+    Images: { path: "/examples/Images" },
     Choose: { path: "/examples/Choose" },
 
     ForgotPassword: { path: "/examples/forgot-password" },

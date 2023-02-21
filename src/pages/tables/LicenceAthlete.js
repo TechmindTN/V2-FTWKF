@@ -80,7 +80,7 @@ const formData = new FormData();
 
 
       Licence_URL
-      ,{"licence":{"categorie":parseInt(categorie),"weight":parseInt(weights),"club":parseInt(club),"grade":parseInt(grade),"degree":parseInt(degree),"seasons":parseInt(season),"user":parseInt(user),"role":parseInt(rolee),
+      ,{"licence":{"categorie":parseInt(categorie),"weight":parseInt(weights),"club":localStorage.getItem("club"),"grade":parseInt(grade),"degree":parseInt(degree),"seasons":parseInt(season),"user":parseInt(user),"role":parseInt(rolee),
       "discipline":parseInt(Disciplines),"discipline_id":1},"photos":{
          "photo": "aaaaaa",
          "identity_photo": "bbbbbb",
@@ -304,7 +304,7 @@ const formData = new FormData();
             
             <Form.Group id="category">
                     <Form.Label>Club النادي</Form.Label>
-                    <Form.Select id="club"  required name="club"  value={club}  onChange={(e) =>setClub(e.target.value)}
+                    <Form.Select id="club"   name="club"  value={club}  onChange={(e) =>setClub(e.target.value)}
                                   autoComplete="off" >                                    <option></option>
 
                                     {state6.map((person) => (<>

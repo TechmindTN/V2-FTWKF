@@ -119,29 +119,31 @@ if (id==1)
     
               <NavItem title="Acceuil" link={Routes.DashboardOverview.path} icon={faChartPie} />
               {/* <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} /> */}
-              <NavItem title="Profile" icon={faUser} link={Routes.Profile.path} />
-              <NavItem title="Changer mot de passe" icon={faCog} link={Routes.ResetPassword.path} />
-              <CollapsableNavItem  title="Athletes" icon={faTable}>
-                <NavItem title="Liste des athletes" link={Routes.Athletes.path} />
-              </CollapsableNavItem>
+              <CollapsableNavItem  title="Profile" icon={faUser}>
+              <NavItem title="Profile"  link={Routes.Profile.path} />
+              <NavItem title="Changer mot de passe"  link={Routes.ResetPassword.path} />
+              <NavItem title="Modifier profile"  link={Routes.EditeProfile.path} />
+              </CollapsableNavItem> 
+            
               {/* <NavItem title="Bootstrap" icon={faCog} link={Routes.BootstrapTables.path} /> */}
 
               <CollapsableNavItem  title="Licences" icon={faTable}>
-                <NavItem title="Liste des licences" link={Routes.Licence.path} />
+              <NavItem title="Liste des athletes" link={Routes.Athletes.path} />
+              <NavItem title="Liste des licences" link={Routes.Licence.path} />
               </CollapsableNavItem>
               {shows.current &&  <>
               <CollapsableNavItem  title="Clubs" icon={faTable}>
                 <NavItem title="Liste des clubs" link={Routes.Clubs.path} />
                 <NavItem title="Liste des ligue" link={Routes.Ligue.path} />
               </CollapsableNavItem></>}
-              <CollapsableNavItem  title="Entraineur" icon={faTable}>
-                <NavItem title="Liste des entraineurs" link={Routes.Entraineur.path} />
-              </CollapsableNavItem>
+           
               <CollapsableNavItem  title="Arbitre" icon={faTable}>
                 <NavItem title="Liste des arbitres" link={Routes.Arbitre.path} />
               </CollapsableNavItem>
-              <CollapsableNavItem  title="Supporteur" icon={faTable}>
-                <NavItem title="Liste des supporteurs" link={Routes.Supporteur.path} />
+              <CollapsableNavItem  title="Staff" icon={faTable}>
+              <NavItem title="Liste des entraineurs" link={Routes.Entraineur.path} />
+              <NavItem title="Liste des supporteurs" link={Routes.Supporteur.path} />
+
               </CollapsableNavItem>
               {shows.current &&  <>
               <CollapsableNavItem  title="Categories" icon={faTable}>
@@ -152,6 +154,7 @@ if (id==1)
               <NavItem title="Liste de saisons" icon={faTable} link={Routes.Saison.path} />
               <NavItem title="Liste des disciplines" icon={faTable} link={Routes.Sports.path} />
               <NavItem title="Liste des compétitions" icon={faTable} link={Routes.Comp.path} />
+              <NavItem title="Gestion des images" icon={faTable} link={Routes.Images.path} />
               </> 
               }
               {/* <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
@@ -195,9 +198,9 @@ if (id==1)
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
               </CollapsableNavItem> */}
-               <NavItem title="Pagination" link={Routes.Pagination.path} />
+               {/* <NavItem title="Pagination" link={Routes.Pagination.path} />
                <NavItem title="Tables" link={Routes.Tables.path} />
-               <NavItem title="Tabs" link={Routes.Tabs.path} />
+               <NavItem title="Tabs" link={Routes.Tabs.path} /> */}
 
             </Nav>
           </div>

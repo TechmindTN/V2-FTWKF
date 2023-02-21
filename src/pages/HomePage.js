@@ -60,6 +60,7 @@ import Signin from "./examples/Signin";
 import Signinadmin from "./admin/Signin";
 import Signup from "./examples/Signup";
 import Role from "./examples/Role";
+import Images from "./examples/Images";
 import Choose from "./examples/Choose";
 
 import Age from "./tables/age";
@@ -183,7 +184,8 @@ export default () => (
     <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
 
     {/* pages */}
-   <RouteWithSidebar exact path={Routes.Role.path} component={Role} />
+    <RouteWithSidebar exact path={Routes.Role.path} component={Role} />
+    <RouteWithSidebar exact path={Routes.Images.path} component={Images} />
    <RouteWithSidebar exact path={Routes.Choose.path} component={Choose} />
 
     <RouteWithSidebar exact path={Routes.DashboardOverview.path} component={DashboardOverview} />

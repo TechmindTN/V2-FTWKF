@@ -860,8 +860,8 @@ export const SaisonTable = () => {
               <td className="border-0 "> 
               {(() => {
                 switch (person.activated) {
-                  case     false: return  <FontAwesomeIcon icon={faBellSlash} color={"red"}  /> ;
-                  case     true:  return <FontAwesomeIcon icon={faBell} color={"green"}  />;
+                  case false: return  <FontAwesomeIcon icon={faBellSlash} color={"red"}  /> ;
+                  case  true:  return <FontAwesomeIcon icon={faBell} color={"green"}  />;
                   default:        return "--";
                 }
               })()}    
@@ -875,7 +875,13 @@ export const SaisonTable = () => {
                 .catch(error => {
                   console.log("Something went wrong", error)
                 })
-              )}>Activé</Button> &nbsp;
+              )}> {(() => {
+                switch (person.activated) {
+                  case false: return "Activer" ;
+                  case  true:  return" Desactiver";
+                  default:        return "--";
+                }
+              })()}</Button> &nbsp;
 
 
 

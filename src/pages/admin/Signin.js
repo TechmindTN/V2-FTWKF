@@ -65,6 +65,7 @@ const handleSubmit = async (e) =>{
     localStorage.setItem('token',token)
     localStorage.setItem('id',id)
     localStorage.setItem('username',username);
+    localStorage.setItem('club',value.data.club.id)
   }
   
  }).catch((e)=>{
